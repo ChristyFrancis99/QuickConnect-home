@@ -1,4 +1,4 @@
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { Suspense, useCallback, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { TextureLoader } from "three";
@@ -177,9 +177,15 @@ function GlobeMotion({
   drag: React.RefObject<{ active: boolean; velocity: number }>;
   reducedMotion: React.RefObject<boolean>;
 }) {
+  const { size } = useThree();
+
   useFrame((_, delta) => {
     const globe = globeRef.current;
-    if (!globe || reducedMotion.current) return;
+    if (!globe) return;
+    const isMobile = size.width <= 680;
+    globe.position.set(isMobile ? 0 : 1.85, isMobile ? -1.15 : 0, 0);
+    globe.scale.setScalar(isMobile ? 0.72 : 1);
+    if (reducedMotion.current) return;
     const dt = Math.min(delta, 0.05);
     const breakup = progress.current;
 
@@ -284,13 +290,17 @@ export function GlobeGallery() {
       ref={wrapperRef}
       className={`globe-interaction${drag.current.active ? " is-dragging" : ""}`}
       data-scene-ready="false"
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
       aria-label="Interactive gallery globe"
       role="img"
     >
+      <div
+        className="globe-drag-hit-area"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        aria-hidden="true"
+      />
       <div className="globe-orbit globe-orbit--one" aria-hidden="true" />
       <div className="globe-orbit globe-orbit--two" aria-hidden="true" />
       <Canvas
