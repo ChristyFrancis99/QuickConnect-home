@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight, Layers3 } from "lucide-react";
+import { ArrowDown, ArrowRight, Layers3, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { GlobeGallery } from "@/game/globe/GlobeGallery";
 
 export const Route = createFileRoute("/")({
@@ -23,20 +24,63 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const updateScrollState = () => setIsScrolled(window.scrollY > 24);
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
+
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
     <>
       <main className="hero-scroll-stage">
         <section className="hero-sticky" aria-labelledby="hero-title">
-          <header className="hero-header">
-            <a className="brand-lockup" href="#top" aria-label="QuickConnect home">
+          <header className={`hero-header${isScrolled ? " is-scrolled" : ""}`}>
+            <a className="brand-lockup" href="#top" aria-label="QuickConnect home" onClick={closeMenu}>
               <span className="brand-mark"><Layers3 size={17} strokeWidth={2.3} /></span>
-              <span className="brand-name">quickflow</span>
+              <span className="brand-name">QuickConnect</span>
             </a>
-            <nav className="flex items-center gap-3 sm:gap-7" aria-label="Main navigation">
-              <a className="text-[11px] font-semibold text-[var(--quickflow-ink)] no-underline transition-opacity hover:opacity-60 sm:text-xs" href="#top" aria-current="page">Home</a>
-              <a className="text-[11px] font-semibold text-[var(--quickflow-ink)] no-underline transition-opacity hover:opacity-60 sm:text-xs" href="#overview">Overview</a>
-              <a className="rounded-sm bg-[var(--quickflow-gold)] px-3 py-2 text-[10px] font-bold text-[var(--quickflow-ink)] no-underline transition-transform hover:-translate-y-0.5 sm:px-4 sm:text-xs" href="#overview">Explore <ArrowRight className="ml-1 inline" size={12} strokeWidth={2.3} /></a>
+
+            <nav className="desktop-nav" aria-label="Main navigation">
+              <a href="#top">Platform</a>
+              <a href="#overview">How It Works</a>
+              <a href="#overview">Use Cases</a>
+              <a href="#overview">About</a>
             </nav>
+
+            <div className="header-actions">
+              <a className="header-login" href="#overview">Log In</a>
+              <a className="header-cta" href="#overview">Get Started <ArrowRight size={14} /></a>
+            </div>
+
+            <button
+              className="mobile-menu-toggle"
+              type="button"
+              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-navigation"
+              onClick={() => setIsMenuOpen((open) => !open)}
+            >
+              {isMenuOpen ? <X size={21} /> : <Menu size={21} />}
+            </button>
+
+            {isMenuOpen && (
+              <nav className="mobile-nav" id="mobile-navigation" aria-label="Mobile navigation">
+                <a href="#top" onClick={closeMenu}>Platform</a>
+                <a href="#overview" onClick={closeMenu}>How It Works</a>
+                <a href="#overview" onClick={closeMenu}>Use Cases</a>
+                <a href="#overview" onClick={closeMenu}>About</a>
+                <div className="mobile-nav__actions">
+                  <a href="#overview" onClick={closeMenu}>Log In</a>
+                  <a className="header-cta" href="#overview" onClick={closeMenu}>Get Started <ArrowRight size={14} /></a>
+                </div>
+              </nav>
+            )}
           </header>
           <div className="hero-main" id="top">
             <div className="hero-copy">
