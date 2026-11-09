@@ -62,10 +62,6 @@ function Index() {
           <div className="hero-visual" aria-hidden="false">
             <GlobeGallery />
           </div>
-          <footer className="hero-footer">
-            <span>BUILT FOR THE MOMENTS BETWEEN</span>
-            <span className="scroll-hint"><span className="scroll-hint__mouse"><span className="scroll-hint__wheel" /></span> SCROLL TO EXPLORE</span>
-          </footer>
         </section>
       </main>
       <section className="overview-section" id="overview" aria-labelledby="overview-title">
