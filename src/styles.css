@@ -104,7 +104,7 @@
   align-items: center;
   margin-inline: auto;
 }
-.hero-copy { position: relative; z-index: 3; max-width: 580px; padding-block: 22px 34px; }
+.hero-copy { position: relative; z-index: 2; max-width: 580px; padding-block: 22px 34px; }
 .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 24px; color: var(--color-muted-foreground); font-size: 10px; font-weight: 750; letter-spacing: 0.15em; }
 .hero-eyebrow::before { width: 26px; height: 1px; background: var(--quickflow-gold); content: ""; }
 .hero-title { max-width: 620px; margin: 0; font-size: 44px; font-weight: 650; line-height: 1.12; letter-spacing: 0; }
@@ -122,9 +122,10 @@
 .hero-button--secondary:hover { background: var(--quickflow-cream); }
 .hero-support { display: flex; align-items: center; gap: 12px; margin: 37px 0 0; color: var(--color-muted-foreground); font-size: 11px; font-weight: 550; }
 .hero-support__line { width: 30px; height: 1px; background: color-mix(in oklab, var(--quickflow-lavender) 60%, transparent); }
-.hero-visual { position: relative; display: grid; width: 100%; height: min(68vh, 690px); min-height: 400px; place-items: center; }
-.globe-interaction { position: relative; width: min(100%, 700px); height: 100%; touch-action: pan-y; cursor: grab; }
-.globe-interaction.is-dragging { cursor: grabbing; }
+.hero-visual { position: absolute; z-index: 3; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.globe-interaction { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.globe-drag-hit-area { position: absolute; z-index: 4; top: 14%; right: 5%; width: 48%; height: 76%; pointer-events: auto; touch-action: pan-y; cursor: grab; }
+.globe-drag-hit-area:active { cursor: grabbing; }
 .globe-canvas { position: absolute !important; inset: 0; }
 .globe-orbit { position: absolute; z-index: 0; top: 50%; left: 50%; width: 81%; aspect-ratio: 1; border: 1px solid color-mix(in oklab, var(--quickflow-gold) 25%, transparent); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%) rotate(-23deg) scaleY(0.3); }
 .globe-orbit--two { width: 96%; border-color: color-mix(in oklab, var(--quickflow-lavender) 17%, transparent); transform: translate(-50%, -50%) rotate(31deg) scaleY(0.43); }
@@ -146,7 +147,7 @@
   .hero-header, .hero-main, .hero-footer { width: min(100% - 56px, 1440px); }
   .hero-title { font-size: 40px; }
   .hero-description { font-size: 14px; }
-  .hero-visual { height: min(62vh, 590px); min-height: 340px; }
+  .hero-visual { inset: 0; height: 100%; min-height: 0; }
   .hero-button { padding-inline: 14px; }
 }
 
@@ -164,8 +165,8 @@
   .hero-actions { gap: 9px; margin-top: 19px; }
   .hero-button { min-height: 45px; font-size: 11px; }
   .hero-support { margin-top: 19px; font-size: 10px; }
-  .hero-visual { height: 100%; min-height: 210px; max-height: 340px; margin-top: -2px; }
-  .globe-interaction { width: min(100%, 370px); }
+  .hero-visual { inset: 0; height: 100%; min-height: 0; max-height: none; margin-top: 0; }
+  .globe-drag-hit-area { top: 48%; right: 8%; width: 84%; height: 43%; }
   .globe-caption { right: 2%; bottom: 5%; font-size: 8px; }
   .hero-footer { width: calc(100% - 40px); min-height: 43px; flex-basis: 43px; font-size: 8px; }
   .overview-inner { padding-block: 85px; }
