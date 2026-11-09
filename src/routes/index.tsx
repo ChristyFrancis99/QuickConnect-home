@@ -43,8 +43,7 @@ function Index() {
         <section className="hero-sticky" aria-labelledby="hero-title">
           <header className={`hero-header${isScrolled ? " is-scrolled" : ""}`}>
             <a className="brand-lockup" href="#top" aria-label="QuickConnect home" onClick={closeMenu}>
-              <span className="brand-mark"><Layers3 size={17} strokeWidth={2.3} /></span>
-              <span className="brand-name">QuickConnect</span>
+              <img className="brand-logo" src={logo} alt="QuickConnect" />
             </a>
 
             <nav className="desktop-nav" aria-label="Main navigation">
