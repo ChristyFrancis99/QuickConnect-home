@@ -45,8 +45,8 @@ function createPanels(): Panel[] {
       const orientation = new THREE.Quaternion().setFromRotationMatrix(
         new THREE.Matrix4().makeBasis(tangentLongitude, tangentLatitude, normal),
       );
-      const halfLatitude = latitudeStep * 0.41;
-      const halfLongitude = longitudeStep * 0.41;
+      const halfLatitude = latitudeStep * 0.37;
+      const halfLongitude = longitudeStep * 0.37;
       const segments = 6;
       const vertices: number[] = [];
       const uvs: number[] = [];
