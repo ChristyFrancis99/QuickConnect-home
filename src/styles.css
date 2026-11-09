@@ -101,8 +101,7 @@
 }
 .brand-lockup { display: inline-flex; width: max-content; align-items: center; gap: 11px; border: 1px solid transparent; border-radius: 6px; padding: 7px 9px; color: var(--quickflow-ink); text-decoration: none; transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease; }
 .brand-lockup:hover { border-color: color-mix(in oklab, var(--quickflow-gold) 65%, transparent); background: color-mix(in oklab, var(--quickflow-cream) 72%, transparent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--quickflow-gold) 16%, transparent); }
-.brand-mark { display: grid; width: 31px; height: 31px; place-items: center; border-radius: 9px; background: var(--quickflow-gold); color: var(--quickflow-ink); }
-.brand-name { font-size: 19px; font-weight: 750; letter-spacing: -0.035em; }
+.brand-logo { display: block; width: auto; height: 36px; max-width: 180px; object-fit: contain; }
 .desktop-nav { display: flex; align-items: center; gap: clamp(18px, 2.4vw, 36px); }
 .desktop-nav a, .header-login { display: inline-flex; min-height: 38px; align-items: center; justify-content: center; border: 1px solid transparent; border-radius: 5px; padding: 0 11px; color: var(--quickflow-ink); font-size: 12px; font-weight: 600; text-decoration: none; transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease; }
 .desktop-nav a:hover, .header-login:hover { border-color: color-mix(in oklab, var(--quickflow-gold) 70%, transparent); background: color-mix(in oklab, var(--quickflow-cream) 78%, transparent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--quickflow-gold) 17%, transparent); transform: translateY(-1px); }
