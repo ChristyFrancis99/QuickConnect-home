@@ -54,9 +54,9 @@ function Index() {
               </div>
               <p className="hero-support"><span className="hero-support__line" />One workspace. Complete context. Seamless transitions.</p>
             </div>
-            <div className="hero-visual">
-              <GlobeGallery />
-            </div>
+          </div>
+          <div className="hero-visual" aria-hidden="false">
+            <GlobeGallery />
           </div>
           <footer className="hero-footer">
             <span>BUILT FOR THE MOMENTS BETWEEN</span>
