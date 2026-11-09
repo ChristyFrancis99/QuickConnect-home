@@ -319,10 +319,6 @@ export function GlobeGallery() {
         </group>
         <GlobeMotion globeRef={globeRef} progress={progress} drag={drag} reducedMotion={reducedMotion} />
       </Canvas>
-      <span className="globe-caption" aria-hidden="true">
-        <span className="globe-caption__dot" />
-        CONTEXT, IN EVERY DIRECTION
-      </span>
     </div>
   );
 }
