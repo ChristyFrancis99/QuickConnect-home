@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight, Layers3, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowRight, Menu, X } from "lucide-react";
+import logo from "@/assets/logo.png";
 import { useEffect, useState } from "react";
 import { GlobeGallery } from "@/game/globe/GlobeGallery";
 
