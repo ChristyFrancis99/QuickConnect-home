@@ -127,11 +127,11 @@
 .globe-drag-hit-area { position: absolute; z-index: 4; top: 14%; right: 5%; width: 48%; height: 76%; pointer-events: auto; touch-action: pan-y; cursor: grab; }
 .globe-drag-hit-area:active { cursor: grabbing; }
 .globe-canvas { position: absolute !important; inset: 0; }
-.globe-orbit { position: absolute; z-index: 0; top: 50%; left: 50%; width: 81%; aspect-ratio: 1; border: 1px solid color-mix(in oklab, var(--quickflow-gold) 25%, transparent); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%) rotate(-23deg) scaleY(0.3); }
+.globe-orbit { position: absolute; z-index: 0; top: 50%; left: 70%; width: 81%; aspect-ratio: 1; border: 1px solid color-mix(in oklab, var(--quickflow-gold) 25%, transparent); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%) rotate(-23deg) scaleY(0.3); }
 .globe-orbit--two { width: 96%; border-color: color-mix(in oklab, var(--quickflow-lavender) 17%, transparent); transform: translate(-50%, -50%) rotate(31deg) scaleY(0.43); }
 .globe-caption { position: absolute; right: 6%; bottom: 8%; display: flex; align-items: center; gap: 8px; color: var(--color-muted-foreground); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; pointer-events: none; }
 .globe-caption__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--quickflow-gold); box-shadow: 0 0 14px color-mix(in oklab, var(--quickflow-gold) 75%, transparent); }
-.hero-footer { display: flex; width: min(100% - 112px, 1440px); min-height: 54px; flex: 0 0 54px; align-items: center; justify-content: space-between; margin-inline: auto; color: var(--color-muted-foreground); font-size: 9px; font-weight: 650; letter-spacing: 0.12em; }
+.hero-footer { position: relative; z-index: 4; display: flex; width: min(100% - 112px, 1440px); min-height: 54px; flex: 0 0 54px; align-items: center; justify-content: space-between; margin-inline: auto; color: var(--color-muted-foreground); font-size: 9px; font-weight: 650; letter-spacing: 0.12em; }
 .scroll-hint { display: inline-flex; align-items: center; gap: 10px; }
 .scroll-hint__mouse { display: grid; width: 16px; height: 23px; place-items: start center; border: 1px solid color-mix(in oklab, var(--quickflow-ink) 38%, transparent); border-radius: 10px; padding-top: 4px; }
 .scroll-hint__wheel { width: 2px; height: 4px; border-radius: 2px; background: var(--quickflow-gold); animation: scroll-wheel 1.5s ease-in-out infinite; }
@@ -166,6 +166,7 @@
   .hero-button { min-height: 45px; font-size: 11px; }
   .hero-support { margin-top: 19px; font-size: 10px; }
   .hero-visual { inset: 0; height: 100%; min-height: 0; max-height: none; margin-top: 0; }
+  .globe-orbit { top: 68%; left: 50%; }
   .globe-drag-hit-area { top: 48%; right: 8%; width: 84%; height: 43%; }
   .globe-caption { right: 2%; bottom: 5%; font-size: 8px; }
   .hero-footer { width: calc(100% - 40px); min-height: 43px; flex-basis: 43px; font-size: 8px; }
