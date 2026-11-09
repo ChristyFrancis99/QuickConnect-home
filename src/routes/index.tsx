@@ -5,9 +5,9 @@ import { GlobeGallery } from "@/game/globe/GlobeGallery";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "QuickFlow — Knowledge that moves with you" },
-      { name: "description", content: "Capture scattered information, connect project context and make every handover seamless with QuickFlow." },
-      { property: "og:title", content: "QuickFlow — Knowledge that moves with you" },
+      { title: "QuickConnect — Knowledge that moves with you" },
+      { name: "description", content: "Capture scattered information, connect project context and make every handover seamless with QuickConnect." },
+      { property: "og:title", content: "QuickConnect — Knowledge that moves with you" },
       { property: "og:description", content: "One workspace. Complete context. Seamless transitions." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -28,7 +28,7 @@ function Index() {
       <main className="hero-scroll-stage">
         <section className="hero-sticky" aria-labelledby="hero-title">
           <header className="hero-header">
-            <a className="brand-lockup" href="#top" aria-label="QuickFlow home">
+            <a className="brand-lockup" href="#top" aria-label="QuickConnect home">
               <span className="brand-mark"><Layers3 size={17} strokeWidth={2.3} /></span>
               <span className="brand-name">quickflow</span>
             </a>
@@ -46,11 +46,11 @@ function Index() {
                 <span className="hero-title__accent">Knowledge Walk Away.</span>
               </h1>
               <p className="hero-description">
-                When people leave, projects shouldn't lose their knowledge. QuickFlow captures scattered information, connects project context and makes every handover seamless.
+                When people leave, projects shouldn't lose their knowledge. QuickConnect captures scattered information, connects project context and makes every handover seamless.
               </p>
               <div className="hero-actions">
                 <a className="hero-button hero-button--primary" href="#overview">
-                  Explore QuickFlow <ArrowRight size={15} strokeWidth={2.2} />
+                  Explore QuickConnect <ArrowRight size={15} strokeWidth={2.2} />
                 </a>
                 <a className="hero-button hero-button--secondary" href="#overview">
                   See How It Works <ArrowDown size={14} strokeWidth={2} />
