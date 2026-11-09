@@ -3,12 +3,15 @@ import { Suspense, useCallback, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { TextureLoader } from "three";
 import { getPanelMotion } from "@/lib/globe-motion";
-import teamPhoto from "@/assets/globe-team.jpg";
-import notesPhoto from "@/assets/globe-notes.jpg";
-import workspacePhoto from "@/assets/globe-workspace.jpg";
-import handoverPhoto from "@/assets/globe-handover.jpg";
+import image1 from "@/assets/1.png";
+import image2 from "@/assets/2.png";
+import image3 from "@/assets/3.png";
+import image4 from "@/assets/4.png";
+import image5 from "@/assets/5.png";
+import image6 from "@/assets/6.png";
+import image7 from "@/assets/7.png";
 
-const PHOTO_PATHS = [teamPhoto, notesPhoto, workspacePhoto, handoverPhoto];
+const PHOTO_PATHS = [image1, image2, image3, image4, image5, image6, image7];
 const SPHERE_RADIUS = 2.08;
 const ROWS = 8;
 
