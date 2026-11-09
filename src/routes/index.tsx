@@ -32,7 +32,11 @@ function Index() {
               <span className="brand-mark"><Layers3 size={17} strokeWidth={2.3} /></span>
               <span className="brand-name">quickflow</span>
             </a>
-            <span className="header-note"><span className="header-note__dot" /> KNOWLEDGE, CONNECTED</span>
+            <nav className="flex items-center gap-3 sm:gap-7" aria-label="Main navigation">
+              <a className="text-[11px] font-semibold text-[var(--quickflow-ink)] no-underline transition-opacity hover:opacity-60 sm:text-xs" href="#top" aria-current="page">Home</a>
+              <a className="text-[11px] font-semibold text-[var(--quickflow-ink)] no-underline transition-opacity hover:opacity-60 sm:text-xs" href="#overview">Overview</a>
+              <a className="rounded-sm bg-[var(--quickflow-gold)] px-3 py-2 text-[10px] font-bold text-[var(--quickflow-ink)] no-underline transition-transform hover:-translate-y-0.5 sm:px-4 sm:text-xs" href="#overview">Explore <ArrowRight className="ml-1 inline" size={12} strokeWidth={2.3} /></a>
+            </nav>
           </header>
           <div className="hero-main" id="top">
             <div className="hero-copy">
