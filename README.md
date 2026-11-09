@@ -1,20 +1,20 @@
-# QuickFlow Knowledge Hub
+# QuickConnect
 
 Hero Section Layout — Updated (Important)
 
 Create a full-screen, two-column hero section with the following exact arrangement:
 
-LEFT SIDE — 45% width: QuickFlow Content
+LEFT SIDE — 45% width: QuickConnect Content
 
 Small label: THE KNOWLEDGE HANDOVER PLATFORM
 
 Main heading: Don't Let Valuable Knowledge Walk Away.
 
-Highlight "Knowledge Walk Away" using QuickFlow's existing accent color.
+Highlight "Knowledge Walk Away" using QuickConnect's existing accent color.
 
-Description: When people leave, projects shouldn't lose their knowledge. QuickFlow captures scattered information, connects project context and makes every handover seamless.
+Description: When people leave, projects shouldn't lose their knowledge. QuickConnect captures scattered information, connects project context and makes every handover seamless.
 
-Primary CTA: Explore QuickFlow
+Primary CTA: Explore QuickConnect
 
 Secondary CTA: See How It Works
 
@@ -56,7 +56,7 @@ Tablet: Maintain the two-column layout when space allows.
 
 Mobile: Stack content and globe vertically, with the content first and globe below it.
 
-Critical: Do not reverse this arrangement. Content must always be on the left and the globe on the right on desktop. Continue using the exact existing QuickFlow color palette, typography, buttons and design system.
+Critical: Do not reverse this arrangement. Content must always be on the left and the globe on the right on desktop. Continue using the exact existing QuickConnect color palette, typography, buttons and design system.
 
 This project was built with [Lovable](https://lovable.dev).
 
