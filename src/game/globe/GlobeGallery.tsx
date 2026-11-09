@@ -1,0 +1,315 @@
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Suspense, useCallback, useEffect, useMemo, useRef } from "react";
+import * as THREE from "three";
+import { TextureLoader } from "three";
+import { getPanelMotion } from "@/lib/globe-motion";
+import teamPhoto from "@/assets/globe-team.jpg";
+import notesPhoto from "@/assets/globe-notes.jpg";
+import workspacePhoto from "@/assets/globe-workspace.jpg";
+import handoverPhoto from "@/assets/globe-handover.jpg";
+
+const PHOTO_PATHS = [teamPhoto, notesPhoto, workspacePhoto, handoverPhoto];
+const SPHERE_RADIUS = 2.08;
+const ROWS = 8;
+
+type Panel = {
+  index: number;
+  position: THREE.Vector3;
+  orientation: THREE.Quaternion;
+  geometry: THREE.BufferGeometry;
+  imageIndex: number;
+};
+
+function createPanels(): Panel[] {
+  const panels: Panel[] = [];
+
+  for (let row = 0; row < ROWS; row += 1) {
+    const latitude = -Math.PI / 2 + (Math.PI * (row + 0.5)) / ROWS;
+    const count = Math.max(4, Math.round(14 * Math.cos(latitude)));
+    const latitudeStep = Math.PI / ROWS;
+    const longitudeStep = (Math.PI * 2) / count;
+
+    for (let column = 0; column < count; column += 1) {
+      const longitude = (column / count) * Math.PI * 2 + (row % 2) * (Math.PI / count);
+      const normal = new THREE.Vector3(
+        Math.cos(latitude) * Math.sin(longitude),
+        Math.sin(latitude),
+        Math.cos(latitude) * Math.cos(longitude),
+      ).normalize();
+      const tangentLongitude = new THREE.Vector3(Math.cos(longitude), 0, -Math.sin(longitude));
+      const tangentLatitude = new THREE.Vector3(
+        -Math.sin(latitude) * Math.sin(longitude),
+        Math.cos(latitude),
+        -Math.sin(latitude) * Math.cos(longitude),
+      );
+      const orientation = new THREE.Quaternion().setFromRotationMatrix(
+        new THREE.Matrix4().makeBasis(tangentLongitude, tangentLatitude, normal),
+      );
+      const halfLatitude = latitudeStep * 0.41;
+      const halfLongitude = longitudeStep * 0.41;
+      const segments = 6;
+      const vertices: number[] = [];
+      const uvs: number[] = [];
+      const indices: number[] = [];
+
+      for (let y = 0; y <= segments; y += 1) {
+        const v = y / segments;
+        const deltaLatitude = (v * 2 - 1) * halfLatitude;
+        for (let x = 0; x <= segments; x += 1) {
+          const u = x / segments;
+          const deltaLongitude = (u * 2 - 1) * halfLongitude;
+          vertices.push(
+            SPHERE_RADIUS * Math.cos(latitude + deltaLatitude) * Math.sin(deltaLongitude),
+            SPHERE_RADIUS * Math.sin(deltaLatitude),
+            SPHERE_RADIUS * (
+              Math.sin(latitude) * Math.sin(latitude + deltaLatitude) +
+              Math.cos(latitude) * Math.cos(latitude + deltaLatitude) * Math.cos(deltaLongitude) - 1
+            ),
+          );
+          uvs.push(u, v);
+        }
+      }
+
+      for (let y = 0; y < segments; y += 1) {
+        for (let x = 0; x < segments; x += 1) {
+          const a = y * (segments + 1) + x;
+          const b = a + segments + 1;
+          indices.push(a, b, a + 1, b, b + 1, a + 1);
+        }
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+      geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+      geometry.setIndex(indices);
+      geometry.computeVertexNormals();
+      panels.push({
+        index: panels.length,
+        position: normal.multiplyScalar(SPHERE_RADIUS),
+        orientation,
+        imageIndex: (row * 3 + column) % PHOTO_PATHS.length,
+        geometry,
+      });
+    }
+  }
+
+  return panels;
+}
+
+function GalleryPanels({ progress }: { progress: React.RefObject<number> }) {
+  const textures = useLoader(TextureLoader, PHOTO_PATHS);
+  const panels = useMemo(() => createPanels(), []);
+  const meshes = useRef<(THREE.Mesh | null)[]>([]);
+  const materials = useRef<(THREE.MeshStandardMaterial | null)[]>([]);
+
+  useEffect(() => {
+    textures.forEach((texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.anisotropy = 4;
+    });
+    const wrapper = document.querySelector<HTMLElement>("[data-scene-ready]");
+    if (wrapper) wrapper.dataset["sceneReady"] = "true";
+    return () => panels.forEach((panel) => panel.geometry.dispose());
+  }, [panels, textures]);
+
+  useFrame(() => {
+    panels.forEach((panel) => {
+      const mesh = meshes.current[panel.index];
+      const material = materials.current[panel.index];
+      if (!mesh || !material) return;
+
+      const motion = getPanelMotion(panel.index, progress.current);
+      mesh.position.set(
+        panel.position.x + motion.x,
+        panel.position.y + motion.y,
+        panel.position.z + motion.z,
+      );
+      mesh.quaternion.copy(panel.orientation);
+      mesh.rotateX(motion.rotationX);
+      mesh.rotateY(motion.rotationY);
+      mesh.rotateZ(motion.rotationZ);
+      material.opacity = motion.opacity;
+      material.depthWrite = motion.opacity > 0.8;
+    });
+  });
+
+  return (
+    <group>
+      {panels.map((panel) => (
+        <mesh
+          key={panel.index}
+          ref={(mesh) => {
+            meshes.current[panel.index] = mesh;
+          }}
+          position={panel.position}
+          quaternion={panel.orientation}
+          geometry={panel.geometry}
+          renderOrder={2}
+        >
+          <meshStandardMaterial
+            ref={(material) => {
+              materials.current[panel.index] = material;
+            }}
+            map={textures[panel.imageIndex] ?? null}
+            roughness={0.48}
+            metalness={0.04}
+            side={THREE.DoubleSide}
+            transparent
+            opacity={1}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function GlobeMotion({
+  globeRef,
+  progress,
+  drag,
+  reducedMotion,
+}: {
+  globeRef: React.RefObject<THREE.Group | null>;
+  progress: React.RefObject<number>;
+  drag: React.RefObject<{ active: boolean; velocity: number }>;
+  reducedMotion: React.RefObject<boolean>;
+}) {
+  useFrame((_, delta) => {
+    const globe = globeRef.current;
+    if (!globe || reducedMotion.current) return;
+    const dt = Math.min(delta, 0.05);
+    const breakup = progress.current;
+
+    if (!drag.current.active) {
+      globe.rotation.y += (0.11 * (1 - breakup) + drag.current.velocity) * dt;
+      drag.current.velocity *= Math.exp(-3.2 * dt);
+    }
+  });
+
+  return null;
+}
+
+export function GlobeGallery() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const globeRef = useRef<THREE.Group>(null);
+  const progress = useRef(0);
+  const reducedMotion = useRef(false);
+  const drag = useRef({ active: false, velocity: 0, x: 0, y: 0 });
+
+  const handlePointerDown = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    drag.current.active = true;
+    drag.current.velocity = 0;
+    drag.current.x = event.clientX;
+    drag.current.y = event.clientY;
+    event.currentTarget.classList.add("is-dragging");
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }, []);
+
+  const handlePointerMove = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
+    if (!drag.current.active || !globeRef.current) return;
+    const dx = event.clientX - drag.current.x;
+    const dy = event.clientY - drag.current.y;
+    const width = Math.max(event.currentTarget.clientWidth, 1);
+    const height = Math.max(event.currentTarget.clientHeight, 1);
+    globeRef.current.rotation.y += (dx / width) * Math.PI * 1.4;
+    globeRef.current.rotation.x = THREE.MathUtils.clamp(
+      globeRef.current.rotation.x + (dy / height) * Math.PI * 1.2,
+      -0.72,
+      0.72,
+    );
+    drag.current.velocity = (dx / width) * 2.4;
+    drag.current.x = event.clientX;
+    drag.current.y = event.clientY;
+  }, []);
+
+  const handlePointerUp = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
+    drag.current.active = false;
+    event.currentTarget.classList.remove("is-dragging");
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  }, []);
+
+  const handleScrollUpdate = useCallback((value: number) => {
+    progress.current = value;
+    if (wrapperRef.current) wrapperRef.current.dataset["scrollProgress"] = value.toFixed(3);
+  }, []);
+
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotion.current = preference.matches;
+    const updatePreference = (event: MediaQueryListEvent) => {
+      reducedMotion.current = event.matches;
+    };
+    preference.addEventListener("change", updatePreference);
+    return () => preference.removeEventListener("change", updatePreference);
+  }, []);
+
+  useEffect(() => {
+    let cleanup: (() => void) | undefined;
+    let mounted = true;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    void Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
+      ([gsapModule, scrollModule]) => {
+        if (!mounted) return;
+        const gsap = gsapModule.gsap;
+        const ScrollTrigger = scrollModule.ScrollTrigger;
+        gsap.registerPlugin(ScrollTrigger);
+        const trigger = ScrollTrigger.create({
+          trigger: ".hero-scroll-stage",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.7,
+          onUpdate: (self) => handleScrollUpdate(self.progress),
+        });
+        cleanup = () => trigger.kill();
+        ScrollTrigger.refresh();
+      },
+    );
+
+    return () => {
+      mounted = false;
+      cleanup?.();
+    };
+  }, [handleScrollUpdate]);
+
+  return (
+    <div
+      ref={wrapperRef}
+      className={`globe-interaction${drag.current.active ? " is-dragging" : ""}`}
+      data-scene-ready="false"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      aria-label="Interactive gallery globe"
+      role="img"
+    >
+      <div className="globe-orbit globe-orbit--one" aria-hidden="true" />
+      <div className="globe-orbit globe-orbit--two" aria-hidden="true" />
+      <Canvas
+        dpr={[1, 1.5]}
+        camera={{ position: [0, 0, 7.2], fov: 40 }}
+        gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
+        className="globe-canvas"
+      >
+        <ambientLight intensity={1.55} />
+        <directionalLight position={[3, 4, 5]} intensity={2.2} />
+        <directionalLight position={[-4, -2, -3]} intensity={0.6} />
+        <group ref={globeRef}>
+          <Suspense fallback={null}>
+            <GalleryPanels progress={progress} />
+          </Suspense>
+        </group>
+        <GlobeMotion globeRef={globeRef} progress={progress} drag={drag} reducedMotion={reducedMotion} />
+      </Canvas>
+      <span className="globe-caption" aria-hidden="true">
+        <span className="globe-caption__dot" />
+        CONTEXT, IN EVERY DIRECTION
+      </span>
+    </div>
+  );
+}
