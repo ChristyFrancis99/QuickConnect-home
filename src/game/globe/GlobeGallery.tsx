@@ -3,7 +3,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type RefOb
 import { useScroll, type MotionValue } from "framer-motion";
 import * as THREE from "three";
 import { TextureLoader } from "three";
-import { getPanelMotion } from "@/lib/globe-motion";
+import { getGlobeCameraFov, getPanelMotion } from "@/lib/globe-motion";
 import image1 from "@/assets/1.png";
 import image2 from "@/assets/2.png";
 import image3 from "@/assets/3.png";
@@ -192,7 +192,7 @@ function GlobeMotion({
     const breakup = reducedMotion.current ? 0 : progress.get();
 
     if (camera instanceof THREE.PerspectiveCamera) {
-      const targetFov = 40 + breakup * 43;
+      const targetFov = getGlobeCameraFov(breakup);
       if (Math.abs(camera.fov - targetFov) > 0.02) {
         camera.fov = targetFov;
         camera.updateProjectionMatrix();
