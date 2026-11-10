@@ -186,9 +186,9 @@ function PlatformStory() {
       cards.forEach((card, index) => {
         gsap.set(card, {
           autoAlpha: 0,
-          y: 28,
-          scale: 0.9,
-          rotation: index % 2 === 0 ? -3 : 3,
+          y: 30,
+          scale: 0.88,
+          rotation: index % 2 === 0 ? -4 : 4,
           transformOrigin: "50% 50%",
         });
       });
@@ -201,27 +201,27 @@ function PlatformStory() {
         defaults: { ease: "power2.out" },
         scrollTrigger: {
           trigger: stage,
-          start: "top 12%",
-          end: "+=5200",
+          start: "top 14%",
+          end: "+=4800",
           pin: stage,
-          scrub: 0.8,
+          scrub: 0.85,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
-      timeline.to(cards[0], { autoAlpha: 1, y: 0, scale: 1, rotation: -1.5, duration: 0.55 });
+      timeline.to(cards[0], { autoAlpha: 1, y: 0, scale: 1, rotation: -2, duration: 0.65 });
       for (let index = 0; index < 7; index += 1) {
-        timeline.to(paths[index], { strokeDashoffset: 0, duration: 0.42, ease: "none" }, ">-0.04");
+        timeline.to(paths[index], { strokeDashoffset: 0, duration: 0.7, ease: "none" }, ">-0.08");
         timeline.to(cards[index + 1], {
           autoAlpha: 1,
           y: 0,
           scale: 1,
-          rotation: index % 2 === 0 ? 1.5 : -1.5,
-          duration: 0.55,
-        }, ">-0.03");
+          rotation: index % 2 === 0 ? 2 : -2,
+          duration: 0.65,
+        }, ">-0.08");
       }
-      timeline.to({}, { duration: 0.25 });
+      timeline.to({}, { duration: 0.35 });
       ScrollTrigger.refresh();
     }, stage);
 
@@ -230,14 +230,14 @@ function PlatformStory() {
 
   return (
     <div className="qc-platform-story" ref={stageRef}>
-      <svg className="qc-platform-paths" viewBox="0 0 1000 900" preserveAspectRatio="none" aria-hidden="true">
-        <path ref={(node) => { pathRefs.current[0] = node; }} d="M 365 88 C 465 82, 535 142, 635 178" />
-        <path ref={(node) => { pathRefs.current[1] = node; }} d="M 635 245 C 535 260, 465 300, 365 315" />
-        <path ref={(node) => { pathRefs.current[2] = node; }} d="M 365 385 C 465 380, 535 438, 635 450" />
-        <path ref={(node) => { pathRefs.current[3] = node; }} d="M 635 520 C 535 535, 465 575, 365 585" />
-        <path ref={(node) => { pathRefs.current[4] = node; }} d="M 365 655 C 465 660, 535 735, 635 755" />
-        <path ref={(node) => { pathRefs.current[5] = node; }} d="M 365 755 C 465 760, 535 805, 635 820" />
-        <path ref={(node) => { pathRefs.current[6] = node; }} d="M 365 835 C 465 850, 535 870, 635 875" />
+      <svg className="qc-platform-paths" viewBox="0 0 1000 1100" preserveAspectRatio="none" aria-hidden="true">
+        <path ref={(node) => { pathRefs.current[0] = node; }} d="M 350 105 C 455 75, 545 150, 650 220" />
+        <path ref={(node) => { pathRefs.current[1] = node; }} d="M 650 235 C 545 265, 455 310, 350 355" />
+        <path ref={(node) => { pathRefs.current[2] = node; }} d="M 350 370 C 455 345, 545 425, 650 485" />
+        <path ref={(node) => { pathRefs.current[3] = node; }} d="M 650 500 C 545 530, 455 575, 350 620" />
+        <path ref={(node) => { pathRefs.current[4] = node; }} d="M 350 635 C 455 610, 545 690, 650 750" />
+        <path ref={(node) => { pathRefs.current[5] = node; }} d="M 650 765 C 545 795, 455 840, 350 885" />
+        <path ref={(node) => { pathRefs.current[6] = node; }} d="M 350 900 C 455 875, 545 960, 650 1020" />
       </svg>
       {capabilities.map((item, index) => {
         const Icon = item.icon;
@@ -246,20 +246,20 @@ function PlatformStory() {
         const paper = ["peach", "blue", "violet", "blue"][index % 4];
         return (
           <article
-            className={`qc-platform-note-card qc-platform-note-card--${side} qc-platform-note-card--${index + 1}`}
+            className={`qc-platform-note qc-platform-note--${side} qc-platform-note--${index + 1}`}
             key={item.title}
             ref={(node) => { cardRefs.current[index] = node; }}
           >
-            <span className={`qc-platform-pin qc-platform-pin--${pin}`} aria-hidden="true"><i /></span>
-            <div className={`qc-platform-paper qc-platform-paper--${paper}`}>
-              <div className="qc-platform-paper__meta"><span>0{index + 1}</span><Icon size={19} strokeWidth={1.7} /></div>
+            <span className={`qc-pin qc-pin--${pin}`} aria-hidden="true"><i /></span>
+            <div className={`qc-pin-note__paper qc-pin-note__paper--${paper}`}>
+              <div className="qc-pin-note__meta"><span>0{index + 1}</span><Icon size={19} strokeWidth={1.7} /></div>
               <h3>{item.title}</h3>
               <p>{item.detail}</p>
             </div>
           </article>
         );
       })}
-      <div className="qc-platform-story-caption" aria-hidden="true">
+      <div className="qc-story-caption" aria-hidden="true">
         <span className="qc-story-caption__dot" />
         <span>Every detail, connected.</span>
       </div>
