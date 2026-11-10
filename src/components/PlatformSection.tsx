@@ -315,7 +315,7 @@ function PlatformCard({
   return (
     <motion.li
       className="qcp__card-slot"
-      style={{ zIndex: index + 1 }}
+      style={{ zIndex: `calc(var(--qc-z-sticky) + ${index})` }}
     >
       <motion.article
         className={`qcp__card${
@@ -329,7 +329,6 @@ function PlatformCard({
           y: isLast ? 0 : y,
           filter: isLast ? "none" : filter,
         }}
-        whileHover={{ y: -5 }}
       >
         <div className="qcp__orbit" aria-hidden="true" />
 
@@ -488,16 +487,16 @@ export default function PlatformSection() {
           position: relative;
           width: min(100%, 1100px);
           margin: 0 auto;
-          padding: 0 0 30vh;
+          padding: 0 0 30svh;
           list-style: none;
         }
 
         .qcp__card-slot {
           position: sticky;
-          top: 12vh;
-          height: 70vh;
-          min-height: 570px;
-          margin-bottom: 30vh;
+          top: calc(var(--qc-nav-height) + 16px);
+          height: min(70svh, 620px);
+          min-height: min(70svh, 460px);
+          margin-bottom: 30svh;
           perspective: 1200px;
         }
 
@@ -517,10 +516,12 @@ export default function PlatformSection() {
           border-radius: 24px;
           padding: clamp(26px, 4.2vw, 56px);
           box-shadow: var(--qc-shadow);
+          transition: box-shadow .22s ease;
           transform-origin: center top;
           transform-style: preserve-3d;
-          will-change: transform, filter;
         }
+
+        .qcp__card:hover { box-shadow: 0 24px 56px rgba(37,37,37,.2); }
 
         .qcp__card--border {
           border: 1px solid var(--qc-gold);
