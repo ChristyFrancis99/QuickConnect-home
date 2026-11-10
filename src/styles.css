@@ -411,7 +411,7 @@
 .qc-platform-note--5 { top: 50%; }
 .qc-platform-note--6 { top: 62.5%; }
 .qc-platform-note--7 { top: 75%; }
-.qc-platform-note--8 { top: 87.5%; }
+.qc-platform-note--8 { top: 82%; }
 .qc-platform-note .qc-pin-note__paper { min-height: 190px; }
 .qc-platform-note .qc-pin-note__meta { padding: 9px 9px 17px; }
 .qc-platform-note h3 { margin: 4px 10px 8px; color: var(--quickflow-ink); font-size: clamp(16px, 1.55vw, 20px); font-weight: 750; line-height: 1.25; letter-spacing: -.035em; }
