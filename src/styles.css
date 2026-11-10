@@ -82,7 +82,12 @@
     overflow-x: clip;
   }
   button, a { -webkit-tap-highlight-color: transparent; }
-  ::selection { background: var(--qc-gold); color: var(--qc-charcoal); }\n  :where(#top, #platform, #how-it-works, #use-cases, #problem, #solution, #final-cta, #about) { scroll-margin-top: calc(var(--qc-nav-height) + 16px); }\n  :where(a, button, [tabindex]):focus-visible { outline: 2px solid var(--qc-lavender); outline-offset: 3px; }
+  ::selection { background: var(--qc-gold); color: var(--qc-charcoal); }
+  :root { --qc-nav-height: 68px; }
+  :where(#top, #platform, #how-it-works, #use-cases, #problem, #solution, #final-cta, #about) { scroll-margin-top: calc(var(--qc-nav-height) + 16px); }
+  :where(a, button, [tabindex]):focus-visible { outline: 2px solid var(--qc-lavender); outline-offset: 3px; }
+  :where(#top, #platform, #how-it-works, #use-cases, #problem, #solution, #final-cta, #about) { scroll-margin-top: calc(var(--qc-nav-height) + 16px); }
+  :where(a, button, [tabindex]):focus-visible { outline: 2px solid var(--qc-lavender); outline-offset: 3px; }
 }
 
 /* ----------------------------------------------------
@@ -398,7 +403,7 @@
 .globe-interaction { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .globe-drag-hit-area {
   position: absolute;
-  z-index: 4;
+  z-index: var(--qc-z-content);
   top: 12%;
   right: 4%;
   width: 88%;
@@ -411,7 +416,7 @@
 .globe-canvas { position: absolute !important; inset: -10% !important; width: 120% !important; height: 120% !important; pointer-events: none; }
 .globe-orbit {
   position: absolute;
-  z-index: 0;
+  z-index: var(--qc-z-background);
   top: 50%;
   left: 50%;
   width: 81%;
@@ -564,7 +569,7 @@
 }
 .qc-pin-note {
   position: absolute;
-  z-index: 1;
+  z-index: var(--qc-z-content);
   width: min(35%, 350px);
   min-height: 220px;
   opacity: 0;
@@ -628,7 +633,7 @@
 /* Push Pin Treatment */
 .qc-pin {
   position: absolute;
-  z-index: 3;
+  z-index: var(--qc-z-sticky);
   top: -18px;
   left: 50%;
   display: block;
@@ -891,7 +896,7 @@
 @media (max-width: 768px) {
   .hero-scroll-stage { height: 160svh; }
   .hero-sticky { min-height: max(680px, 100svh); height: 100svh; }
-  .hero-header { height: 68px; --qc-nav-height: 68px; }
+  .hero-header { height: 68px; }
   .hero-header__inner { width: calc(100% - 36px); height: 68px; }
   .desktop-nav, .header-actions { display: none; }
   .mobile-menu-toggle { display: grid; }
