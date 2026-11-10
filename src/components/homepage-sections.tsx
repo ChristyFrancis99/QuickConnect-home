@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import PlatformSection from "@/components/PlatformSection";
+import HandoverSection from "@/components/HandoverSection";
 
 function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -215,34 +216,7 @@ export function HomepageSections() {
         </div>
       </section>
 
-      <section className="qc-section qc-process" id="how-it-works" aria-labelledby="process-title">
-        <div className="qc-container">
-          <Reveal>
-            <SectionHeading
-              eyebrow="A CLEARER HANDOVER"
-              id="process-title"
-              title="A Smarter Way to Pass Knowledge Forward."
-              copy="A simple, repeatable flow helps teams move from scattered information to a confident transition."
-              align="center"
-            />
-          </Reveal>
-          <div className="qc-timeline">
-            {steps.map((step) => {
-              const Icon = step.icon;
-              return (
-                <Reveal className="qc-step-reveal" key={step.number}>
-                  <article className="qc-step">
-                    <div className="qc-step__marker"><Icon size={21} strokeWidth={1.7} /></div>
-                    <p className="qc-step__number">{step.number}</p>
-                    <h3>{step.title}</h3>
-                    <p className="qc-step__copy">{step.copy}</p>
-                  </article>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <HandoverSection />
 
       <PlatformSection />
 
