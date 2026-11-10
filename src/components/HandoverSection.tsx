@@ -123,28 +123,10 @@ function HandoverStep({
                 boxShadow: "0 0 0 6px rgba(198,154,77,0.2)",
               }
             : {
-                backgroundColor: useTransform(
-                  fill,
-                  (value) =>
-                    value > 0.5
-                      ? "var(--qc-handover-gold)"
-                      : "transparent",
-                ),
-                borderColor: useTransform(
-                  fill,
-                  (value) =>
-                    value > 0.5
-                      ? "var(--qc-handover-gold)"
-                      : "rgba(37,37,37,0.25)",
-                ),
-                color: useTransform(fill, (value) =>
-                  value > 0.5 ? "#FFFFFF" : "#77736C",
-                ),
-                boxShadow: useTransform(
-                  glow,
-                  (value) =>
-                    `0 0 0 ${6 * value}px rgba(198,154,77,${0.2 * value})`,
-                ),
+                backgroundColor: nodeBackground,
+                borderColor: nodeBorder,
+                color: nodeColor,
+                boxShadow: nodeShadow,
               }
         }
       >
@@ -159,7 +141,7 @@ function HandoverStep({
           <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
           <h3>{step.title}</h3>
         </div>
-        <p>{step.description}</p>
+        <motion.p style={reducedMotion ? undefined : { opacity: descriptionOpacity }}>{step.description}</motion.p>
       </motion.div>
     </motion.li>
   );
