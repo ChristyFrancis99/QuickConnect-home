@@ -24,7 +24,7 @@ import {
 const platformCards = [
   {
     title: "Project Management",
-    description: "Keep project work and ownership organized.",
+    description: "Bring project goals, tasks, owners, and deadlines into one clear view. Everyone can see what needs attention, who is responsible, and what happens next.",
     status: "Active",
     background: "#C69A4D",
     foreground: "#252525",
@@ -33,7 +33,7 @@ const platformCards = [
   },
   {
     title: "Knowledge Sources",
-    description: "Bring key resources and reference material together.",
+    description: "Keep briefs, documents, links, decisions, and reference files connected to the work they support. Find the right information without digging through scattered folders and chats.",
     status: "Completed",
     background: "#7785C5",
     foreground: "#252525",
@@ -42,7 +42,7 @@ const platformCards = [
   },
   {
     title: "AI Analysis",
-    description: "Make project information easier to understand and summarize.",
+    description: "Turn lengthy project updates and shared information into concise, useful summaries. Help teammates quickly understand the background, key decisions, and outstanding questions.",
     status: "In Progress",
     background: "#252525",
     foreground: "#FFFFFF",
@@ -51,7 +51,7 @@ const platformCards = [
   },
   {
     title: "Structured Handovers",
-    description: "Give every transition a clear record and next steps.",
+    description: "Create a structured handover with responsibilities, important context, open tasks, and next steps. Give the incoming owner a reliable starting point instead of a rushed verbal update.",
     status: "Active",
     background: "#A87E36",
     foreground: "#171717",
@@ -60,7 +60,7 @@ const platformCards = [
   },
   {
     title: "Verification",
-    description: "Review what has been shared and what is still missing.",
+    description: "Use a clear review process to spot missing files, unanswered questions, and incomplete handover details before work changes hands.",
     status: "Completed",
     background: "#5A67A6",
     foreground: "#FFFFFF",
@@ -69,7 +69,7 @@ const platformCards = [
   },
   {
     title: "Readiness Tracking",
-    description: "Make handover progress easier to follow.",
+    description: "See how prepared a project or team member is for a transition. Track what is complete, what still needs review, and where follow-up is required.",
     status: "In Progress",
     background: "#F5F4F0",
     foreground: "#252525",
@@ -79,7 +79,7 @@ const platformCards = [
   },
   {
     title: "Team Management",
-    description: "Keep people and responsibilities connected.",
+    description: "Make roles, project owners, and collaborators easier to understand. Help each person see who to contact and how their work connects to the wider team.",
     status: "Active",
     background: "#E3C98F",
     foreground: "#252525",
@@ -88,7 +88,7 @@ const platformCards = [
   },
   {
     title: "Activity Tracking",
-    description: "Maintain visibility into important project updates.",
+    description: "Keep a readable trail of key changes, new resources, reviews, and handover activity. Give the team more visibility into what has happened and what needs attention.",
     status: "Pending",
     background: "#EADBBE",
     foreground: "#252525",
@@ -401,9 +401,24 @@ export default function PlatformSection() {
         </h2>
 
         <p>
-          A connected set of capability areas for organizing project
-          knowledge, managing transitions, and keeping teams aligned.
+          QuickConnect brings your project information, people, and processes
+          into one connected workspace. From the first task to the final
+          handover, everyone gets the context they need to keep work moving.
         </p>
+        <div className="qcp__value-points" aria-label="What your team gains">
+          <div className="qcp__value-point">
+            <span className="qcp__value-number">01</span>
+            <div><strong>Find the full picture</strong><span>Keep files, decisions, and updates connected to each project.</span></div>
+          </div>
+          <div className="qcp__value-point">
+            <span className="qcp__value-number">02</span>
+            <div><strong>Know what happens next</strong><span>Make ownership, progress, and pending actions easier to see.</span></div>
+          </div>
+          <div className="qcp__value-point">
+            <span className="qcp__value-number">03</span>
+            <div><strong>Make transitions smoother</strong><span>Pass work forward with the context and resources people need.</span></div>
+          </div>
+        </div>
       </div>
 
       <ol ref={stackRef} className="qcp__stack">
@@ -482,6 +497,57 @@ export default function PlatformSection() {
           font-size: 16px;
           line-height: 1.8;
           font-weight: 400;
+        }
+
+        .qcp__value-points {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 18px;
+          margin: 34px auto 0;
+          text-align: left;
+        }
+
+        .qcp__value-point {
+          display: flex;
+          align-items: flex-start;
+          gap: 11px;
+          min-width: 0;
+          padding: 15px 14px;
+          border: 1px solid rgba(37,37,37,.09);
+          border-radius: 14px;
+          background: rgba(255,255,255,.58);
+        }
+
+        .qcp__value-number {
+          display: grid;
+          width: 27px;
+          height: 27px;
+          flex: 0 0 27px;
+          place-items: center;
+          border-radius: 50%;
+          background: rgba(198,154,77,.16);
+          color: #8d682b;
+          font-size: 9px;
+          font-weight: 800;
+        }
+
+        .qcp__value-point div {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+        }
+
+        .qcp__value-point strong {
+          color: var(--qc-charcoal);
+          font-size: 11px;
+          line-height: 1.35;
+          font-weight: 700;
+        }
+
+        .qcp__value-point div span {
+          color: #77736c;
+          font-size: 10px;
+          line-height: 1.5;
         }
 
         .qcp__stack {
@@ -869,6 +935,19 @@ export default function PlatformSection() {
           .qcp__intro { margin-bottom: 45px; }
           .qcp__intro h2 br { display: none; }
           .qcp__intro p { font-size: 14px; }
+
+          .qcp__value-points {
+            grid-template-columns: 1fr;
+            gap: 9px;
+            margin-top: 24px;
+          }
+
+          .qcp__value-point {
+            padding: 12px 13px;
+          }
+
+          .qcp__value-point strong { font-size: 12px; }
+          .qcp__value-point div span { font-size: 11px; }
 
           .qcp__stack { padding-bottom: 0; }
 
