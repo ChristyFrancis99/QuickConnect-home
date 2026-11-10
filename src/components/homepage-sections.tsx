@@ -17,7 +17,6 @@ import {
   MessageSquareText,
   RefreshCw,
   ShieldCheck,
-  Sparkles,
   Users,
   Workflow,
 } from "lucide-react";
@@ -169,6 +168,105 @@ function SolutionStory() {
   );
 }
 
+
+function PlatformStory() {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLArticleElement | null)[]>([]);
+  const pathRefs = useRef<(SVGPathElement | null)[]>([]);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    const cards = cardRefs.current.filter(Boolean) as HTMLArticleElement[];
+    const paths = pathRefs.current.filter(Boolean) as SVGPathElement[];
+    if (!stage || cards.length !== 8 || paths.length !== 7) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.matchMedia("(max-width: 759px)").matches) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+    const context = gsap.context(() => {
+      cards.forEach((card, index) => {
+        gsap.set(card, {
+          autoAlpha: 0,
+          y: 28,
+          scale: 0.9,
+          rotation: index % 2 === 0 ? -3 : 3,
+          transformOrigin: "50% 50%",
+        });
+      });
+      paths.forEach((path) => {
+        const length = path.getTotalLength();
+        gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+      });
+
+      const timeline = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        scrollTrigger: {
+          trigger: stage,
+          start: "top 12%",
+          end: "+=5200",
+          pin: stage,
+          scrub: 0.8,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      timeline.to(cards[0], { autoAlpha: 1, y: 0, scale: 1, rotation: -1.5, duration: 0.55 });
+      for (let index = 0; index < 7; index += 1) {
+        timeline.to(paths[index], { strokeDashoffset: 0, duration: 0.42, ease: "none" }, ">-0.04");
+        timeline.to(cards[index + 1], {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          rotation: index % 2 === 0 ? 1.5 : -1.5,
+          duration: 0.55,
+        }, ">-0.03");
+      }
+      timeline.to({}, { duration: 0.25 });
+      ScrollTrigger.refresh();
+    }, stage);
+
+    return () => context.revert();
+  }, []);
+
+  return (
+    <div className="qc-platform-story" ref={stageRef}>
+      <svg className="qc-platform-paths" viewBox="0 0 1000 900" preserveAspectRatio="none" aria-hidden="true">
+        <path ref={(node) => { pathRefs.current[0] = node; }} d="M 365 88 C 465 82, 535 142, 635 178" />
+        <path ref={(node) => { pathRefs.current[1] = node; }} d="M 635 245 C 535 260, 465 300, 365 315" />
+        <path ref={(node) => { pathRefs.current[2] = node; }} d="M 365 385 C 465 380, 535 438, 635 450" />
+        <path ref={(node) => { pathRefs.current[3] = node; }} d="M 635 520 C 535 535, 465 575, 365 585" />
+        <path ref={(node) => { pathRefs.current[4] = node; }} d="M 365 655 C 465 650, 535 705, 635 720" />
+        <path ref={(node) => { pathRefs.current[5] = node; }} d="M 635 785 C 535 795, 465 830, 365 835" />
+        <path ref={(node) => { pathRefs.current[6] = node; }} d="M 365 835 C 465 850, 535 870, 635 875" />
+      </svg>
+      {capabilities.map((item, index) => {
+        const Icon = item.icon;
+        const side = index % 2 === 0 ? "left" : "right";
+        const pin = ["coral", "blue", "violet", "blue"][index % 4];
+        const paper = ["peach", "blue", "violet", "blue"][index % 4];
+        return (
+          <article
+            className={`qc-platform-note-card qc-platform-note-card--${side} qc-platform-note-card--${index + 1}`}
+            key={item.title}
+            ref={(node) => { cardRefs.current[index] = node; }}
+          >
+            <span className={`qc-platform-pin qc-platform-pin--${pin}`} aria-hidden="true"><i /></span>
+            <div className={`qc-platform-paper qc-platform-paper--${paper}`}>
+              <div className="qc-platform-paper__meta"><span>0{index + 1}</span><Icon size={19} strokeWidth={1.7} /></div>
+              <h3>{item.title}</h3>
+              <p>{item.detail}</p>
+            </div>
+          </article>
+        );
+      })}
+      <div className="qc-platform-story-caption" aria-hidden="true">
+        <span className="qc-story-caption__dot" />
+        <span>Every detail, connected.</span>
+      </div>
+    </div>
+  );
+}
+
 function SectionHeading({ eyebrow, title, copy, align = "left", id }: { eyebrow: string; title: string; copy?: string; align?: "left" | "center"; id?: string }) {
   return (
     <div className={`qc-section-heading qc-section-heading--${align}`}>
@@ -267,30 +365,7 @@ export function HomepageSections() {
               align="center"
             />
           </Reveal>
-          <div className="qc-platform-layout">
-            <Reveal className="qc-platform-intro">
-              <div className="qc-platform-note">
-                <span className="qc-platform-note__icon"><Sparkles size={18} /></span>
-                <p>One connected workflow</p>
-              </div>
-              <h3>Keep the important details within reach.</h3>
-              <p>From the first project resource to the final readiness check, QuickConnect is designed to keep context visible as responsibilities move between people.</p>
-              <a className="qc-text-link" href="#how-it-works">Explore the workflow <ArrowUpRight size={16} /></a>
-            </Reveal>
-            <div className="qc-capability-grid">
-              {capabilities.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <Reveal className="qc-capability-reveal" key={item.title}>
-                    <article className="qc-capability">
-                      <div className="qc-capability__icon"><Icon size={19} strokeWidth={1.8} /></div>
-                      <div><span className="qc-capability__index">0{index + 1}</span><h3>{item.title}</h3><p>{item.detail}</p></div>
-                    </article>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </div>
+          <PlatformStory />
           <p className="qc-platform-footnote">Capability overview — AI analysis and workflow tools are presented as product areas, not as a claim of live integrations on this landing page.</p>
         </div>
       </section>
