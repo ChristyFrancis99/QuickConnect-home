@@ -108,9 +108,9 @@ const statusColors: Record<string, string> = {
 
 function StatusChip({ status }: { status: string }) {
   return (
-    <span className="qc-platform__status">
+    <span className="qcp__status">
       <span
-        className="qc-platform__status-dot"
+        className="qcp__status-dot"
         style={{ backgroundColor: statusColors[status] }}
         aria-hidden="true"
       />
@@ -121,17 +121,17 @@ function StatusChip({ status }: { status: string }) {
 
 function PreviewTile({ type }: { type: PlatformCardData["preview"] }) {
   return (
-    <div className="qc-platform__preview" aria-hidden="true">
+    <div className="qcp__preview" aria-hidden="true">
       {type === "tasks" && (
         <>
-          <div className="qc-platform__preview-heading">
+          <div className="qcp__preview-heading">
             <span>Project tasks</span>
             <ClipboardCheck size={14} />
           </div>
           {["Project scope", "Team assignment", "Next milestone"].map(
             (label, index) => (
-              <div className="qc-platform__task" key={label}>
-                <span className="qc-platform__check">
+              <div className="qcp__task" key={label}>
+                <span className="qcp__check">
                   {index < 2 && <Check size={9} />}
                 </span>
                 <span>{label}</span>
@@ -143,13 +143,13 @@ function PreviewTile({ type }: { type: PlatformCardData["preview"] }) {
 
       {type === "documents" && (
         <>
-          <div className="qc-platform__preview-heading">
+          <div className="qcp__preview-heading">
             <span>Knowledge library</span>
             <Files size={14} />
           </div>
           {["Project brief", "Research notes", "Team resources"].map((name) => (
-            <div className="qc-platform__document" key={name}>
-              <span className="qc-platform__document-icon">
+            <div className="qcp__document" key={name}>
+              <span className="qcp__document-icon">
                 <Files size={12} />
               </span>
               <span>{name}</span>
@@ -161,20 +161,20 @@ function PreviewTile({ type }: { type: PlatformCardData["preview"] }) {
 
       {type === "analysis" && (
         <>
-          <div className="qc-platform__preview-heading">
+          <div className="qcp__preview-heading">
             <span>Analysis summary</span>
             <BrainCircuit size={14} />
           </div>
-          <div className="qc-platform__analysis-line wide" />
-          <div className="qc-platform__analysis-line" />
-          <div className="qc-platform__analysis-line short" />
-          <div className="qc-platform__analysis-tag">Example summary view</div>
+          <div className="qcp__analysis-line wide" />
+          <div className="qcp__analysis-line" />
+          <div className="qcp__analysis-line short" />
+          <div className="qcp__analysis-tag">Example summary view</div>
         </>
       )}
 
       {type === "handover" && (
         <>
-          <div className="qc-platform__preview-heading">
+          <div className="qcp__preview-heading">
             <span>Handover record</span>
             <ClipboardList size={14} />
           </div>
@@ -183,7 +183,7 @@ function PreviewTile({ type }: { type: PlatformCardData["preview"] }) {
             ["Next steps", "03"],
             ["Resources", "08"],
           ].map(([label, count]) => (
-            <div className="qc-platform__handover-row" key={label}>
+            <div className="qcp__handover-row" key={label}>
               <span>{label}</span>
               <b>{count}</b>
             </div>
@@ -193,13 +193,13 @@ function PreviewTile({ type }: { type: PlatformCardData["preview"] }) {
 
       {type === "checklist" && (
         <>
-          <div className="qc-platform__preview-heading">
+          <div className="qcp__preview-heading">
             <span>Review checklist</span>
             <ShieldCheck size={14} />
           </div>
           {["Information shared", "Documents reviewed", "Owner confirmed"].map(
             (label) => (
-              <div className="qc-platform__check-row" key={label}>
+              <div className="qcp__check-row" key={label}>
                 <Check size={12} />
                 <span>{label}</span>
               </div>
@@ -210,15 +210,15 @@ function PreviewTile({ type }: { type: PlatformCardData["preview"] }) {
 
       {type === "progress" && (
         <>
-          <div className="qc-platform__preview-heading">
+          <div className="qcp__preview-heading">
             <span>Readiness overview</span>
             <Gauge size={14} />
           </div>
-          <div className="qc-platform__progress-value">78%</div>
-          <div className="qc-platform__progress-track">
+          <div className="qcp__progress-value">78%</div>
+          <div className="qcp__progress-track">
             <span />
           </div>
-          <div className="qc-platform__progress-caption">
+          <div className="qcp__progress-caption">
             Illustrative progress
           </div>
         </>
@@ -226,11 +226,11 @@ function PreviewTile({ type }: { type: PlatformCardData["preview"] }) {
 
       {type === "team" && (
         <>
-          <div className="qc-platform__preview-heading">
+          <div className="qcp__preview-heading">
             <span>Team members</span>
             <Users size={14} />
           </div>
-          <div className="qc-platform__avatars">
+          <div className="qcp__avatars">
             {["A", "J", "M", "S"].map((letter, index) => (
               <span
                 key={letter}
@@ -240,7 +240,7 @@ function PreviewTile({ type }: { type: PlatformCardData["preview"] }) {
               </span>
             ))}
           </div>
-          <div className="qc-platform__team-caption">
+          <div className="qcp__team-caption">
             People and responsibilities
           </div>
         </>
@@ -248,13 +248,13 @@ function PreviewTile({ type }: { type: PlatformCardData["preview"] }) {
 
       {type === "activity" && (
         <>
-          <div className="qc-platform__preview-heading">
+          <div className="qcp__preview-heading">
             <span>Recent activity</span>
             <Activity size={14} />
           </div>
           {["Project updated", "Resource added", "Handover reviewed"].map(
             (label, index) => (
-              <div className="qc-platform__activity-row" key={label}>
+              <div className="qcp__activity-row" key={label}>
                 <Circle size={8} />
                 <span>{label}</span>
                 <small>{index + 1}h</small>
@@ -314,12 +314,12 @@ function PlatformCard({
 
   return (
     <motion.li
-      className="qc-platform__card-slot"
+      className="qcp__card-slot"
       style={{ zIndex: index + 1 }}
     >
       <motion.article
-        className={`qc-platform__card${
-          item.border ? " qc-platform__card--border" : ""
+        className={`qcp__card${
+          item.border ? " qcp__card--border" : ""
         }`}
         style={{
           backgroundColor: item.background,
@@ -331,36 +331,36 @@ function PlatformCard({
         }}
         whileHover={{ y: -5 }}
       >
-        <div className="qc-platform__orbit" aria-hidden="true" />
+        <div className="qcp__orbit" aria-hidden="true" />
 
-        <div className="qc-platform__card-top">
-          <div className="qc-platform__card-heading">
-            <div className="qc-platform__icon" aria-hidden="true">
+        <div className="qcp__card-top">
+          <div className="qcp__card-heading">
+            <div className="qcp__icon" aria-hidden="true">
               <Icon size={24} strokeWidth={1.5} />
             </div>
             <h3>{item.title}</h3>
           </div>
 
-          <span className="qc-platform__index">
+          <span className="qcp__index">
             [{String(index + 1).padStart(2, "0")}]
           </span>
         </div>
 
-        <div className="qc-platform__card-content">
+        <div className="qcp__card-content">
           <p>{item.description}</p>
           <StatusChip status={item.status} />
         </div>
 
-        <div className="qc-platform__card-bottom">
-          <div className="qc-platform__card-meta" aria-hidden="true">
+        <div className="qcp__card-bottom">
+          <div className="qcp__card-meta" aria-hidden="true">
             <span>QUICKCONNECT</span>
             <span>PLATFORM / {String(index + 1).padStart(2, "0")}</span>
           </div>
 
-          <div className="qc-platform__preview-wrap">
+          <div className="qcp__preview-wrap">
             <PreviewTile type={item.preview} />
             <a
-              className="qc-platform__learn"
+              className="qcp__learn"
               href="#platform"
               aria-label={`Return to The Platform section: ${item.title}`}
             >
@@ -385,16 +385,16 @@ export default function PlatformSection() {
   return (
     <section
       id="platform"
-      className="qc-platform"
-      aria-labelledby="qc-platform-heading"
+      className="qcp"
+      aria-labelledby="qcp-heading"
     >
-      <div className="qc-platform__intro">
-        <span className="qc-platform__eyebrow">
+      <div className="qcp__intro">
+        <span className="qcp__eyebrow">
           <span aria-hidden="true" />
           THE PLATFORM
         </span>
 
-        <h2 id="qc-platform-heading">
+        <h2 id="qcp-heading">
           Everything Your Team Needs
           <br />
           to Stay Connected.
@@ -406,7 +406,7 @@ export default function PlatformSection() {
         </p>
       </div>
 
-      <ol ref={stackRef} className="qc-platform__stack">
+      <ol ref={stackRef} className="qcp__stack">
         {platformCards.map((item, index) => (
           <PlatformCard
             key={item.title}
@@ -419,7 +419,7 @@ export default function PlatformSection() {
       </ol>
 
       <style>{`
-        .qc-platform {
+        .qcp {
           --qc-gold: #C69A4D;
           --qc-lavender: #7785C5;
           --qc-cream: #F4E9D5;
@@ -437,19 +437,19 @@ export default function PlatformSection() {
           scroll-margin-top: 20px;
         }
 
-        .qc-platform *,
-        .qc-platform *::before,
-        .qc-platform *::after {
+        .qcp *,
+        .qcp *::before,
+        .qcp *::after {
           box-sizing: border-box;
         }
 
-        .qc-platform__intro {
+        .qcp__intro {
           width: min(100%, 900px);
           margin: 0 auto 70px;
           text-align: center;
         }
 
-        .qc-platform__eyebrow {
+        .qcp__eyebrow {
           display: inline-flex;
           align-items: center;
           gap: 10px;
@@ -460,14 +460,14 @@ export default function PlatformSection() {
           letter-spacing: .18em;
         }
 
-        .qc-platform__eyebrow > span {
+        .qcp__eyebrow > span {
           width: 7px;
           height: 7px;
           border-radius: 50%;
           background: var(--qc-gold);
         }
 
-        .qc-platform__intro h2 {
+        .qcp__intro h2 {
           margin: 0;
           font-size: clamp(34px, 5.3vw, 64px);
           font-weight: 700;
@@ -475,7 +475,7 @@ export default function PlatformSection() {
           letter-spacing: -.055em;
         }
 
-        .qc-platform__intro p {
+        .qcp__intro p {
           max-width: 620px;
           margin: 22px auto 0;
           color: #77736c;
@@ -484,7 +484,7 @@ export default function PlatformSection() {
           font-weight: 400;
         }
 
-        .qc-platform__stack {
+        .qcp__stack {
           position: relative;
           width: min(100%, 1100px);
           margin: 0 auto;
@@ -492,7 +492,7 @@ export default function PlatformSection() {
           list-style: none;
         }
 
-        .qc-platform__card-slot {
+        .qcp__card-slot {
           position: sticky;
           top: 12vh;
           height: 70vh;
@@ -501,11 +501,11 @@ export default function PlatformSection() {
           perspective: 1200px;
         }
 
-        .qc-platform__card-slot:last-child {
+        .qcp__card-slot:last-child {
           margin-bottom: 0;
         }
 
-        .qc-platform__card {
+        .qcp__card {
           position: relative;
           display: flex;
           width: 100%;
@@ -522,11 +522,11 @@ export default function PlatformSection() {
           will-change: transform, filter;
         }
 
-        .qc-platform__card--border {
+        .qcp__card--border {
           border: 1px solid var(--qc-gold);
         }
 
-        .qc-platform__orbit {
+        .qcp__orbit {
           position: absolute;
           top: -35%;
           right: -10%;
@@ -538,8 +538,8 @@ export default function PlatformSection() {
           pointer-events: none;
         }
 
-        .qc-platform__orbit::before,
-        .qc-platform__orbit::after {
+        .qcp__orbit::before,
+        .qcp__orbit::after {
           position: absolute;
           content: "";
           inset: 12%;
@@ -547,11 +547,11 @@ export default function PlatformSection() {
           border-radius: 50%;
         }
 
-        .qc-platform__orbit::after {
+        .qcp__orbit::after {
           inset: 25%;
         }
 
-        .qc-platform__card-top {
+        .qcp__card-top {
           position: relative;
           z-index: 1;
           display: flex;
@@ -559,13 +559,13 @@ export default function PlatformSection() {
           gap: 20px;
         }
 
-        .qc-platform__card-heading {
+        .qcp__card-heading {
           display: flex;
           align-items: center;
           gap: 20px;
         }
 
-        .qc-platform__icon {
+        .qcp__icon {
           display: grid;
           width: 58px;
           height: 58px;
@@ -577,7 +577,7 @@ export default function PlatformSection() {
           color: var(--qc-gold);
         }
 
-        .qc-platform__card h3 {
+        .qcp__card h3 {
           margin: 0;
           font-size: clamp(23px, 3vw, 32px);
           font-weight: 600;
@@ -585,7 +585,7 @@ export default function PlatformSection() {
           letter-spacing: -.04em;
         }
 
-        .qc-platform__index {
+        .qcp__index {
           padding-top: 7px;
           color: inherit;
           font-size: 15px;
@@ -593,14 +593,14 @@ export default function PlatformSection() {
           opacity: .6;
         }
 
-        .qc-platform__card-content {
+        .qcp__card-content {
           position: relative;
           z-index: 1;
           max-width: 530px;
           margin-top: 28px;
         }
 
-        .qc-platform__card-content p {
+        .qcp__card-content p {
           margin: 0 0 20px;
           font-size: 16px;
           line-height: 1.75;
@@ -608,7 +608,7 @@ export default function PlatformSection() {
           opacity: .9;
         }
 
-        .qc-platform__status {
+        .qcp__status {
           display: inline-flex;
           align-items: center;
           gap: 9px;
@@ -620,14 +620,14 @@ export default function PlatformSection() {
           font-weight: 600;
         }
 
-        .qc-platform__status-dot {
+        .qcp__status-dot {
           width: 8px;
           height: 8px;
           flex: 0 0 8px;
           border-radius: 50%;
         }
 
-        .qc-platform__card-bottom {
+        .qcp__card-bottom {
           position: relative;
           z-index: 1;
           display: flex;
@@ -637,7 +637,7 @@ export default function PlatformSection() {
           margin-top: 30px;
         }
 
-        .qc-platform__card-meta {
+        .qcp__card-meta {
           display: flex;
           flex-direction: column;
           gap: 7px;
@@ -648,13 +648,13 @@ export default function PlatformSection() {
           opacity: .7;
         }
 
-        .qc-platform__preview-wrap {
+        .qcp__preview-wrap {
           display: flex;
           align-items: flex-end;
           gap: 16px;
         }
 
-        .qc-platform__preview {
+        .qcp__preview {
           width: 245px;
           min-height: 150px;
           border: 1px solid rgba(37,37,37,.08);
@@ -665,7 +665,7 @@ export default function PlatformSection() {
           box-shadow: 0 8px 28px rgba(37,37,37,.10);
         }
 
-        .qc-platform__preview-heading {
+        .qcp__preview-heading {
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -674,7 +674,7 @@ export default function PlatformSection() {
           font-weight: 700;
         }
 
-        .qc-platform__task {
+        .qcp__task {
           display: flex;
           align-items: center;
           gap: 9px;
@@ -683,7 +683,7 @@ export default function PlatformSection() {
           color: #55514a;
         }
 
-        .qc-platform__check {
+        .qcp__check {
           display: grid;
           width: 13px;
           height: 13px;
@@ -694,7 +694,7 @@ export default function PlatformSection() {
           color: var(--qc-gold);
         }
 
-        .qc-platform__document {
+        .qcp__document {
           display: flex;
           align-items: center;
           gap: 8px;
@@ -703,11 +703,11 @@ export default function PlatformSection() {
           font-weight: 500;
         }
 
-        .qc-platform__document > span:nth-child(2) {
+        .qcp__document > span:nth-child(2) {
           flex: 1;
         }
 
-        .qc-platform__document-icon {
+        .qcp__document-icon {
           display: grid;
           width: 23px;
           height: 23px;
@@ -717,7 +717,7 @@ export default function PlatformSection() {
           color: var(--qc-gold);
         }
 
-        .qc-platform__analysis-line {
+        .qcp__analysis-line {
           width: 75%;
           height: 6px;
           margin: 10px 0;
@@ -725,10 +725,10 @@ export default function PlatformSection() {
           background: #dedbd3;
         }
 
-        .qc-platform__analysis-line.wide { width: 100%; }
-        .qc-platform__analysis-line.short { width: 50%; }
+        .qcp__analysis-line.wide { width: 100%; }
+        .qcp__analysis-line.short { width: 50%; }
 
-        .qc-platform__analysis-tag {
+        .qcp__analysis-tag {
           display: inline-block;
           margin-top: 8px;
           border-radius: 99px;
@@ -739,7 +739,7 @@ export default function PlatformSection() {
           font-weight: 600;
         }
 
-        .qc-platform__handover-row {
+        .qcp__handover-row {
           display: flex;
           justify-content: space-between;
           margin-top: 9px;
@@ -748,9 +748,9 @@ export default function PlatformSection() {
           font-size: 10px;
         }
 
-        .qc-platform__handover-row b { color: #8d682b; }
+        .qcp__handover-row b { color: #8d682b; }
 
-        .qc-platform__check-row {
+        .qcp__check-row {
           display: flex;
           align-items: center;
           gap: 9px;
@@ -758,15 +758,15 @@ export default function PlatformSection() {
           font-size: 10px;
         }
 
-        .qc-platform__check-row svg { color: #477b21; }
+        .qcp__check-row svg { color: #477b21; }
 
-        .qc-platform__progress-value {
+        .qcp__progress-value {
           font-size: 27px;
           font-weight: 700;
           letter-spacing: -.05em;
         }
 
-        .qc-platform__progress-track {
+        .qcp__progress-track {
           height: 8px;
           margin-top: 9px;
           overflow: hidden;
@@ -774,7 +774,7 @@ export default function PlatformSection() {
           background: #e3dfd5;
         }
 
-        .qc-platform__progress-track span {
+        .qcp__progress-track span {
           display: block;
           width: 78%;
           height: 100%;
@@ -782,19 +782,19 @@ export default function PlatformSection() {
           background: var(--qc-gold);
         }
 
-        .qc-platform__progress-caption,
-        .qc-platform__team-caption {
+        .qcp__progress-caption,
+        .qcp__team-caption {
           margin-top: 9px;
           color: #625e56;
           font-size: 9px;
         }
 
-        .qc-platform__avatars {
+        .qcp__avatars {
           display: flex;
           padding-left: 5px;
         }
 
-        .qc-platform__avatars span {
+        .qcp__avatars span {
           display: grid;
           width: 34px;
           height: 34px;
@@ -808,11 +808,11 @@ export default function PlatformSection() {
           font-weight: 700;
         }
 
-        .qc-platform__avatars span:nth-child(even) {
+        .qcp__avatars span:nth-child(even) {
           background: #d9dff2;
         }
 
-        .qc-platform__activity-row {
+        .qcp__activity-row {
           display: flex;
           align-items: center;
           gap: 8px;
@@ -820,18 +820,18 @@ export default function PlatformSection() {
           font-size: 9px;
         }
 
-        .qc-platform__activity-row svg {
+        .qcp__activity-row svg {
           color: var(--qc-gold);
           fill: var(--qc-gold);
         }
 
-        .qc-platform__activity-row span { flex: 1; }
+        .qcp__activity-row span { flex: 1; }
 
-        .qc-platform__activity-row small {
+        .qcp__activity-row small {
           color: #625e56;
         }
 
-        .qc-platform__learn {
+        .qcp__learn {
           display: inline-flex;
           align-items: center;
           gap: 8px;
@@ -845,31 +845,31 @@ export default function PlatformSection() {
           transition: transform .25s ease, box-shadow .25s ease;
         }
 
-        .qc-platform__learn:hover {
+        .qcp__learn:hover {
           transform: translateY(-3px);
           box-shadow: 0 8px 20px rgba(37,37,37,.14);
         }
 
-        .qc-platform__learn:hover svg { transform: translate(2px,-2px); }
+        .qcp__learn:hover svg { transform: translate(2px,-2px); }
 
-        .qc-platform__learn svg {
+        .qcp__learn svg {
           transition: transform .25s ease;
         }
 
-        .qc-platform__learn:focus-visible {
+        .qcp__learn:focus-visible {
           outline: 3px solid var(--qc-lavender);
           outline-offset: 4px;
         }
 
         @media (max-width: 760px) {
-          .qc-platform { padding: 75px 14px 5vh; }
-          .qc-platform__intro { margin-bottom: 45px; }
-          .qc-platform__intro h2 br { display: none; }
-          .qc-platform__intro p { font-size: 14px; }
+          .qcp { padding: 75px 14px 5vh; }
+          .qcp__intro { margin-bottom: 45px; }
+          .qcp__intro h2 br { display: none; }
+          .qcp__intro p { font-size: 14px; }
 
-          .qc-platform__stack { padding-bottom: 0; }
+          .qcp__stack { padding-bottom: 0; }
 
-          .qc-platform__card-slot {
+          .qcp__card-slot {
             position: relative;
             top: auto;
             height: auto;
@@ -878,7 +878,7 @@ export default function PlatformSection() {
             perspective: none;
           }
 
-          .qc-platform__card {
+          .qcp__card {
             height: auto;
             min-height: 390px;
             padding: 25px;
@@ -887,49 +887,49 @@ export default function PlatformSection() {
             filter: none !important;
           }
 
-          .qc-platform__card-heading { gap: 13px; }
+          .qcp__card-heading { gap: 13px; }
 
-          .qc-platform__icon {
+          .qcp__icon {
             width: 46px;
             height: 46px;
             flex-basis: 46px;
             border-radius: 13px;
           }
 
-          .qc-platform__card h3 { font-size: 22px; }
-          .qc-platform__card-content { margin-top: 24px; }
-          .qc-platform__card-content p { font-size: 14px; }
+          .qcp__card h3 { font-size: 22px; }
+          .qcp__card-content { margin-top: 24px; }
+          .qcp__card-content p { font-size: 14px; }
 
-          .qc-platform__card-bottom {
+          .qcp__card-bottom {
             align-items: flex-start;
             flex-direction: column;
             margin-top: 28px;
           }
 
-          .qc-platform__preview-wrap {
+          .qcp__preview-wrap {
             width: 100%;
             align-items: stretch;
             flex-direction: column;
           }
 
-          .qc-platform__preview { width: 100%; }
-          .qc-platform__learn { align-self: flex-start; }
+          .qcp__preview { width: 100%; }
+          .qcp__learn { align-self: flex-start; }
         }
 
         @media (max-width: 420px) {
-          .qc-platform__card-top { gap: 10px; }
-          .qc-platform__index { font-size: 12px; }
-          .qc-platform__card h3 { font-size: 19px; }
+          .qcp__card-top { gap: 10px; }
+          .qcp__index { font-size: 12px; }
+          .qcp__card h3 { font-size: 19px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .qc-platform__card {
+          .qcp__card {
             transform: none !important;
             filter: none !important;
           }
 
-          .qc-platform__learn,
-          .qc-platform__learn svg {
+          .qcp__learn,
+          .qcp__learn svg {
             transition: none;
           }
         }
