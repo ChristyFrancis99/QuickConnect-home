@@ -8,12 +8,10 @@ import {
   BriefcaseBusiness,
   CheckCircle2,
   ClipboardCheck,
-  FileStack,
   FolderKanban,
   FolderOpen,
   GraduationCap,
   Link2,
-  MessageSquareText,
   RefreshCw,
   ShieldCheck,
   Workflow,
@@ -21,6 +19,7 @@ import {
 import logo from "@/assets/logo.png";
 import PlatformSection from "@/components/PlatformSection";
 import HandoverSection from "@/components/HandoverSection";
+import ProblemSection from "@/components/ProblemSection";
 
 function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -47,12 +46,6 @@ function Reveal({ children, className = "" }: { children: ReactNode; className?:
 
   return <div ref={ref} className={`qc-reveal ${className}`}>{children}</div>;
 }
-
-const problems = [
-  { icon: FolderOpen, number: "01", title: "Scattered Information", copy: "Important files, conversations, and decisions are spread across different tools and locations.", tone: "gold" },
-  { icon: MessageSquareText, number: "02", title: "Lost Project Context", copy: "Teams struggle to understand why decisions were made and how work reached its current state.", tone: "lavender" },
-  { icon: FileStack, number: "03", title: "Unstructured Handovers", copy: "Critical information gets transferred through incomplete documents, rushed meetings, and informal conversations.", tone: "ink" },
-];
 
 const steps = [
   { number: "01", title: "Capture", copy: "Collect project documents, resources, decisions, and important information.", icon: FolderOpen },
@@ -171,35 +164,7 @@ function SectionHeading({ eyebrow, title, copy, align = "left", id }: { eyebrow:
 export function HomepageSections() {
   return (
     <>
-      <section className="qc-section qc-problem" id="problem" aria-labelledby="problem-title">
-        <div className="qc-container">
-          <Reveal>
-            <SectionHeading
-              eyebrow="THE CHALLENGE"
-              id="problem-title"
-              title="When People Leave, Knowledge Shouldn't."
-              copy="Every project carries valuable context — decisions, processes, documents, and experience. But when people move on, that knowledge often disappears with them."
-              align="center"
-            />
-          </Reveal>
-          <div className="qc-problem-grid">
-            {problems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Reveal className="qc-grid-reveal" key={item.number}>
-                  <article className="qc-problem-card">
-                    <div className={`qc-icon-tile qc-tone--${item.tone}`}><Icon size={23} strokeWidth={1.7} /></div>
-                    <span className="qc-card-number">{item.number}</span>
-                    <h3>{item.title}</h3>
-                    <p>{item.copy}</p>
-                    <div className="qc-card-rule" />
-                  </article>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <ProblemSection />
 
       <section className="qc-section qc-solution" id="solution" aria-labelledby="solution-title">
         <div className="qc-container">
