@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getPanelMotion } from "./globe-motion";
+import { getGlobeCameraFov, getPanelMotion } from "./globe-motion";
 
 describe("scroll-controlled gallery panel motion", () => {
   it("keeps every panel assembled at the start of the scroll", () => {
@@ -24,5 +24,17 @@ describe("scroll-controlled gallery panel motion", () => {
   it("clamps scroll progress to its reversible assembled and dispersed endpoints", () => {
     expect(getPanelMotion(12, -0.5)).toEqual(getPanelMotion(12, 0));
     expect(getPanelMotion(12, 1.5)).toEqual(getPanelMotion(12, 1));
+  });
+});
+
+describe("globe camera framing", () => {
+  it("keeps the assembled globe at its original field of view", () => {
+    expect(getGlobeCameraFov(0)).toBe(40);
+  });
+
+  it("widens the view as panels disperse and clamps out-of-range progress", () => {
+    expect(getGlobeCameraFov(1)).toBe(83);
+    expect(getGlobeCameraFov(-1)).toBe(40);
+    expect(getGlobeCameraFov(2)).toBe(83);
   });
 });
