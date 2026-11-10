@@ -281,19 +281,20 @@ function PlatformCard({
   const total = platformCards.length;
   const enter = index / total;
   const exit = (index + 1) / total;
-  const settleStart = Math.max(0, enter - 0.035);
-  const exitEnd = Math.min(1, exit + 0.10);
   const isLast = index === total - 1;
+  const settleStart = index === 0 ? 0 : Math.max(0, enter - 0.035);
+  const settlePoint = index === 0 ? 0.035 : enter;
+  const exitEnd = isLast ? 1.01 : Math.min(1, exit + 0.10);
 
   const scale = useTransform(
     progress,
-    [settleStart, enter, exit, exitEnd],
-    reducedMotion ? [1, 1, 1, 1] : [0.97, 1, 1, 0.93]
+    [settleStart, settlePoint, exit, exitEnd],
+    reducedMotion ? [1, 1, 1, 1] : index === 0 ? [1, 1, 1, 0.93] : [0.97, 1, 1, 0.93]
   );
   const rotateX = useTransform(
     progress,
-    [settleStart, enter, exit, exitEnd],
-    reducedMotion ? [0, 0, 0, 0] : [5, 0, 0, 5]
+    [settleStart, settlePoint, exit, exitEnd],
+    reducedMotion ? [0, 0, 0, 0] : [0, 0, 0, 5]
   );
   const y = useTransform(
     progress,
