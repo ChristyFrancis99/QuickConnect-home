@@ -331,8 +331,8 @@ export default function HandoverSection() {
 
         .qc-handover__track {
           position: absolute;
-          top: 37.5svh;
-          bottom: 37.5svh;
+          top: 24svh;
+          bottom: 24svh;
           left: 17px;
           width: 2px;
           overflow: visible;
@@ -376,13 +376,13 @@ export default function HandoverSection() {
           grid-template-columns: 36px minmax(0, 1fr);
           align-items: start;
           gap: 24px;
-          min-height: 75svh;
-          padding: calc(37.5svh - 18px) 0 0;
+          min-height: 48svh;
+          padding: calc(24svh - 18px) 0 0;
           transform-origin: left center;
         }
 
         .qc-handover__step:last-child {
-          min-height: 75svh;
+          min-height: 48svh;
         }
 
         .qc-handover__node {
