@@ -356,6 +356,7 @@ export default function HandoverSection() {
         }
 
         .qc-handover__track-progress {
+          height: 100%;
           background: var(--qc-handover-gold);
           transform-origin: top;
         }
@@ -386,7 +387,7 @@ export default function HandoverSection() {
 
         .qc-handover__node {
           position: relative;
-          z-index: 1;
+          z-index: var(--qc-z-content);
           display: grid;
           width: 36px;
           height: 36px;
