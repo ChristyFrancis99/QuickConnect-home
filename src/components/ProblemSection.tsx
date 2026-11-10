@@ -77,7 +77,7 @@ export default function ProblemSection() {
 
   return <section id="problem" className="qc-problem" aria-labelledby="qc-problem-title"
     onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={onBlur}>
-    <style>{\`
+    <style>{`
       .qc-problem{--qc-gold:#C69A4D;--qc-lavender:#7785C5;--qc-cream:#F4E9D5;--qc-off-white:#F5F4F0;--qc-charcoal:#252525;--qc-tint:rgba(198,154,77,.18);width:100%;padding:clamp(64px,8vw,112px) 24px;color:var(--qc-charcoal);font-family:"Plus Jakarta Sans",sans-serif;background:transparent}
       .qc-problem *,.qc-problem *:before,.qc-problem *:after{box-sizing:border-box}
       .qc-problem__inner{width:min(100%,1100px);margin:0 auto}
@@ -139,7 +139,7 @@ export default function ProblemSection() {
       }
       @media(max-width:390px){.qc-problem-card[data-active=true]{height:360px}.qc-problem-card__expanded{align-items:flex-start;flex-direction:column;justify-content:center}.qc-problem-card__copy{flex:0 0 auto;width:100%}.qc-problem-art{flex:0 0 auto;width:100%;height:112px}.qc-problem-card__action{position:absolute;right:0;bottom:0;margin:0}}
       @media(prefers-reduced-motion:reduce){.qc-problem *,.qc-problem *:before,.qc-problem *:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
-    \`}</style>
+    `}</style>
     <div className="qc-problem__inner">
       <header className="qc-problem__header"><div className="qc-problem__heading">
         <h2 id="qc-problem-title" className="qc-problem__title">When People Leave,<span className="qc-problem__accent">Knowledge Shouldn't.</span></h2>
