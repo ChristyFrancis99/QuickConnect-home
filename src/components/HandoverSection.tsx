@@ -112,7 +112,7 @@ function HandoverStep({
   const textColor = useTransform(
     progress,
     [segmentStart, segmentMiddle, segmentEnd],
-    ["#77736C", "#252525", "#77736C"],
+    ["#77736C", "#252525", "#252525"],
   );
   const Icon = step.icon;
 
