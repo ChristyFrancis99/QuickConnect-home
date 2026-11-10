@@ -188,7 +188,7 @@ function GlobeMotion({
     if (!globe) return;
     const isMobile = size.width <= 680;
     globe.position.set(0, 0, 0);
-    globe.scale.setScalar(isMobile ? 0.72 : 1);
+    globe.scale.setScalar(isMobile ? 0.9 : 1.32);
     const breakup = reducedMotion.current ? 0 : progress.get();
 
     if (camera instanceof THREE.PerspectiveCamera) {
