@@ -33,3 +33,7 @@ export function getPanelMotion(index: number, progress: number): PanelMotion {
     opacity: fade,
   };
 }
+
+export function getGlobeCameraFov(progress: number): number {
+  return 40 + clampProgress(progress) * 43;
+}
