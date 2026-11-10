@@ -93,10 +93,11 @@
   position: sticky;
   top: 0;
   display: flex;
-  min-height: 640px;
+  min-height: max(640px, 100svh);
   height: 100svh;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
+  isolation: isolate;
   background:
     radial-gradient(ellipse at 78% 48%, rgba(198, 154, 77, 0.10), transparent 42%),
     var(--color-background);
@@ -276,6 +277,8 @@
   grid-template-columns: 45fr 55fr;
   align-items: center;
   margin-inline: auto;
+  position: relative;
+  z-index: var(--qc-z-content);
   padding-top: 80px;
 }
 .hero-copy {
@@ -396,9 +399,9 @@
 .globe-drag-hit-area {
   position: absolute;
   z-index: 4;
-  top: 14%;
-  right: 5%;
-  width: 48%;
+  top: 12%;
+  right: 4%;
+  width: 88%;
   height: 76%;
   pointer-events: auto;
   touch-action: pan-y;
@@ -446,7 +449,7 @@
 
 .hero-footer {
   position: relative;
-  z-index: 4;
+  z-index: var(--qc-z-content);
   display: flex;
   width: min(100% - 80px, 1280px);
   min-height: 52px;
@@ -887,12 +890,12 @@
   .mobile-menu-toggle { display: grid; }
   .hero-main {
     width: calc(100% - 36px);
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(200px, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(230px, 1fr);
     align-content: start;
     padding-top: calc(68px + clamp(24px, 5svh, 44px));
   }
-  .hero-copy { padding: 0; }
+  .hero-copy { grid-column: 1; grid-row: 1; padding: 0; }
   .hero-eyebrow { margin-bottom: 14px; font-size: 10px; }
   .hero-title { font-size: clamp(34px, 8.5vw, 44px); }
   .hero-description { font-size: 14px; line-height: 1.7; margin-top: 16px; }
