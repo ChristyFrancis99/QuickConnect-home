@@ -993,3 +993,49 @@
   .qc-pin-note { opacity: 1 !important; visibility: visible !important; transform: none !important; }
   .qc-button { transition: none; }
 }
+
+
+@media (prefers-reduced-motion: reduce) and (min-width: 769px) {
+  .qc-solution-scroll {
+    height: auto;
+  }
+
+  .qc-solution-stage {
+    position: relative;
+    top: auto;
+    display: grid;
+    height: auto;
+    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    padding: 20px 0;
+  }
+
+  .qc-solution-paths,
+  .qc-story-caption {
+    display: none;
+  }
+
+  .qc-pin-note,
+  .qc-pin-note--left,
+  .qc-pin-note--right,
+  .qc-pin-note--1,
+  .qc-pin-note--2,
+  .qc-pin-note--3,
+  .qc-pin-note--4 {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .qc-pin-note__paper,
+  .qc-pin-note--right .qc-pin-note__paper {
+    min-height: 220px;
+    transform: none;
+  }
+}
