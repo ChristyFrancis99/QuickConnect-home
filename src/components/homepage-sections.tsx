@@ -86,11 +86,11 @@ const useCases = [
   { icon: GraduationCap, title: "Team Onboarding", copy: "Help new team members understand existing projects, decisions, and workflows faster.", tint: "cream" },
 ];
 
-function SectionHeading({ eyebrow, title, copy, align = "left" }: { eyebrow: string; title: string; copy?: string; align?: "left" | "center" }) {
+function SectionHeading({ eyebrow, title, copy, align = "left", id }: { eyebrow: string; title: string; copy?: string; align?: "left" | "center"; id?: string }) {
   return (
     <div className={`qc-section-heading qc-section-heading--${align}`}>
       <p className="qc-eyebrow">{eyebrow}</p>
-      <h2>{title}</h2>
+      <h2 id={id}>{title}</h2>
       {copy && <p className="qc-section-copy">{copy}</p>}
     </div>
   );
@@ -104,6 +104,7 @@ export function HomepageSections() {
           <Reveal>
             <SectionHeading
               eyebrow="THE CHALLENGE"
+              id="problem-title"
               title="When People Leave, Knowledge Shouldn't."
               copy="Every project carries valuable context — decisions, processes, documents, and experience. But when people move on, that knowledge often disappears with them."
               align="center"
@@ -133,6 +134,7 @@ export function HomepageSections() {
           <Reveal>
             <SectionHeading
               eyebrow="THE QUICKCONNECT APPROACH"
+              id="solution-title"
               title="Turn Knowledge Into Continuity."
               copy="QuickConnect brings scattered project knowledge together and transforms it into structured, actionable handovers."
               align="center"
@@ -160,6 +162,7 @@ export function HomepageSections() {
           <Reveal>
             <SectionHeading
               eyebrow="A CLEARER HANDOVER"
+              id="process-title"
               title="A Smarter Way to Pass Knowledge Forward."
               copy="A simple, repeatable flow helps teams move from scattered information to a confident transition."
               align="center"
@@ -188,6 +191,7 @@ export function HomepageSections() {
           <Reveal>
             <SectionHeading
               eyebrow="THE PLATFORM"
+              id="platform-title"
               title="Everything Your Team Needs to Stay Connected."
               copy="A connected set of capability areas for organizing project knowledge, managing transitions, and keeping teams aligned."
               align="center"
@@ -226,6 +230,7 @@ export function HomepageSections() {
           <Reveal>
             <SectionHeading
               eyebrow="WHERE CONTEXT MATTERS"
+              id="use-cases-title"
               title="Knowledge Continuity Across Every Transition."
               copy="Keep work moving through the moments when people, roles, and responsibilities change."
               align="center"
