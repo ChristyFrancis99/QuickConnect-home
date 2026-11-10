@@ -169,26 +169,6 @@ function ContinuityCardView({
   );
 }
 
-        <div className="qc-continuity__footer">
-          <div className="qc-continuity__scenario">
-            <span className="qc-continuity__scenario-icon">
-              <ContinuityIcon name={card.icon} />
-            </span>
-            <p>{card.description}</p>
-          </div>
-          <button
-            className="qc-continuity__view"
-            type="button"
-            aria-label={`View ${card.title}`}
-            onClick={() => onViewClick(card)}
-          >
-            View
-          </button>
-        </div>
-      </div>
-    </motion.article>
-  );
-}
 
 export default function ContinuitySection({
   onViewClick = () => {},
