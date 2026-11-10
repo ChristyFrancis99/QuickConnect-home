@@ -570,7 +570,7 @@
   width: min(35%, 350px);
   min-height: 220px;
   opacity: 0;
-  visibility: hidden;
+  visibility: visible;
   filter: drop-shadow(0 18px 24px rgba(37, 37, 37, 0.12));
 }
 .qc-pin-note--left { left: 3%; }
