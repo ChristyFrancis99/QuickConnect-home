@@ -30,6 +30,7 @@ const platformCards = [
     foreground: "#252525",
     icon: FolderKanban,
     preview: "tasks",
+    highlights: ["Tasks & milestones", "Clear ownership", "Deadline visibility"],
   },
   {
     title: "Knowledge Sources",
@@ -39,6 +40,7 @@ const platformCards = [
     foreground: "#252525",
     icon: Files,
     preview: "documents",
+    highlights: ["Central file library", "Connected references", "Quick document access"],
   },
   {
     title: "AI Analysis",
@@ -48,6 +50,7 @@ const platformCards = [
     foreground: "#FFFFFF",
     icon: BrainCircuit,
     preview: "analysis",
+    highlights: ["Key decisions", "Progress summaries", "Open questions"],
   },
   {
     title: "Structured Handovers",
@@ -57,6 +60,7 @@ const platformCards = [
     foreground: "#171717",
     icon: ClipboardList,
     preview: "handover",
+    highlights: ["Role responsibilities", "Pending actions", "Essential context"],
   },
   {
     title: "Verification",
@@ -66,6 +70,7 @@ const platformCards = [
     foreground: "#FFFFFF",
     icon: ShieldCheck,
     preview: "checklist",
+    highlights: ["File completeness", "Details reviewed", "Owner confirmation"],
   },
   {
     title: "Readiness Tracking",
@@ -76,6 +81,7 @@ const platformCards = [
     border: true,
     icon: Gauge,
     preview: "progress",
+    highlights: ["Completion overview", "Outstanding items", "Review status"],
   },
   {
     title: "Team Management",
@@ -85,6 +91,7 @@ const platformCards = [
     foreground: "#252525",
     icon: Users,
     preview: "team",
+    highlights: ["Team directory", "Role visibility", "Project contacts"],
   },
   {
     title: "Activity Tracking",
@@ -94,6 +101,7 @@ const platformCards = [
     foreground: "#252525",
     icon: Activity,
     preview: "activity",
+    highlights: ["Recent changes", "Resource updates", "Review history"],
   },
 ] as const;
 
@@ -349,6 +357,17 @@ function PlatformCard({
         <div className="qcp__card-content">
           <p>{item.description}</p>
           <StatusChip status={item.status} />
+          <div className="qcp__highlights">
+            <span className="qcp__highlights-label">WHAT YOU CAN MANAGE</span>
+            <div className="qcp__highlight-list">
+              {item.highlights.map((highlight) => (
+                <span className="qcp__highlight" key={highlight}>
+                  <Check size={12} strokeWidth={2} />
+                  {highlight}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="qcp__card-bottom">
@@ -696,6 +715,45 @@ export default function PlatformSection() {
           border-radius: 50%;
         }
 
+        .qcp__highlights {
+          margin-top: 27px;
+        }
+
+        .qcp__highlights-label {
+          display: block;
+          margin-bottom: 12px;
+          font-size: 9px;
+          font-weight: 800;
+          letter-spacing: .15em;
+          opacity: .62;
+        }
+
+        .qcp__highlight-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 9px;
+          max-width: 560px;
+        }
+
+        .qcp__highlight {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          border: 1px solid currentColor;
+          border-color: color-mix(in srgb, currentColor 18%, transparent);
+          border-radius: 999px;
+          padding: 9px 12px;
+          background: rgba(255,255,255,.13);
+          font-size: 10px;
+          font-weight: 600;
+          line-height: 1.2;
+        }
+
+        .qcp__highlight svg {
+          flex: 0 0 auto;
+          opacity: .75;
+        }
+
         .qcp__card-bottom {
           position: relative;
           z-index: var(--qc-z-content);
@@ -981,6 +1039,9 @@ export default function PlatformSection() {
           .qcp__card h3 { font-size: 22px; }
           .qcp__card-content { margin-top: 24px; }
           .qcp__card-content p { font-size: 14px; }
+          .qcp__highlights { margin-top: 20px; }
+          .qcp__highlight-list { gap: 7px; }
+          .qcp__highlight { padding: 8px 10px; font-size: 9px; }
 
           .qcp__card-bottom {
             align-items: flex-start;
