@@ -11,8 +11,6 @@ import {
   ArrowUpRight,
   BrainCircuit,
   Check,
-  Circle,
-  ClipboardCheck,
   ClipboardList,
   Files,
   FolderKanban,
@@ -29,7 +27,8 @@ const platformCards = [
     background: "#C69A4D",
     foreground: "#252525",
     icon: FolderKanban,
-    preview: "tasks",
+    image: "01.png",
+    imageAlt: "Project dashboard with task list, timeline, and milestone overview",
     highlights: ["Tasks & milestones", "Clear ownership", "Deadline visibility"],
   },
   {
@@ -39,7 +38,8 @@ const platformCards = [
     background: "#7785C5",
     foreground: "#252525",
     icon: Files,
-    preview: "documents",
+    image: "02.png",
+    imageAlt: "Knowledge library with connected project documents and resources",
     highlights: ["Central file library", "Connected references", "Quick document access"],
   },
   {
@@ -49,7 +49,8 @@ const platformCards = [
     background: "#252525",
     foreground: "#FFFFFF",
     icon: BrainCircuit,
-    preview: "analysis",
+    image: "03.png",
+    imageAlt: "AI analysis summary highlighting decisions and open questions",
     highlights: ["Key decisions", "Progress summaries", "Open questions"],
   },
   {
@@ -59,7 +60,8 @@ const platformCards = [
     background: "#A87E36",
     foreground: "#171717",
     icon: ClipboardList,
-    preview: "handover",
+    image: "04.png",
+    imageAlt: "Structured handover record showing responsibilities and next steps",
     highlights: ["Role responsibilities", "Pending actions", "Essential context"],
   },
   {
@@ -69,7 +71,8 @@ const platformCards = [
     background: "#5A67A6",
     foreground: "#FFFFFF",
     icon: ShieldCheck,
-    preview: "checklist",
+    image: "05.png",
+    imageAlt: "Verification checklist with reviewed and outstanding items",
     highlights: ["File completeness", "Details reviewed", "Owner confirmation"],
   },
   {
@@ -80,7 +83,8 @@ const platformCards = [
     foreground: "#252525",
     border: true,
     icon: Gauge,
-    preview: "progress",
+    image: "06.png",
+    imageAlt: "Readiness dashboard with progress ring and completion indicators",
     highlights: ["Completion overview", "Outstanding items", "Review status"],
   },
   {
@@ -90,7 +94,8 @@ const platformCards = [
     background: "#E3C98F",
     foreground: "#252525",
     icon: Users,
-    preview: "team",
+    image: "07.png",
+    imageAlt: "Team directory showing project roles and collaborators",
     highlights: ["Team directory", "Role visibility", "Project contacts"],
   },
   {
@@ -100,7 +105,8 @@ const platformCards = [
     background: "#EADBBE",
     foreground: "#252525",
     icon: Activity,
-    preview: "activity",
+    image: "08.png",
+    imageAlt: "Activity timeline showing project updates and handover reviews",
     highlights: ["Recent changes", "Resource updates", "Review history"],
   },
 ] as const;
@@ -127,153 +133,6 @@ function StatusChip({ status }: { status: string }) {
   );
 }
 
-function PreviewTile({ type }: { type: PlatformCardData["preview"] }) {
-  return (
-    <div className="qcp__preview" aria-hidden="true">
-      {type === "tasks" && (
-        <>
-          <div className="qcp__preview-heading">
-            <span>Project tasks</span>
-            <ClipboardCheck size={14} />
-          </div>
-          {["Project scope", "Team assignment", "Next milestone"].map(
-            (label, index) => (
-              <div className="qcp__task" key={label}>
-                <span className="qcp__check">
-                  {index < 2 && <Check size={9} />}
-                </span>
-                <span>{label}</span>
-              </div>
-            )
-          )}
-        </>
-      )}
-
-      {type === "documents" && (
-        <>
-          <div className="qcp__preview-heading">
-            <span>Knowledge library</span>
-            <Files size={14} />
-          </div>
-          {["Project brief", "Research notes", "Team resources"].map((name) => (
-            <div className="qcp__document" key={name}>
-              <span className="qcp__document-icon">
-                <Files size={12} />
-              </span>
-              <span>{name}</span>
-              <ArrowUpRight size={11} />
-            </div>
-          ))}
-        </>
-      )}
-
-      {type === "analysis" && (
-        <>
-          <div className="qcp__preview-heading">
-            <span>Analysis summary</span>
-            <BrainCircuit size={14} />
-          </div>
-          <div className="qcp__analysis-line wide" />
-          <div className="qcp__analysis-line" />
-          <div className="qcp__analysis-line short" />
-          <div className="qcp__analysis-tag">Example summary view</div>
-        </>
-      )}
-
-      {type === "handover" && (
-        <>
-          <div className="qcp__preview-heading">
-            <span>Handover record</span>
-            <ClipboardList size={14} />
-          </div>
-          {[
-            ["Responsibilities", "04"],
-            ["Next steps", "03"],
-            ["Resources", "08"],
-          ].map(([label, count]) => (
-            <div className="qcp__handover-row" key={label}>
-              <span>{label}</span>
-              <b>{count}</b>
-            </div>
-          ))}
-        </>
-      )}
-
-      {type === "checklist" && (
-        <>
-          <div className="qcp__preview-heading">
-            <span>Review checklist</span>
-            <ShieldCheck size={14} />
-          </div>
-          {["Information shared", "Documents reviewed", "Owner confirmed"].map(
-            (label) => (
-              <div className="qcp__check-row" key={label}>
-                <Check size={12} />
-                <span>{label}</span>
-              </div>
-            )
-          )}
-        </>
-      )}
-
-      {type === "progress" && (
-        <>
-          <div className="qcp__preview-heading">
-            <span>Readiness overview</span>
-            <Gauge size={14} />
-          </div>
-          <div className="qcp__progress-value">78%</div>
-          <div className="qcp__progress-track">
-            <span />
-          </div>
-          <div className="qcp__progress-caption">
-            Illustrative progress
-          </div>
-        </>
-      )}
-
-      {type === "team" && (
-        <>
-          <div className="qcp__preview-heading">
-            <span>Team members</span>
-            <Users size={14} />
-          </div>
-          <div className="qcp__avatars">
-            {["A", "J", "M", "S"].map((letter, index) => (
-              <span
-                key={letter}
-                style={{ "--avatar-index": index } as CSSProperties}
-              >
-                {letter}
-              </span>
-            ))}
-          </div>
-          <div className="qcp__team-caption">
-            People and responsibilities
-          </div>
-        </>
-      )}
-
-      {type === "activity" && (
-        <>
-          <div className="qcp__preview-heading">
-            <span>Recent activity</span>
-            <Activity size={14} />
-          </div>
-          {["Project updated", "Resource added", "Handover reviewed"].map(
-            (label, index) => (
-              <div className="qcp__activity-row" key={label}>
-                <Circle size={8} />
-                <span>{label}</span>
-                <small>{index + 1}h</small>
-              </div>
-            )
-          )}
-        </>
-      )}
-    </div>
-  );
-}
 
 function PlatformCard({
   item,
@@ -370,23 +229,28 @@ function PlatformCard({
           </div>
         </div>
 
-        <div className="qcp__card-bottom">
-          <div className="qcp__card-meta" aria-hidden="true">
-            <span>QUICKCONNECT</span>
-            <span>PLATFORM / {String(index + 1).padStart(2, "0")}</span>
-          </div>
-
-          <div className="qcp__preview-wrap">
-            <PreviewTile type={item.preview} />
-            <a
-              className="qcp__learn"
-              href="#platform"
-              aria-label={`Return to The Platform section: ${item.title}`}
-            >
-              Learn More <ArrowUpRight size={15} />
-            </a>
-          </div>
+        <div className="qcp__card-meta" aria-hidden="true">
+          <span>QUICKCONNECT</span>
+          <span>PLATFORM / {String(index + 1).padStart(2, "0")}</span>
         </div>
+
+        <div className="qcp__visual-panel">
+          <img
+            className="qcp__visual-image"
+            src={`/images/platform/${item.image}`}
+            alt={item.imageAlt}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <a
+          className="qcp__learn"
+          href="#platform"
+          aria-label={`Return to The Platform section: ${item.title}`}
+        >
+          Learn More <ArrowUpRight size={15} />
+        </a>
       </motion.article>
     </motion.li>
   );
@@ -775,190 +639,42 @@ export default function PlatformSection() {
           opacity: .7;
         }
 
-        .qcp__preview-wrap {
-          display: flex;
-          align-items: flex-end;
-          gap: 16px;
-        }
-
-        .qcp__preview {
-          width: 245px;
-          min-height: 150px;
-          border: 1px solid rgba(37,37,37,.08);
-          border-radius: 16px;
-          padding: 17px;
-          background: var(--qc-off-white);
-          color: var(--qc-charcoal);
-          box-shadow: 0 8px 28px rgba(37,37,37,.10);
-        }
-
-        .qcp__preview-heading {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 14px;
-          font-size: 11px;
-          font-weight: 700;
-        }
-
-        .qcp__task {
-          display: flex;
-          align-items: center;
-          gap: 9px;
-          margin: 10px 0;
-          font-size: 9px;
-          color: #55514a;
-        }
-
-        .qcp__check {
+        .qcp__visual-panel {
+          position: absolute;
+          z-index: var(--qc-z-content);
+          top: 12%;
+          right: 3.5%;
+          bottom: 12%;
           display: grid;
-          width: 13px;
-          height: 13px;
-          flex: 0 0 13px;
+          width: 53%;
           place-items: center;
-          border: 1px solid var(--qc-gold);
-          border-radius: 4px;
-          color: var(--qc-gold);
+          overflow: visible;
+          border-radius: 22px;
+          background: radial-gradient(ellipse at center, rgba(255,255,255,.30), transparent 70%);
+          pointer-events: none;
         }
 
-        .qcp__document {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin-top: 8px;
-          font-size: 9px;
-          font-weight: 500;
-        }
-
-        .qcp__document > span:nth-child(2) {
-          flex: 1;
-        }
-
-        .qcp__document-icon {
-          display: grid;
-          width: 23px;
-          height: 23px;
-          place-items: center;
-          border-radius: 6px;
-          background: var(--qc-cream);
-          color: var(--qc-gold);
-        }
-
-        .qcp__analysis-line {
-          width: 75%;
-          height: 6px;
-          margin: 10px 0;
-          border-radius: 10px;
-          background: #dedbd3;
-        }
-
-        .qcp__analysis-line.wide { width: 100%; }
-        .qcp__analysis-line.short { width: 50%; }
-
-        .qcp__analysis-tag {
-          display: inline-block;
-          margin-top: 8px;
-          border-radius: 99px;
-          padding: 5px 9px;
-          background: #e8e2d5;
-          color: #514a3d;
-          font-size: 9px;
-          font-weight: 600;
-        }
-
-        .qcp__handover-row {
-          display: flex;
-          justify-content: space-between;
-          margin-top: 9px;
-          border-bottom: 1px solid #e8e5de;
-          padding-bottom: 7px;
-          font-size: 10px;
-        }
-
-        .qcp__handover-row b { color: #8d682b; }
-
-        .qcp__check-row {
-          display: flex;
-          align-items: center;
-          gap: 9px;
-          margin: 12px 0;
-          font-size: 10px;
-        }
-
-        .qcp__check-row svg { color: #477b21; }
-
-        .qcp__progress-value {
-          font-size: 27px;
-          font-weight: 700;
-          letter-spacing: -.05em;
-        }
-
-        .qcp__progress-track {
-          height: 8px;
-          margin-top: 9px;
-          overflow: hidden;
-          border-radius: 20px;
-          background: #e3dfd5;
-        }
-
-        .qcp__progress-track span {
+        .qcp__visual-image {
           display: block;
-          width: 78%;
+          width: 100%;
           height: 100%;
-          border-radius: inherit;
-          background: var(--qc-gold);
+          object-fit: contain;
+          object-position: center;
+          filter: drop-shadow(0 14px 22px rgba(37,37,37,.13));
+          animation: qcp-image-float 6s ease-in-out infinite;
+          animation-delay: calc(var(--qc-stack-index) * -0.65s);
         }
 
-        .qcp__progress-caption,
-        .qcp__team-caption {
-          margin-top: 9px;
-          color: #625e56;
-          font-size: 9px;
-        }
-
-        .qcp__avatars {
-          display: flex;
-          padding-left: 5px;
-        }
-
-        .qcp__avatars span {
-          display: grid;
-          width: 34px;
-          height: 34px;
-          margin-left: -5px;
-          place-items: center;
-          border: 2px solid var(--qc-off-white);
-          border-radius: 50%;
-          background: var(--qc-cream);
-          color: var(--qc-charcoal);
-          font-size: 10px;
-          font-weight: 700;
-        }
-
-        .qcp__avatars span:nth-child(even) {
-          background: #d9dff2;
-        }
-
-        .qcp__activity-row {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin: 11px 0;
-          font-size: 9px;
-        }
-
-        .qcp__activity-row svg {
-          color: var(--qc-gold);
-          fill: var(--qc-gold);
-        }
-
-        .qcp__activity-row span { flex: 1; }
-
-        .qcp__activity-row small {
-          color: #625e56;
+        @keyframes qcp-image-float {
+          0%, 100% { transform: translateY(-8px); }
+          50% { transform: translateY(8px); }
         }
 
         .qcp__learn {
+          position: absolute;
+          z-index: var(--qc-z-content);
+          right: clamp(26px, 4.2vw, 56px);
+          bottom: clamp(26px, 4.2vw, 56px);
           display: inline-flex;
           align-items: center;
           gap: 8px;
@@ -1020,7 +736,7 @@ export default function PlatformSection() {
 
           .qcp__card {
             height: auto;
-            min-height: 390px;
+            min-height: 0;
             padding: 25px;
             border-radius: 20px;
             transform: none !important;
@@ -1038,10 +754,23 @@ export default function PlatformSection() {
 
           .qcp__card h3 { font-size: 22px; }
           .qcp__card-content { margin-top: 24px; }
+          .qcp__card-content { max-width: 100%; padding-bottom: 0; }
           .qcp__card-content p { font-size: 14px; }
           .qcp__highlights { margin-top: 20px; }
           .qcp__highlight-list { gap: 7px; }
           .qcp__highlight { padding: 8px 10px; font-size: 9px; }
+          .qcp__visual-panel {
+            position: relative;
+            top: auto;
+            right: auto;
+            bottom: auto;
+            width: 100%;
+            height: 210px;
+            margin-top: 22px;
+          }
+          .qcp__visual-image { animation: none; }
+          .qcp__card-meta { margin-top: 22px; }
+          .qcp__learn { position: relative; right: auto; bottom: auto; align-self: flex-start; margin-top: 16px; }
 
           .qcp__card-bottom {
             align-items: flex-start;
@@ -1055,7 +784,6 @@ export default function PlatformSection() {
             flex-direction: column;
           }
 
-          .qcp__preview { width: 100%; }
           .qcp__learn { align-self: flex-start; }
         }
 
@@ -1090,6 +818,7 @@ export default function PlatformSection() {
             filter: none !important;
           }
 
+          .qcp__visual-image { animation: none !important; }
           .qcp__learn,
           .qcp__learn svg {
             transition: none;
