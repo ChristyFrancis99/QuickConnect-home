@@ -46,11 +46,13 @@ function HandoverStep({
   index,
   progress,
   reducedMotion,
+  activeStep,
 }: {
   step: (typeof handoverSteps)[number];
   index: number;
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
   reducedMotion: boolean;
+  activeStep: number;
 }) {
   const segmentStart = index / handoverSteps.length;
   const segmentMiddle = (index + 0.5) / handoverSteps.length;
@@ -119,6 +121,7 @@ function HandoverStep({
   return (
     <motion.li
       className="qc-handover__step"
+      aria-current={index === activeStep ? "step" : undefined}
       style={
         reducedMotion
           ? undefined
@@ -228,6 +231,7 @@ export default function HandoverSection() {
                 index={index}
                 progress={scrollYProgress}
                 reducedMotion={Boolean(reducedMotion)}
+                activeStep={activeStep}
               />
             ))}
           </ol>
