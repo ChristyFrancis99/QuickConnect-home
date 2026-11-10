@@ -1,18 +1,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import ContinuitySection from "@/components/ContinuitySection";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  BrainCircuit,
-  CheckCircle2,
-  ClipboardCheck,
-  FolderKanban,
-  FolderOpen,
-  Link2,
-  RefreshCw,
-  ShieldCheck,
-} from "lucide-react";
+import ContinuitySteps from "@/components/sections/ContinuitySteps";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import logo from "@/assets/logo.png";
 import PlatformSection from "@/components/PlatformSection";
 import HandoverSection from "@/components/HandoverSection";
@@ -44,131 +33,12 @@ function Reveal({ children, className = "" }: { children: ReactNode; className?:
   return <div ref={ref} className={`qc-reveal ${className}`}>{children}</div>;
 }
 
-const steps = [
-  { number: "01", title: "Capture", copy: "Collect project documents, resources, decisions, and important information.", icon: FolderOpen },
-  { number: "02", title: "Connect", copy: "Organize information into meaningful project context.", icon: Link2 },
-  { number: "03", title: "Handover", copy: "Transfer structured knowledge to the incoming team member.", icon: RefreshCw },
-  { number: "04", title: "Verify", copy: "Review completeness and ensure the new owner is ready to take over.", icon: CheckCircle2 },
-];
-
-const solutionNotes = [
-  { number: "01", title: "Centralized Knowledge", copy: "Bring project information, documents, decisions, and resources into one organized space.", icon: FolderKanban, pin: "gold", paper: "cream", side: "left" },
-  { number: "02", title: "AI-Powered Analysis", copy: "Support teams in understanding, summarizing, and organizing project knowledge with AI-assisted analysis.", icon: BrainCircuit, pin: "lavender", paper: "lavender", side: "right" },
-  { number: "03", title: "Structured Handovers", copy: "Create clear handover records that help incoming team members understand responsibilities and context.", icon: ClipboardCheck, pin: "gold", paper: "cream", side: "left" },
-  { number: "04", title: "Verification & Readiness", copy: "Track handover progress and identify missing information before responsibilities are transferred.", icon: ShieldCheck, pin: "lavender", paper: "lavender", side: "right" },
-];
-
-function SolutionNote({
-  note,
-  index,
-  progress,
-}: {
-  note: (typeof solutionNotes)[number];
-  index: number;
-  progress: MotionValue<number>;
-}) {
-  const start = index === 0 ? 0 : index / solutionNotes.length - 0.025;
-  const revealEnd = Math.min(1, start + 0.14);
-  const opacity = useTransform(
-    progress,
-    [start, revealEnd],
-    index === 0 ? [1, 1] : [0, 1],
-  );
-  const y = useTransform(
-    progress,
-    [start, revealEnd],
-    index === 0 ? [0, 0] : [28, 0],
-  );
-  const scale = useTransform(
-    progress,
-    [start, revealEnd],
-    index === 0 ? [1, 1] : [0.92, 1],
-  );
-  const rotate = useTransform(
-    progress,
-    [start, revealEnd],
-    index === 0 ? [-2, -2] : [index % 2 === 0 ? -4 : 4, index % 2 === 0 ? -2 : 2],
-  );
-  const Icon = note.icon;
-
-  return (
-    <motion.article
-      className={`qc-pin-note qc-pin-note--${note.side} qc-pin-note--${index + 1}`}
-      style={{ opacity, y, scale, rotate }}
-    >
-      <span className={`qc-pin qc-pin--${note.pin}`} aria-hidden="true"><i /></span>
-      <div className={`qc-pin-note__paper qc-pin-note__paper--${note.paper}`}>
-        <div className="qc-pin-note__meta"><span>{note.number}</span><Icon size={19} strokeWidth={1.7} /></div>
-        <h3>{note.title}</h3>
-        <p>{note.copy}</p>
-      </div>
-    </motion.article>
-  );
-}
-
-function SolutionStory() {
-  const stageRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: stageRef,
-    offset: ["start start", "end end"],
-  });
-  const pathOne = useTransform(scrollYProgress, [0.12, 0.34], [0, 1]);
-  const pathTwo = useTransform(scrollYProgress, [0.38, 0.60], [0, 1]);
-  const pathThree = useTransform(scrollYProgress, [0.64, 0.86], [0, 1]);
-
-  return (
-    <div className="qc-solution-scroll" ref={stageRef}>
-      <div className="qc-solution-stage">
-        <svg className="qc-solution-paths" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
-          <motion.path style={{ pathLength: pathOne }} d="M 350 112 C 455 62, 548 158, 650 205" />
-          <motion.path style={{ pathLength: pathTwo }} d="M 650 292 C 555 365, 450 355, 350 418" />
-          <motion.path style={{ pathLength: pathThree }} d="M 350 482 C 455 540, 548 520, 650 465" />
-        </svg>
-        {solutionNotes.map((note, index) => (
-          <SolutionNote key={note.number} note={note} index={index} progress={scrollYProgress} />
-        ))}
-        <div className="qc-story-caption" aria-hidden="true">
-          <span className="qc-story-caption__dot" />
-          <span>Knowledge, connected.</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
-function SectionHeading({ eyebrow, title, copy, align = "left", id }: { eyebrow: string; title: string; copy?: string; align?: "left" | "center"; id?: string }) {
-  return (
-    <div className={`qc-section-heading qc-section-heading--${align}`}>
-      <p className="qc-eyebrow">
-        <span className="qc-eyebrow-dot" aria-hidden="true" />
-        {eyebrow}
-      </p>
-      <h2 id={id}>{title}</h2>
-      {copy && <p className="qc-section-copy">{copy}</p>}
-    </div>
-  );
-}
-
 export function HomepageSections() {
   return (
     <>
       <ProblemSection />
 
-      <section className="qc-section qc-solution" id="solution" aria-labelledby="solution-title">
-        <div className="qc-container">
-          <Reveal>
-            <SectionHeading
-              eyebrow="THE QUICKCONNECT APPROACH"
-              id="solution-title"
-              title="Turn Knowledge Into Continuity."
-              copy="QuickConnect brings scattered project knowledge together and transforms it into structured, actionable handovers."
-              align="center"
-            />
-          </Reveal>
-          <SolutionStory />
-        </div>
-      </section>
+      <ContinuitySteps />
 
       <HandoverSection />
 
