@@ -159,7 +159,16 @@ function ContinuityCardView({
           <button
             type="button"
             className="qc-continuity__view"
-            onClick={() => onViewClick?.(card)}
+            onClick={() => {
+              if (onViewClick) {
+                onViewClick(card);
+                return;
+              }
+              document.getElementById("how-it-works")?.scrollIntoView({
+                behavior: reduceMotion ? "auto" : "smooth",
+                block: "start",
+              });
+            }}
           >
             View
           </button>
@@ -170,9 +179,7 @@ function ContinuityCardView({
 }
 
 
-export default function ContinuitySection({
-  onViewClick = () => {},
-}: ContinuitySectionProps) {
+export default function ContinuitySection({ onViewClick }: ContinuitySectionProps) {
   const reduceMotionPreference = useReducedMotion();
   const reduceMotion = Boolean(reduceMotionPreference);
   const listRef = useRef<HTMLUListElement>(null);
@@ -180,27 +187,42 @@ export default function ContinuitySection({
 
   useEffect(() => {
     const list = listRef.current;
-    if (!list) return;
+    if (!list || typeof IntersectionObserver === "undefined") return;
 
-    const cards = Array.from(list.querySelectorAll<HTMLElement>(".qc-continuity__card"));
-    if (!cards.length) return;
+    const media = window.matchMedia("(max-width: 640px)");
+    let observer: IntersectionObserver | undefined;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const mostVisible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    const connectObserver = () => {
+      observer?.disconnect();
+      if (!media.matches) {
+        setActiveIndex(0);
+        return;
+      }
 
-        if (mostVisible) {
-          const index = cards.indexOf(mostVisible.target as HTMLElement);
-          if (index >= 0) setActiveIndex(index);
-        }
-      },
-      { root: list, threshold: [0.35, 0.55, 0.75] },
-    );
+      const cards = Array.from(list.querySelectorAll<HTMLElement>(".qc-continuity__card"));
+      observer = new IntersectionObserver(
+        (entries) => {
+          const mostVisible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-    cards.forEach((card) => observer.observe(card));
-    return () => observer.disconnect();
+          if (mostVisible) {
+            const index = cards.indexOf(mostVisible.target as HTMLElement);
+            if (index >= 0) setActiveIndex((current) => current === index ? current : index);
+          }
+        },
+        { root: list, threshold: [0.35, 0.55, 0.75] },
+      );
+
+      cards.forEach((card) => observer?.observe(card));
+    };
+
+    connectObserver();
+    media.addEventListener("change", connectObserver);
+    return () => {
+      observer?.disconnect();
+      media.removeEventListener("change", connectObserver);
+    };
   }, []);
 
   return (
@@ -222,7 +244,6 @@ export default function ContinuitySection({
           --qc-blend-tint: #F2EEF8;
           position: relative;
           isolation: isolate;
-          overflow: hidden;
           border-radius: 28px;
           background: var(--qc-cream);
           color: var(--qc-charcoal);
@@ -594,7 +615,7 @@ export default function ContinuitySection({
             display: flex;
             gap: 14px;
             overflow-x: auto;
-            padding: 4px 22px 16px;
+            padding: 12px 22px 22px;
             scroll-snap-type: x mandatory;
             scroll-padding-inline: 22px;
             overscroll-behavior-x: contain;
