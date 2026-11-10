@@ -316,7 +316,7 @@ function PlatformCard({
   return (
     <motion.li
       className="qcp__card-slot"
-      style={{ zIndex: `calc(var(--qc-z-sticky) + ${index})` }}
+      style={{ "--qc-stack-index": index } as CSSProperties}
     >
       <motion.article
         className={`qcp__card${
@@ -494,6 +494,7 @@ export default function PlatformSection() {
 
         .qcp__card-slot {
           position: sticky;
+          z-index: calc(var(--qc-z-sticky) + var(--qc-stack-index));
           top: calc(var(--qc-nav-height) + 16px);
           height: min(70svh, 760px);
           min-height: min(70svh, 460px);
