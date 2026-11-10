@@ -3,6 +3,7 @@ import { ArrowDown, ArrowRight, Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useEffect, useState } from "react";
 import { GlobeGallery } from "@/game/globe/GlobeGallery";
+import { HomepageSections } from "@/components/homepage-sections";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -47,15 +48,15 @@ function Index() {
             </a>
 
             <nav className="desktop-nav" aria-label="Main navigation">
-              <a href="#top">Platform</a>
-              <a href="#overview">How It Works</a>
-              <a href="#overview">Use Cases</a>
-              <a href="#overview">About</a>
+              <a href="#platform">Platform</a>
+              <a href="#how-it-works">How It Works</a>
+              <a href="#use-cases">Use Cases</a>
+              <a href="#about">About</a>
             </nav>
 
             <div className="header-actions">
-              <a className="header-login" href="#overview">Log In</a>
-              <a className="header-cta" href="#overview">Get Started <ArrowRight size={14} /></a>
+              <a className="header-login" href="#final-cta">Log In</a>
+              <a className="header-cta" href="#final-cta">Get Started <ArrowRight size={14} /></a>
             </div>
 
             <button
@@ -71,13 +72,13 @@ function Index() {
 
             {isMenuOpen && (
               <nav className="mobile-nav" id="mobile-navigation" aria-label="Mobile navigation">
-                <a href="#top" onClick={closeMenu}>Platform</a>
-                <a href="#overview" onClick={closeMenu}>How It Works</a>
-                <a href="#overview" onClick={closeMenu}>Use Cases</a>
-                <a href="#overview" onClick={closeMenu}>About</a>
+                <a href="#platform" onClick={closeMenu}>Platform</a>
+                <a href="#how-it-works" onClick={closeMenu}>How It Works</a>
+                <a href="#use-cases" onClick={closeMenu}>Use Cases</a>
+                <a href="#about" onClick={closeMenu}>About</a>
                 <div className="mobile-nav__actions">
-                  <a href="#overview" onClick={closeMenu}>Log In</a>
-                  <a className="header-cta" href="#overview" onClick={closeMenu}>Get Started <ArrowRight size={14} /></a>
+                  <a href="#final-cta" onClick={closeMenu}>Log In</a>
+                  <a className="header-cta" href="#final-cta" onClick={closeMenu}>Get Started <ArrowRight size={14} /></a>
                 </div>
               </nav>
             )}
@@ -93,10 +94,10 @@ function Index() {
                 When people leave, projects shouldn't lose their knowledge. QuickConnect captures scattered information, connects project context and makes every handover seamless.
               </p>
               <div className="hero-actions">
-                <a className="hero-button hero-button--primary" href="#overview">
+                <a className="hero-button hero-button--primary" href="#platform">
                   Explore QuickConnect <ArrowRight size={15} strokeWidth={2.2} />
                 </a>
-                <a className="hero-button hero-button--secondary" href="#overview">
+                <a className="hero-button hero-button--secondary" href="#how-it-works">
                   See How It Works <ArrowDown size={14} strokeWidth={2} />
                 </a>
               </div>
@@ -108,13 +109,7 @@ function Index() {
           </div>
         </section>
       </main>
-      <section className="overview-section" id="overview" aria-labelledby="overview-title">
-        <div className="overview-inner">
-          <p className="overview-eyebrow">THE WORK CONTINUES</p>
-          <h2 className="overview-title" id="overview-title">Knowledge shouldn't start over <span>when people move on.</span></h2>
-          <p className="overview-copy">Keep the decisions, discoveries and project context that help your team move forward—connected, clear and ready for whoever comes next.</p>
-        </div>
-      </section>
+      <HomepageSections />
     </>
   );
 }
