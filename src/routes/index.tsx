@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(() => typeof window !== "undefined" && window.scrollY > 24);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const heroStageRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
