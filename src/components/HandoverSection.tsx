@@ -185,12 +185,12 @@ export default function HandoverSection() {
       handoverSteps.length - 1,
       Math.max(0, Math.floor(latest * handoverSteps.length)),
     );
-    setActiveStep(nextStep);
+    setActiveStep((current) => current === nextStep ? current : nextStep);
   });
 
-  const progressHeight = useTransform(
+  const progressScale = useTransform(
     scrollYProgress,
-    (value) => `${Math.max(0, Math.min(1, value)) * 100}%`,
+    (value) => Math.max(0, Math.min(1, value)),
   );
 
   return (
@@ -222,8 +222,8 @@ export default function HandoverSection() {
               className="qc-handover__track-progress"
               style={
                 reducedMotion
-                  ? { height: "100%" }
-                  : { height: progressHeight }
+                  ? { scaleY: 1 }
+                  : { scaleY: progressScale }
               }
             />
           </div>
@@ -281,8 +281,8 @@ export default function HandoverSection() {
 
         .qc-handover__intro {
           position: sticky;
-          top: 20vh;
-          padding-top: 10vh;
+          top: clamp(112px, 14svh, 180px);
+          padding-top: 0;
         }
 
         .qc-handover__eyebrow {
@@ -331,8 +331,8 @@ export default function HandoverSection() {
 
         .qc-handover__track {
           position: absolute;
-          top: 37.5vh;
-          bottom: 37.5vh;
+          top: 37.5svh;
+          bottom: 37.5svh;
           left: 17px;
           width: 2px;
           overflow: visible;
@@ -347,6 +347,7 @@ export default function HandoverSection() {
           left: 0;
           width: 2px;
           border-radius: 99px;
+          transform-origin: top;
         }
 
         .qc-handover__track-base {
@@ -374,13 +375,13 @@ export default function HandoverSection() {
           grid-template-columns: 36px minmax(0, 1fr);
           align-items: start;
           gap: 24px;
-          min-height: 75vh;
-          padding: calc(37.5vh - 18px) 0 0;
+          min-height: 75svh;
+          padding: calc(37.5svh - 18px) 0 0;
           transform-origin: left center;
         }
 
         .qc-handover__step:last-child {
-          min-height: 75vh;
+          min-height: 75svh;
         }
 
         .qc-handover__node {
@@ -397,7 +398,6 @@ export default function HandoverSection() {
           font-size: 11px;
           font-weight: 700;
           line-height: 1;
-          will-change: box-shadow, background-color;
           transition: border-color .2s ease, box-shadow .2s ease;
         }
 
@@ -514,7 +514,7 @@ export default function HandoverSection() {
             font-size: 21px;
           }
 
-          .qc-handover__step-copy p {
+          .qc-handover__step-card p {
             font-size: 14px;
           }
         }
