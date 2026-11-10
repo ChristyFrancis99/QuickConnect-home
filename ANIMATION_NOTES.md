@@ -25,7 +25,7 @@ Platform cards use `calc(var(--qc-z-sticky) + cardIndex)` to keep all eight stic
 
 | Section | Target / range | Behavior |
 |---|---|---|
-| Hero globe | `.hero-scroll-stage`, `start start` → `end end`. The stage is 175svh on desktop (about 75svh of scroll at a 100svh viewport) and 160svh on mobile (about 60svh). | Progress 0 is fully assembled. Progress 1 is dispersed and faded. Panel position, rotation, opacity, and camera field-of-view are derived from the same progress value. Auto-rotation pauses while dragging and rendering pauses outside the viewport. |
+| Hero globe | `.hero-scroll-stage`, `start start` → `end end`. The stage is 175svh on desktop (about 75svh of scroll at a 100svh viewport) and 160svh on mobile (about 60svh). | Progress 0 is fully assembled. Progress 1 is dispersed and faded. Panel position, rotation, opacity, and camera field-of-view (40° → 100°, eased with panel separation) are derived from the same progress value. Auto-rotation pauses while dragging and rendering pauses outside the viewport. |
 | Solution story | `.qc-solution-scroll`, `start start` → `end end`; wrapper height 260svh (about 160svh of scroll at a 100svh viewport). | Four note cards and three dotted path segments reveal in sequence. The sticky stage releases at the wrapper end. Mobile and reduced-motion layouts are static and fully visible. |
 | Problem accordion | No scroll-linked range. | Three cards use a 4-second optional auto-cycle. Hover pauses it; a click or keyboard selection stops it. Arrow keys navigate. Mobile uses a vertical accordion. Reduced motion disables auto-cycle and collapses animation durations. |
 | Platform stack | `.qcp__stack`, `start start` → `end end`. Eight slots use 70svh card heights, 30svh spacing, and 30svh trailing stack space; the approximate target height is 800svh (about 700svh of scroll at a 100svh viewport). | As the next card enters, the previous card scales toward 0.93, tilts toward 5° on X, dims to 0.88 brightness, and shifts up 8px. Each slot has a unique ascending z-index. Mobile and reduced-motion layouts are non-sticky and static. |
@@ -33,7 +33,7 @@ Platform cards use `calc(var(--qc-z-sticky) + cardIndex)` to keep all eight stic
 
 ## Implementation notes and assumptions
 
-- The hero camera field-of-view interpolates from 40° to 83° as panels disperse. This keeps outward-moving panels within the camera frustum; the canvas itself also has 10% visual overflow room.
+- The hero camera field-of-view interpolates from 40° to 100° as panels disperse. This keeps outward-moving panels within the camera frustum; the canvas itself also has 10% visual overflow room.
 - Deterministic panel displacement and camera framing math live in `src/lib/globe-motion.ts`, separate from the Three.js renderer as required by `AGENTS.md`.
 - The globe uses React Three Fiber's lifecycle cleanup for its scene objects and renderer. Textures loaded with `useLoader` are shared/cached and are not manually disposed.
 - The Continuity cards' `View` action uses the optional `onViewClick` callback when provided; otherwise it scrolls to the existing `#how-it-works` timeline because there is no separate detail route in the current homepage.
