@@ -235,8 +235,8 @@ function PlatformStory() {
         <path ref={(node) => { pathRefs.current[1] = node; }} d="M 635 245 C 535 260, 465 300, 365 315" />
         <path ref={(node) => { pathRefs.current[2] = node; }} d="M 365 385 C 465 380, 535 438, 635 450" />
         <path ref={(node) => { pathRefs.current[3] = node; }} d="M 635 520 C 535 535, 465 575, 365 585" />
-        <path ref={(node) => { pathRefs.current[4] = node; }} d="M 365 655 C 465 650, 535 705, 635 720" />
-        <path ref={(node) => { pathRefs.current[5] = node; }} d="M 635 785 C 535 795, 465 830, 365 835" />
+        <path ref={(node) => { pathRefs.current[4] = node; }} d="M 365 655 C 465 660, 535 735, 635 755" />
+        <path ref={(node) => { pathRefs.current[5] = node; }} d="M 365 755 C 465 760, 535 805, 635 820" />
         <path ref={(node) => { pathRefs.current[6] = node; }} d="M 365 835 C 465 850, 535 870, 635 875" />
       </svg>
       {capabilities.map((item, index) => {
