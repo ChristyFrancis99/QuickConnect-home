@@ -28,7 +28,7 @@ export function getPanelMotion(index: number, progress: number): PanelMotion {
     y: directionY * distance * eased,
     z: directionZ * distance * eased,
     rotationX: Math.sin(seed * 2.17) * 1.35 * eased,
-    rotationY: Math.cos(seed * 1.43) * 0.75 * eased,
+    rotationY: Math.cos(seed * 1.43) * 1.35 * eased,
     rotationZ: Math.sin(seed * 0.87) * 1.05 * eased,
     opacity: fade,
   };
@@ -37,5 +37,5 @@ export function getPanelMotion(index: number, progress: number): PanelMotion {
 export function getGlobeCameraFov(progress: number): number {
   const t = clampProgress(progress);
   const eased = t * t * (3 - 2 * t);
-  return 40 + Math.sqrt(eased) * 60;
+  return 40 + Math.sqrt(eased) * 18;
 }
