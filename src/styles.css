@@ -532,10 +532,17 @@
 /* ----------------------------------------------------
    Solution Story: Pinned Notes & Push-Pin Sequence
 ---------------------------------------------------- */
-.qc-solution-stage {
+.qc-solution-scroll {
   position: relative;
+  height: 260svh;
+}
+
+.qc-solution-stage {
+  position: sticky;
+  top: calc(var(--qc-nav-height) + 24px);
   width: min(100%, 1080px);
-  height: 590px;
+  height: min(590px, calc(100svh - var(--qc-nav-height) - 48px));
+  min-height: 420px;
   margin: 0 auto;
   isolation: isolate;
 }
@@ -875,7 +882,7 @@
   }
   .hero-title { font-size: 44px; }
   .hero-description { font-size: 15px; }
-  .qc-solution-stage { height: 560px; }
+  .qc-solution-stage { height: min(560px, calc(100svh - var(--qc-nav-height) - 48px)); min-height: 420px; }
   .qc-pin-note { width: 39%; }
   .qc-pin-note p { font-size: 11px; }
   .qc-pin-note__paper { min-height: 205px; }
@@ -915,10 +922,14 @@
   .qc-section-copy { margin-top: 14px; font-size: 14px; line-height: 1.7; }
 
   /* Stack Solution Notes on Mobile */
+  .qc-solution-scroll { height: auto; }
   .qc-solution-stage {
+    position: relative;
+    top: auto;
     display: grid;
     width: 100%;
     height: auto;
+    min-height: 0;
     grid-template-columns: 1fr;
     gap: 24px;
     padding: 15px 4px 5px;
@@ -936,8 +947,9 @@
     width: min(100% - 16px, 440px);
     min-height: 0;
     margin-inline: auto;
-    opacity: 1;
-    visibility: visible;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
     filter: drop-shadow(0 14px 18px rgba(37, 37, 37, 0.10));
   }
   .qc-pin-note__paper,
@@ -975,6 +987,6 @@
     transition-duration: 0.01ms !important;
   }
   .qc-reveal { opacity: 1; transform: none; transition: none; }
-  .qc-pin-note { opacity: 1; visibility: visible; transform: none; }
+  .qc-pin-note { opacity: 1 !important; visibility: visible !important; transform: none !important; }
   .qc-button { transition: none; }
 }
