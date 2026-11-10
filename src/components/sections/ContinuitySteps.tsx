@@ -180,7 +180,7 @@ export default function ContinuitySteps() {
               ))}
             </svg>
           )}
-          <ol ref={listRef} className="relative z-[1] flex list-none flex-col gap-[106px] p-0 md:gap-[clamp(118px,16vh,160px)] md:px-[8%]">
+          <ol ref={listRef} className="relative z-[1] flex list-none flex-col gap-[106px] p-0 md:gap-[clamp(280px,40vh,380px)] md:px-[8%]">
             {steps.map((step, index) => (
               <StepCard key={step.number} step={step} index={index} progress={progress} reduced={reduced} />
             ))}
