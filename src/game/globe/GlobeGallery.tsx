@@ -181,17 +181,26 @@ function GlobeMotion({
   drag: RefObject<{ active: boolean; velocity: number }>;
   reducedMotion: RefObject<boolean>;
 }) {
-  const { size } = useThree();
+  const { size, camera } = useThree();
 
   useFrame((_, delta) => {
     const globe = globeRef.current;
     if (!globe) return;
     const isMobile = size.width <= 680;
-    globe.position.set(isMobile ? 0 : 1.85, isMobile ? -1.15 : 0, 0);
+    globe.position.set(0, 0, 0);
     globe.scale.setScalar(isMobile ? 0.72 : 1);
+    const breakup = reducedMotion.current ? 0 : progress.get();
+
+    if (camera instanceof THREE.PerspectiveCamera) {
+      const targetFov = 40 + breakup * 43;
+      if (Math.abs(camera.fov - targetFov) > 0.02) {
+        camera.fov = targetFov;
+        camera.updateProjectionMatrix();
+      }
+    }
+
     if (reducedMotion.current) return;
     const dt = Math.min(delta, 0.05);
-    const breakup = progress.get();
 
     if (!drag.current.active) {
       globe.rotation.y += (0.11 * (1 - breakup) + drag.current.velocity) * dt;
