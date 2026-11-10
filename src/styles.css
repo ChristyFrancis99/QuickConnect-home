@@ -53,6 +53,12 @@
   --qc-cream: #F4E9D5;
   --qc-off-white: #F5F4F0;
   --qc-charcoal: #252525;
+  --qc-nav-height: 80px;
+  --qc-z-background: 0;
+  --qc-z-content: 10;
+  --qc-z-sticky: 20;
+  --qc-z-nav: 50;
+  --qc-z-modal: 100;
 
   /* Backward compatibility aliases */
   --quickflow-gold: var(--qc-gold);
@@ -65,7 +71,7 @@
   * { border-color: var(--color-border); }
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   body {
     margin: 0;
@@ -73,16 +79,16 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   button, a { -webkit-tap-highlight-color: transparent; }
-  ::selection { background: var(--qc-gold); color: var(--qc-charcoal); }
+  ::selection { background: var(--qc-gold); color: var(--qc-charcoal); }\n  :where(#top, #platform, #how-it-works, #use-cases, #problem, #solution, #final-cta, #about) { scroll-margin-top: calc(var(--qc-nav-height) + 16px); }\n  :where(a, button, [tabindex]):focus-visible { outline: 2px solid var(--qc-lavender); outline-offset: 3px; }
 }
 
 /* ----------------------------------------------------
    Hero & Navigation
 ---------------------------------------------------- */
-.hero-scroll-stage { position: relative; height: 175svh; }
+.hero-scroll-stage { position: relative; height: 175svh; scroll-margin-top: var(--qc-nav-height); }
 .hero-sticky {
   position: sticky;
   top: 0;
@@ -101,7 +107,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: var(--qc-z-nav);
   width: 100%;
   height: 80px;
   display: flex;
@@ -267,14 +273,14 @@
   width: min(100% - 80px, 1280px);
   min-height: 0;
   flex: 1;
-  grid-template-columns: 50fr 50fr;
+  grid-template-columns: 45fr 55fr;
   align-items: center;
   margin-inline: auto;
   padding-top: 80px;
 }
 .hero-copy {
   position: relative;
-  z-index: 2;
+  z-index: var(--qc-z-content);
   max-width: 560px;
   padding-block: 24px;
 }
@@ -376,15 +382,14 @@
 }
 
 .hero-visual {
-  position: absolute;
-  z-index: 3;
-  top: 80px;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
+  z-index: var(--qc-z-background);
+  grid-column: 2;
+  grid-row: 1;
   width: 100%;
-  height: calc(100% - 80px);
-  overflow: hidden;
+  height: 100%;
+  min-height: 0;
+  overflow: visible;
   pointer-events: none;
 }
 .globe-interaction { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
@@ -400,12 +405,12 @@
   cursor: grab;
 }
 .globe-drag-hit-area:active { cursor: grabbing; }
-.globe-canvas { position: absolute !important; inset: 0; }
+.globe-canvas { position: absolute !important; inset: -10% !important; width: 120% !important; height: 120% !important; pointer-events: none; }
 .globe-orbit {
   position: absolute;
   z-index: 0;
   top: 50%;
-  left: 70%;
+  left: 50%;
   width: 81%;
   aspect-ratio: 1;
   border: 1px solid rgba(198, 154, 77, 0.28);
@@ -863,7 +868,7 @@
     width: min(100% - 48px, 1200px);
   }
   .hero-main {
-    grid-template-columns: 55fr 45fr;
+    grid-template-columns: 45fr 55fr;
   }
   .hero-title { font-size: 44px; }
   .hero-description { font-size: 15px; }
@@ -875,8 +880,8 @@
 
 @media (max-width: 768px) {
   .hero-scroll-stage { height: 160svh; }
-  .hero-sticky { min-height: 0; height: 100svh; }
-  .hero-header { height: 68px; }
+  .hero-sticky { min-height: max(680px, 100svh); height: 100svh; }
+  .hero-header { height: 68px; --qc-nav-height: 68px; }
   .hero-header__inner { width: calc(100% - 36px); height: 68px; }
   .desktop-nav, .header-actions { display: none; }
   .mobile-menu-toggle { display: grid; }
@@ -885,7 +890,7 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto minmax(200px, 1fr);
     align-content: start;
-    padding-top: clamp(24px, 5vh, 44px);
+    padding-top: calc(68px + clamp(24px, 5svh, 44px));
   }
   .hero-copy { padding: 0; }
   .hero-eyebrow { margin-bottom: 14px; font-size: 10px; }
@@ -894,9 +899,9 @@
   .hero-actions { gap: 10px; margin-top: 22px; }
   .hero-button { min-height: 46px; font-size: 12px; padding: 0 16px; }
   .hero-support { margin-top: 20px; font-size: 11px; }
-  .hero-visual { top: 68px; height: calc(100% - 68px); }
-  .globe-orbit { top: 68%; left: 50%; }
-  .globe-drag-hit-area { top: 48%; right: 8%; width: 84%; height: 43%; }
+  .hero-visual { grid-column: 1; grid-row: 2; min-height: 230px; height: 100%; }
+  .globe-orbit { top: 50%; left: 50%; }
+  .globe-drag-hit-area { top: 0; right: 8%; width: 84%; height: 100%; }
   .globe-caption { right: 2%; bottom: 5%; font-size: 8px; }
   .hero-footer { width: calc(100% - 36px); min-height: 44px; flex-basis: 44px; font-size: 9px; }
 
