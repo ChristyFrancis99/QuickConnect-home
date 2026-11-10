@@ -202,7 +202,11 @@ function GlobeMotion({
   return null;
 }
 
-type GlobeGalleryProps = {\n  scrollTarget: RefObject<HTMLElement | null>;\n};\n\nexport function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
+type GlobeGalleryProps = {
+  scrollTarget: RefObject<HTMLElement | null>;
+};
+
+export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const globeRef = useRef<THREE.Group>(null);
   const progress = useRef(0);
@@ -285,7 +289,8 @@ type GlobeGalleryProps = {\n  scrollTarget: RefObject<HTMLElement | null>;\n};\n
       <div className="globe-orbit globe-orbit--one" aria-hidden="true" />
       <div className="globe-orbit globe-orbit--two" aria-hidden="true" />
       <Canvas
-        frameloop={isInView ? "always" : "never"}\n        dpr={[1, 1.5]}
+        frameloop={isInView ? "always" : "never"}
+        dpr={[1, 1.5]}
         camera={{ position: [0, 0, 7.2], fov: 40 }}
         gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
         className="globe-canvas"
