@@ -9,7 +9,7 @@ export type ContinuityCard = {
 };
 
 type ContinuitySectionProps = {
-  onViewClick?: (card: ContinuityCard) => void;
+  onViewClick?: ((card: ContinuityCard) => void) | undefined;
 };
 
 const continuityCards: ContinuityCard[] = [
