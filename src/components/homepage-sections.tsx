@@ -2,7 +2,6 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  Activity,
   ArrowRight,
   ArrowUpRight,
   BrainCircuit,
@@ -17,10 +16,10 @@ import {
   MessageSquareText,
   RefreshCw,
   ShieldCheck,
-  Users,
   Workflow,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
+import PlatformSection from "@/components/PlatformSection";
 
 function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -59,17 +58,6 @@ const steps = [
   { number: "02", title: "Connect", copy: "Organize information into meaningful project context.", icon: Link2 },
   { number: "03", title: "Handover", copy: "Transfer structured knowledge to the incoming team member.", icon: RefreshCw },
   { number: "04", title: "Verify", copy: "Review completeness and ensure the new owner is ready to take over.", icon: CheckCircle2 },
-];
-
-const capabilities = [
-  { icon: FolderKanban, title: "Project Management", detail: "Keep project work and ownership organized." },
-  { icon: FileStack, title: "Knowledge Sources", detail: "Bring key resources and reference material together." },
-  { icon: BrainCircuit, title: "AI Analysis", detail: "Make project information easier to understand and summarize." },
-  { icon: ClipboardCheck, title: "Structured Handovers", detail: "Give every transition a clear record and next steps." },
-  { icon: ShieldCheck, title: "Verification", detail: "Review what has been shared and what is still missing." },
-  { icon: Activity, title: "Readiness Tracking", detail: "Make handover progress easier to follow." },
-  { icon: Users, title: "Team Management", detail: "Keep people and responsibilities connected." },
-  { icon: Workflow, title: "Activity Tracking", detail: "Maintain visibility into important project updates." },
 ];
 
 const useCases = [
@@ -169,104 +157,6 @@ function SolutionStory() {
 }
 
 
-function PlatformStory() {
-  const stageRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLArticleElement | null)[]>([]);
-  const pathRefs = useRef<(SVGPathElement | null)[]>([]);
-
-  useEffect(() => {
-    const stage = stageRef.current;
-    const cards = cardRefs.current.filter(Boolean) as HTMLArticleElement[];
-    const paths = pathRefs.current.filter(Boolean) as SVGPathElement[];
-    if (!stage || cards.length !== 8 || paths.length !== 7) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.matchMedia("(max-width: 759px)").matches) return;
-
-    gsap.registerPlugin(ScrollTrigger);
-    const context = gsap.context(() => {
-      cards.forEach((card, index) => {
-        gsap.set(card, {
-          autoAlpha: 0,
-          y: 30,
-          scale: 0.88,
-          rotation: index % 2 === 0 ? -4 : 4,
-          transformOrigin: "50% 50%",
-        });
-      });
-      paths.forEach((path) => {
-        const length = path.getTotalLength();
-        gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
-      });
-
-      const timeline = gsap.timeline({
-        defaults: { ease: "power2.out" },
-        scrollTrigger: {
-          trigger: stage,
-          start: "top 14%",
-          end: "+=4800",
-          pin: stage,
-          scrub: 0.85,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      timeline.to(cards[0], { autoAlpha: 1, y: 0, scale: 1, rotation: -2, duration: 0.65 });
-      for (let index = 0; index < 7; index += 1) {
-        timeline.to(paths[index], { strokeDashoffset: 0, duration: 0.7, ease: "none" }, ">-0.08");
-        timeline.to(cards[index + 1], {
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          rotation: index % 2 === 0 ? 2 : -2,
-          duration: 0.65,
-        }, ">-0.08");
-      }
-      timeline.to({}, { duration: 0.35 });
-      ScrollTrigger.refresh();
-    }, stage);
-
-    return () => context.revert();
-  }, []);
-
-  return (
-    <div className="qc-platform-story" ref={stageRef}>
-      <svg className="qc-platform-paths" viewBox="0 0 1000 1100" preserveAspectRatio="none" aria-hidden="true">
-        <path ref={(node) => { pathRefs.current[0] = node; }} d="M 350 105 C 455 75, 545 150, 650 220" />
-        <path ref={(node) => { pathRefs.current[1] = node; }} d="M 650 235 C 545 265, 455 310, 350 355" />
-        <path ref={(node) => { pathRefs.current[2] = node; }} d="M 350 370 C 455 345, 545 425, 650 485" />
-        <path ref={(node) => { pathRefs.current[3] = node; }} d="M 650 500 C 545 530, 455 575, 350 620" />
-        <path ref={(node) => { pathRefs.current[4] = node; }} d="M 350 635 C 455 610, 545 690, 650 750" />
-        <path ref={(node) => { pathRefs.current[5] = node; }} d="M 650 765 C 545 795, 455 840, 350 885" />
-        <path ref={(node) => { pathRefs.current[6] = node; }} d="M 350 900 C 455 875, 545 960, 650 1020" />
-      </svg>
-      {capabilities.map((item, index) => {
-        const Icon = item.icon;
-        const side = index % 2 === 0 ? "left" : "right";
-        const pin = ["coral", "blue", "violet", "blue"][index % 4];
-        const paper = ["peach", "blue", "violet", "blue"][index % 4];
-        return (
-          <article
-            className={`qc-platform-note qc-platform-note--${side} qc-platform-note--${index + 1}`}
-            key={item.title}
-            ref={(node) => { cardRefs.current[index] = node; }}
-          >
-            <span className={`qc-pin qc-pin--${pin}`} aria-hidden="true"><i /></span>
-            <div className={`qc-pin-note__paper qc-pin-note__paper--${paper}`}>
-              <div className="qc-pin-note__meta"><span>0{index + 1}</span><Icon size={19} strokeWidth={1.7} /></div>
-              <h3>{item.title}</h3>
-              <p>{item.detail}</p>
-            </div>
-          </article>
-        );
-      })}
-      <div className="qc-story-caption" aria-hidden="true">
-        <span className="qc-story-caption__dot" />
-        <span>Every detail, connected.</span>
-      </div>
-    </div>
-  );
-}
-
 function SectionHeading({ eyebrow, title, copy, align = "left", id }: { eyebrow: string; title: string; copy?: string; align?: "left" | "center"; id?: string }) {
   return (
     <div className={`qc-section-heading qc-section-heading--${align}`}>
@@ -354,21 +244,7 @@ export function HomepageSections() {
         </div>
       </section>
 
-      <section className="qc-section qc-platform" id="platform" aria-labelledby="platform-title">
-        <div className="qc-container">
-          <Reveal>
-            <SectionHeading
-              eyebrow="THE PLATFORM"
-              id="platform-title"
-              title="Everything Your Team Needs to Stay Connected."
-              copy="A connected set of capability areas for organizing project knowledge, managing transitions, and keeping teams aligned."
-              align="center"
-            />
-          </Reveal>
-          <PlatformStory />
-          <p className="qc-platform-footnote">Capability overview — AI analysis and workflow tools are presented as product areas, not as a claim of live integrations on this landing page.</p>
-        </div>
-      </section>
+      <PlatformSection />
 
       <section className="qc-section qc-use-cases" id="use-cases" aria-labelledby="use-cases-title">
         <div className="qc-container">
