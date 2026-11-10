@@ -212,7 +212,7 @@ function GlobeMotion({
 }
 
 type GlobeGalleryProps = {
-  scrollTarget: RefObject<HTMLElement | null>;
+  scrollTarget: RefObject<HTMLMainElement | null>;
 };
 
 export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
@@ -224,7 +224,7 @@ export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
   const reducedMotion = useRef(prefersReducedMotion);
   const [isInView, setIsInView] = useState(true);
   const { scrollYProgress } = useScroll({
-    target: scrollTarget,
+    target: scrollTarget as RefObject<HTMLElement | null>,
     offset: ["start start", "end end"],
   });
   const drag = useRef({ active: false, velocity: 0, x: 0, y: 0 });
