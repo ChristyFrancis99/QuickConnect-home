@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
-import { useScroll, type MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import * as THREE from "three";
 import { TextureLoader } from "three";
 import { getGlobeCameraFov, getPanelMotion } from "@/lib/globe-motion";
@@ -228,6 +228,7 @@ export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
     offset: ["start start", "end end"],
   });
   const drag = useRef({ active: false, velocity: 0, x: 0, y: 0 });
+  const explosionScale = useTransform(scrollYProgress, [0, 0.12, 0.55, 1], [1, 1.28, 2.15, 2.3]);
 
   const handlePointerDown = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "mouse" && event.button !== 0) return;
@@ -305,6 +306,7 @@ export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
       />
       <div className="globe-orbit globe-orbit--one" aria-hidden="true" />
       <div className="globe-orbit globe-orbit--two" aria-hidden="true" />
+      <motion.div className="globe-canvas-expansion" style={{ scale: prefersReducedMotion ? 1 : explosionScale }}>
       <Canvas
         frameloop={isInView ? (prefersReducedMotion ? "demand" : "always") : "never"}
         dpr={[1, 1.25]}
@@ -322,6 +324,7 @@ export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
         </group>
         <GlobeMotion globeRef={globeRef} progress={scrollYProgress} drag={drag} reducedMotion={reducedMotion} />
       </Canvas>
+      </motion.div>
     </div>
   );
 }
