@@ -35,7 +35,8 @@ Platform cards use `calc(var(--qc-z-sticky) + cardIndex)` to keep all eight stic
 
 - The hero camera field-of-view interpolates from 40° to 100° as panels disperse. This keeps outward-moving panels within the camera frustum; the canvas itself also has 10% visual overflow room.
 - Deterministic panel displacement and camera framing math live in `src/lib/globe-motion.ts`, separate from the Three.js renderer as required by `AGENTS.md`.
-- The globe uses React Three Fiber's lifecycle cleanup for its scene objects and renderer. Textures loaded with `useLoader` are shared/cached and are not manually disposed.
+- The globe uses React Three Fiber's lifecycle cleanup for its scene objects and renderer. Textures loaded with `useLoader` are shared/cached and are not manually disposed. Its render pixel ratio is capped at 1.25 for lower GPU cost.
 - The Continuity cards' `View` action uses the optional `onViewClick` callback when provided; otherwise it scrolls to the existing `#how-it-works` timeline because there is no separate detail route in the current homepage.
 - The mobile hero uses content first and the globe below it. Desktop and tablet retain the left-content/right-globe 45/55 split.
+- The existing seven globe PNGs are approximately 1.1–1.6 MB each, and the logo PNG is approximately 1.1 MB. They were preserved unchanged to avoid altering visual assets; image-format/size optimization remains a separate asset task.
 - No new dependencies, routes, copy, fonts, or brand colors were added.
