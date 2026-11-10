@@ -430,7 +430,7 @@ export default function PlatformSection() {
           position: relative;
           isolation: isolate;
           width: 100%;
-          padding: clamp(80px, 10vw, 140px) 20px 8vh;
+          padding: clamp(80px, 10vw, 140px) 20px 8svh;
           color: var(--qc-charcoal);
           font-family: "Plus Jakarta Sans", sans-serif;
           scroll-margin-top: 20px;
@@ -494,7 +494,7 @@ export default function PlatformSection() {
         .qcp__card-slot {
           position: sticky;
           top: calc(var(--qc-nav-height) + 16px);
-          height: min(70svh, 620px);
+          height: min(70svh, 760px);
           min-height: min(70svh, 460px);
           margin-bottom: 30svh;
           perspective: 1200px;
@@ -863,7 +863,7 @@ export default function PlatformSection() {
         }
 
         @media (max-width: 760px) {
-          .qcp { padding: 75px 14px 5vh; }
+          .qcp { padding: 75px 14px 5svh; }
           .qcp__intro { margin-bottom: 45px; }
           .qcp__intro h2 br { display: none; }
           .qcp__intro p { font-size: 14px; }
@@ -924,7 +924,26 @@ export default function PlatformSection() {
         }
 
         @media (prefers-reduced-motion: reduce) {
+          .qcp__stack {
+            padding-bottom: 0;
+          }
+
+          .qcp__card-slot {
+            position: relative;
+            top: auto;
+            height: auto;
+            min-height: 0;
+            margin-bottom: 20px;
+            perspective: none;
+          }
+
+          .qcp__card-slot:last-child {
+            margin-bottom: 0;
+          }
+
           .qcp__card {
+            height: auto;
+            min-height: 390px;
             transform: none !important;
             filter: none !important;
           }
