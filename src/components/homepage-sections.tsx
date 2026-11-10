@@ -56,13 +56,6 @@ const problems = [
   { icon: FileStack, number: "03", title: "Unstructured Handovers", copy: "Critical information gets transferred through incomplete documents, rushed meetings, and informal conversations.", tone: "ink" },
 ];
 
-const solutions = [
-  { icon: FolderKanban, title: "Centralized Knowledge", copy: "Bring project information, documents, decisions, and resources into one organized space." },
-  { icon: BrainCircuit, title: "AI-Powered Analysis", copy: "Support teams in understanding, summarizing, and organizing project knowledge with AI-assisted analysis." },
-  { icon: ClipboardCheck, title: "Structured Handovers", copy: "Create clear handover records that help incoming team members understand responsibilities and context." },
-  { icon: ShieldCheck, title: "Verification & Readiness", copy: "Track handover progress and identify missing information before responsibilities are transferred." },
-];
-
 const steps = [
   { number: "01", title: "Capture", copy: "Collect project documents, resources, decisions, and important information.", icon: FolderOpen },
   { number: "02", title: "Connect", copy: "Organize information into meaningful project context.", icon: Link2 },
