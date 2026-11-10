@@ -37,7 +37,7 @@ export default function ProblemSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [mobile, setMobile] = useState(false);
+  const [mobile, setMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches);
   const reduceMotion = useReducedMotion();
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const reduced = reduceMotion ?? false;
@@ -100,7 +100,7 @@ export default function ProblemSection() {
       .qc-problem-card__collapsed{display:block;overflow:hidden;margin-top:24px;max-width:100%;font-size:20px;line-height:1.3;font-weight:650;white-space:nowrap;text-overflow:ellipsis;color:var(--qc-charcoal)}
       .qc-problem-card__expanded{display:flex;flex:1;align-items:center;gap:18px;min-width:0;min-height:0;padding-top:12px}
       .qc-problem-card__copy{display:flex;flex:1 1 48%;flex-direction:column;align-items:flex-start;min-width:0}
-      .qc-problem-card__title{margin:0;max-width:100%;font-size:23px;line-height:1.22;letter-spacing:-.03em;font-weight:700;color:var(--qc-charcoal)}
+      .qc-problem-card__title{margin:0;max-width:100%;font-size:clamp(18px,1.8vw,22px);line-height:1.22;letter-spacing:-.03em;font-weight:700;color:var(--qc-charcoal);white-space:nowrap}
       .qc-problem-card__description{margin:12px 0 0;max-width:340px;color:rgba(37,37,37,.74);font-size:15px;line-height:1.68;font-weight:400}
       .qc-problem-card__action{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;margin-top:20px;border-radius:50%;background:var(--qc-gold);color:#252525;transition:transform .2s ease}
       .qc-problem-card__action:hover{transform:scale(1.06)}
@@ -134,14 +134,14 @@ export default function ProblemSection() {
         .qc-problem{padding:68px 18px}.qc-problem__header{align-items:flex-start;flex-direction:column;gap:18px;margin-bottom:28px}
         .qc-problem__title{font-size:clamp(32px,8.5vw,42px)}.qc-problem__intro{margin-top:14px;font-size:15px;line-height:1.7}
         .qc-problem__cards{flex-direction:column;gap:12px}.qc-problem-card{flex:0 0 auto;width:100%;height:74px;min-height:74px;padding:17px 20px}
-        .qc-problem-card[data-active=true]{height:330px}.qc-problem-card__collapsed{margin-top:8px;font-size:16px}
+        .qc-problem-card[data-active=true]{height:auto;min-height:330px}.qc-problem-card__collapsed{margin-top:8px;font-size:16px}
         .qc-problem-card[data-active=true] .qc-problem-card__collapsed{display:none}
         .qc-problem-card__expanded{gap:12px;padding-top:9px}.qc-problem-card__copy{flex-basis:54%}
-        .qc-problem-card__title{font-size:20px}.qc-problem-card__description{margin-top:9px;font-size:13px;line-height:1.55}
+        .qc-problem-card__copy{flex-basis:62%}.qc-problem-card__title{font-size:clamp(16px,4.5vw,18px)}.qc-problem-card__description{margin-top:9px;font-size:13px;line-height:1.55}
         .qc-problem-card__action{width:34px;height:34px;margin-top:14px}.qc-problem-art{flex-basis:46%;min-width:0;height:180px;border-radius:17px}
         .qc-problem-art svg{width:20px;height:20px}.qc-problem-card__small-action{width:34px;height:34px}
       }
-      @media(max-width:390px){.qc-problem-card[data-active=true]{height:360px}.qc-problem-card__expanded{align-items:flex-start;flex-direction:column;justify-content:center}.qc-problem-card__copy{flex:0 0 auto;width:100%}.qc-problem-art{flex:0 0 auto;width:100%;height:112px}.qc-problem-card__action{position:absolute;right:0;bottom:0;margin:0}}
+      @media(max-width:390px){.qc-problem-card[data-active=true]{min-height:360px}.qc-problem-card__expanded{align-items:flex-start;flex-direction:column;justify-content:center}.qc-problem-card__copy{flex:0 0 auto;width:100%}.qc-problem-card__title{font-size:19px}.qc-problem-art{flex:0 0 auto;width:100%;height:112px}.qc-problem-card__action{position:absolute;right:0;bottom:0;margin:0}}
       @media(prefers-reduced-motion:reduce){.qc-problem *,.qc-problem *:before,.qc-problem *:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
     `}</style>
     <div className="qc-problem__inner">
@@ -170,7 +170,7 @@ export default function ProblemSection() {
             onMouseEnter={()=>{setPaused(true);choose(index)}}
             onFocus={()=>setPaused(true)} onClick={()=>choose(index,true)}
             onKeyDown={event=>onKeyDown(event,index)}
-            animate={{flexGrow:mobile?0:(active?2.2:1),height:mobile?(active?(window.innerWidth<=390?360:330):74):340}}
+            animate={{ flexGrow: mobile ? 0 : active ? 2.2 : 1, height: mobile ? (active ? "auto" : 74) : 340 }}
             transition={reduced?{duration:0}:{duration:.6,ease:[.22,1,.36,1]}}>
             <span className="qc-problem-card__wash" /><div className="qc-problem-card__inner">
               <span className="qc-problem-card__top"><span className="qc-problem-card__index">{card.number}</span>
