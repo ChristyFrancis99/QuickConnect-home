@@ -307,7 +307,7 @@ export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
       <div className="globe-orbit globe-orbit--two" aria-hidden="true" />
       <Canvas
         frameloop={isInView ? (prefersReducedMotion ? "demand" : "always") : "never"}
-        dpr={[1, 1.5]}
+        dpr={[1, 1.25]}
         camera={{ position: [0, 0, 7.2], fov: 40 }}
         gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
         className="globe-canvas"
