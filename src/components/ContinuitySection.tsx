@@ -118,7 +118,7 @@ function ContinuityCardView({
       aria-labelledby={`qc-continuity-title-${card.index}`}
       initial={reduceMotion ? false : { opacity: 0, y: 24 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
+      viewport={{ once: false, amount: 0.18 }}
       transition={{ duration: 0.55, delay: reduceMotion ? 0 : position * 0.1, ease: [0.22, 1, 0.36, 1] }}
       whileHover={reduceMotion ? undefined : { y: -6, transition: { duration: 0.22 } }}
     >
@@ -301,13 +301,6 @@ export default function ContinuitySection({ onViewClick }: ContinuitySectionProp
           font-weight: 700;
           letter-spacing: .16em;
           text-transform: uppercase;
-        }
-
-        .qc-continuity__eyebrow-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: var(--qc-gold);
         }
 
         .qc-continuity__header h2 {
@@ -672,7 +665,6 @@ export default function ContinuitySection({ onViewClick }: ContinuitySectionProp
       <div className="qc-continuity__inner">
         <header className="qc-continuity__header">
           <span className="qc-continuity__eyebrow">
-            <span className="qc-continuity__eyebrow-dot" aria-hidden="true" />
             Knowledge continuity
           </span>
           <h2 id="qc-continuity-heading">Knowledge Continuity Across Every Transition.</h2>
