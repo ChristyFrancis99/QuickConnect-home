@@ -33,7 +33,8 @@ describe("globe camera framing", () => {
   });
 
   it("widens the view as panels disperse and clamps out-of-range progress", () => {
-    expect(getGlobeCameraFov(0.5)).toBeGreaterThan(80);\n    expect(getGlobeCameraFov(1)).toBe(100);
+    expect(getGlobeCameraFov(0.5)).toBeGreaterThan(80);
+    expect(getGlobeCameraFov(1)).toBe(100);
     expect(getGlobeCameraFov(-1)).toBe(40);
     expect(getGlobeCameraFov(2)).toBe(100);
   });
