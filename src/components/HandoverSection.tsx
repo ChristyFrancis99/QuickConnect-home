@@ -91,6 +91,24 @@ function HandoverStep({
     damping: 24,
     mass: 0.45,
   });
+  const nodeBackground = useTransform(fill, (value) =>
+    value > 0.5 ? "var(--qc-handover-gold)" : "transparent",
+  );
+  const nodeBorder = useTransform(fill, (value) =>
+    value > 0.5 ? "var(--qc-handover-gold)" : "rgba(37,37,37,0.25)",
+  );
+  const nodeColor = useTransform(fill, (value) =>
+    value > 0.5 ? "#FFFFFF" : "#77736C",
+  );
+  const nodeShadow = useTransform(
+    glow,
+    (value) => `0 0 0 ${6 * value}px rgba(198,154,77,${0.2 * value})`,
+  );
+  const descriptionOpacity = useTransform(
+    progress,
+    [segmentStart, segmentMiddle, segmentEnd],
+    index === 0 ? [0.7, 0.7, 0.55] : [0.28, 0.7, 0.55],
+  );
   const textColor = useTransform(
     progress,
     [segmentStart, segmentMiddle, segmentEnd],
