@@ -213,6 +213,25 @@ export default function HandoverSection() {
             A simple, repeatable flow helps teams move from scattered
             information to a confident transition.
           </p>
+          <figure className="qc-handover__visual">
+            <img
+              src="https://images.pexels.com/photos/7643742/pexels-photo-7643742.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Colleagues reviewing project information together on a laptop"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <span>BETTER CONTEXT. STRONGER TEAMS.</span>
+              <a
+                href="https://www.pexels.com/photo/a-team-looking-at-a-laptop-and-collaborating-7643742/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="View photo source on Pexels"
+              >
+                Photo: MART PRODUCTION / Pexels
+              </a>
+            </figcaption>
+          </figure>
         </header>
 
         <div className="qc-handover__timeline">
@@ -322,6 +341,69 @@ export default function HandoverSection() {
           font-size: 16px;
           font-weight: 400;
           line-height: 1.75;
+        }
+
+        .qc-handover__visual {
+          position: relative;
+          width: min(100%, 470px);
+          height: clamp(190px, 22vw, 250px);
+          margin: 30px 0 0;
+          overflow: hidden;
+          border: 5px solid rgba(255, 255, 255, .78);
+          border-radius: 22px;
+          background: var(--qc-handover-cream);
+          box-shadow: 0 18px 42px rgba(37, 37, 37, .10), 0 3px 12px rgba(198, 154, 77, .10);
+        }
+
+        .qc-handover__visual::after {
+          content: "";
+          position: absolute;
+          inset: 35% 0 0;
+          background: linear-gradient(180deg, transparent 0%, rgba(28, 27, 25, .72) 100%);
+          pointer-events: none;
+        }
+
+        .qc-handover__visual img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center 46%;
+          filter: saturate(.78) contrast(1.02);
+          transition: transform .65s cubic-bezier(.2, .7, .2, 1);
+        }
+
+        .qc-handover__visual:hover img {
+          transform: scale(1.035);
+        }
+
+        .qc-handover__visual figcaption {
+          position: absolute;
+          z-index: 1;
+          right: 16px;
+          bottom: 14px;
+          left: 16px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 12px;
+          color: #fff;
+        }
+
+        .qc-handover__visual figcaption span {
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: .13em;
+          line-height: 1.4;
+        }
+
+        .qc-handover__visual figcaption a {
+          color: rgba(255, 255, 255, .86);
+          font-size: 9px;
+          line-height: 1.4;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          white-space: nowrap;
         }
 
         .qc-handover__timeline {
@@ -488,6 +570,12 @@ export default function HandoverSection() {
           .qc-handover__subtext {
             margin-top: 17px;
             font-size: 15px;
+          }
+
+          .qc-handover__visual {
+            width: 100%;
+            height: clamp(190px, 58vw, 250px);
+            margin-top: 26px;
           }
 
           .qc-handover__track {
