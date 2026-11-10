@@ -53,10 +53,10 @@ const steps = [
 ];
 
 const solutionNotes = [
-  { number: "01", title: "Centralized Knowledge", copy: "Bring project information, documents, decisions, and resources into one organized space.", icon: FolderKanban, pin: "coral", paper: "peach", side: "left" },
-  { number: "02", title: "AI-Powered Analysis", copy: "Support teams in understanding, summarizing, and organizing project knowledge with AI-assisted analysis.", icon: BrainCircuit, pin: "blue", paper: "blue", side: "right" },
-  { number: "03", title: "Structured Handovers", copy: "Create clear handover records that help incoming team members understand responsibilities and context.", icon: ClipboardCheck, pin: "violet", paper: "violet", side: "left" },
-  { number: "04", title: "Verification & Readiness", copy: "Track handover progress and identify missing information before responsibilities are transferred.", icon: ShieldCheck, pin: "coral", paper: "peach", side: "right" },
+  { number: "01", title: "Centralized Knowledge", copy: "Bring project information, documents, decisions, and resources into one organized space.", icon: FolderKanban, pin: "gold", paper: "cream", side: "left" },
+  { number: "02", title: "AI-Powered Analysis", copy: "Support teams in understanding, summarizing, and organizing project knowledge with AI-assisted analysis.", icon: BrainCircuit, pin: "lavender", paper: "lavender", side: "right" },
+  { number: "03", title: "Structured Handovers", copy: "Create clear handover records that help incoming team members understand responsibilities and context.", icon: ClipboardCheck, pin: "gold", paper: "cream", side: "left" },
+  { number: "04", title: "Verification & Readiness", copy: "Track handover progress and identify missing information before responsibilities are transferred.", icon: ShieldCheck, pin: "lavender", paper: "lavender", side: "right" },
 ];
 
 function SolutionStory() {
@@ -144,7 +144,10 @@ function SolutionStory() {
 function SectionHeading({ eyebrow, title, copy, align = "left", id }: { eyebrow: string; title: string; copy?: string; align?: "left" | "center"; id?: string }) {
   return (
     <div className={`qc-section-heading qc-section-heading--${align}`}>
-      <p className="qc-eyebrow">{eyebrow}</p>
+      <p className="qc-eyebrow">
+        <span className="qc-eyebrow-dot" aria-hidden="true" />
+        {eyebrow}
+      </p>
       <h2 id={id}>{title}</h2>
       {copy && <p className="qc-section-copy">{copy}</p>}
     </div>
@@ -181,30 +184,52 @@ export function HomepageSections() {
         <div className="qc-cta-orbit qc-cta-orbit--one" aria-hidden="true" />
         <div className="qc-cta-orbit qc-cta-orbit--two" aria-hidden="true" />
         <Reveal className="qc-cta-content">
-          <p className="qc-eyebrow">KEEP KNOWLEDGE MOVING</p>
+          <p className="qc-eyebrow">
+            <span className="qc-eyebrow-dot" aria-hidden="true" />
+            KEEP KNOWLEDGE MOVING
+          </p>
           <h2 id="final-cta-title">Don't Let Knowledge Walk Out the Door.</h2>
           <p>Keep your projects moving, your teams informed, and your knowledge connected with QuickConnect.</p>
           <div className="qc-cta-actions">
-            <a className="qc-button qc-button--gold" href="#footer">Get Started <ArrowRight size={16} /></a>
-            <a className="qc-button qc-button--outline" href="#platform">Explore Platform <ArrowUpRight size={16} /></a>
+            <a className="qc-button qc-button--gold" href="#top">Get Started <ArrowRight size={15} strokeWidth={2.4} /></a>
+            <a className="qc-button qc-button--outline" href="#platform">Explore Platform <ArrowUpRight size={15} strokeWidth={2} /></a>
           </div>
         </Reveal>
       </section>
 
-      <footer className="qc-footer" id="footer">
+      <footer className="qc-footer" id="about">
         <div className="qc-container">
           <div className="qc-footer-main">
-            <div className="qc-footer-brand" id="about">
-              <a href="#top" aria-label="QuickConnect home"><img src={logo} alt="QuickConnect" /></a>
+            <div className="qc-footer-brand">
+              <a href="#top" aria-label="QuickConnect home" className="qc-footer-logo-wrap">
+                <img src={logo} alt="QuickConnect" className="qc-footer-logo" />
+              </a>
               <p>Keep project knowledge connected, so every team can move forward with context.</p>
             </div>
             <div className="qc-footer-links">
-              <div><h3>Platform</h3><a href="#platform">Overview</a><a href="#solution">Capabilities</a><a href="#problem">The Challenge</a></div>
-              <div><h3>Explore</h3><a href="#how-it-works">How It Works</a><a href="#use-cases">Use Cases</a><a href="#about">About</a></div>
-              <div><h3>Get Started</h3><a href="#final-cta">Log In</a><a href="#final-cta">Get Started <ArrowUpRight size={13} /></a></div>
+              <div>
+                <h3>Platform</h3>
+                <a href="#platform">Overview</a>
+                <a href="#solution">Capabilities</a>
+                <a href="#problem">The Challenge</a>
+              </div>
+              <div>
+                <h3>Explore</h3>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#use-cases">Use Cases</a>
+                <a href="#about">About</a>
+              </div>
+              <div>
+                <h3>Get Started</h3>
+                <a href="#final-cta">Log In</a>
+                <a href="#final-cta">Get Started <ArrowUpRight size={13} /></a>
+              </div>
             </div>
           </div>
-          <div className="qc-footer-bottom"><span>© {new Date().getFullYear()} QuickConnect. All rights reserved.</span><span>One workspace. Complete context. Seamless transitions.</span></div>
+          <div className="qc-footer-bottom">
+            <span>© {new Date().getFullYear()} QuickConnect. All rights reserved.</span>
+            <span>One workspace. Complete context. Seamless transitions.</span>
+          </div>
         </div>
       </footer>
     </>

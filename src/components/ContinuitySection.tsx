@@ -110,7 +110,7 @@ function ContinuityCardView({
   card: ContinuityCard;
   position: number;
   reduceMotion: boolean;
-  onViewClick: (card: ContinuityCard) => void;
+  onViewClick?: (card: ContinuityCard) => void;
 }) {
   return (
     <motion.article
@@ -148,6 +148,26 @@ function ContinuityCardView({
             ))}
           </div>
         </div>
+
+        <div className="qc-continuity__footer">
+          <div className="qc-continuity__scenario">
+            <span className="qc-continuity__scenario-icon">
+              <ContinuityIcon name={card.icon} />
+            </span>
+            <p>{card.description}</p>
+          </div>
+          <button
+            type="button"
+            className="qc-continuity__view"
+            onClick={() => onViewClick?.(card)}
+          >
+            View
+          </button>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
 
         <div className="qc-continuity__footer">
           <div className="qc-continuity__scenario">
@@ -205,7 +225,7 @@ export default function ContinuitySection({
 
   return (
     <section
-      id="continuity"
+      id="use-cases"
       className="qc-continuity"
       aria-labelledby="qc-continuity-heading"
     >
@@ -216,10 +236,10 @@ export default function ContinuitySection({
           --qc-cream: #F4E9D5;
           --qc-off-white: #F5F4F0;
           --qc-charcoal: #252525;
-          --qc-lavender-tint: #E4E7F5;
-          --qc-gold-tint: #F8EAD2;
-          --qc-sage-tint: #EEF0DC;
-          --qc-blend-tint: #EFE6EE;
+          --qc-lavender-tint: #ECEFF9;
+          --qc-gold-tint: #F9F1E2;
+          --qc-sage-tint: #F3F1E7;
+          --qc-blend-tint: #F2EEF8;
           position: relative;
           isolation: isolate;
           overflow: hidden;
@@ -270,14 +290,23 @@ export default function ContinuitySection({
         }
 
         .qc-continuity__eyebrow {
-          display: inline-block;
-          margin: 0 0 14px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin: 0 0 16px;
           color: #745522;
-          font-size: 12px;
+          font-size: 11px;
           line-height: 1.4;
           font-weight: 700;
-          letter-spacing: .14em;
+          letter-spacing: .16em;
           text-transform: uppercase;
+        }
+
+        .qc-continuity__eyebrow-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--qc-gold);
         }
 
         .qc-continuity__header h2 {
@@ -316,7 +345,10 @@ export default function ContinuitySection({
 
         .qc-continuity__frame {
           height: 100%;
-          min-height: 390px;
+          min-height: 400px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
           padding: 6px;
           border-radius: 24px;
           background: var(--qc-off-white);
@@ -334,6 +366,7 @@ export default function ContinuitySection({
           flex-direction: column;
           justify-content: space-between;
           min-height: 240px;
+          height: 240px;
           padding: 19px 18px 15px;
           overflow: hidden;
           border-radius: 18px;
@@ -637,7 +670,10 @@ export default function ContinuitySection({
 
       <div className="qc-continuity__inner">
         <header className="qc-continuity__header">
-          <span className="qc-continuity__eyebrow">Knowledge continuity</span>
+          <span className="qc-continuity__eyebrow">
+            <span className="qc-continuity__eyebrow-dot" aria-hidden="true" />
+            Knowledge continuity
+          </span>
           <h2 id="qc-continuity-heading">Knowledge Continuity Across Every Transition.</h2>
           <p>
             Keep work moving through the moments when people, roles, and responsibilities change.

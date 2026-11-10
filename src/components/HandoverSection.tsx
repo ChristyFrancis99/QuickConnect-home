@@ -155,11 +155,13 @@ function HandoverStep({
       </motion.span>
 
       <motion.div
-        className="qc-handover__step-copy"
+        className="qc-handover__step-card"
         style={reducedMotion ? undefined : { color: textColor }}
       >
         <div className="qc-handover__step-heading">
-          <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
+          <span className="qc-handover__icon-badge">
+            <Icon size={19} strokeWidth={1.8} aria-hidden="true" />
+          </span>
           <h3>{step.title}</h3>
         </div>
         <motion.p style={reducedMotion ? undefined : { opacity: descriptionOpacity }}>{step.description}</motion.p>
@@ -194,13 +196,16 @@ export default function HandoverSection() {
   return (
     <section
       ref={sectionRef}
-      id="handover"
+      id="how-it-works"
       className="qc-handover"
       aria-labelledby="qc-handover-title"
     >
       <div className="qc-handover__layout">
         <header className="qc-handover__intro">
-          <p className="qc-handover__eyebrow">A CLEARER HANDOVER</p>
+          <p className="qc-handover__eyebrow">
+            <span className="qc-handover__eyebrow-dot" aria-hidden="true" />
+            A CLEARER HANDOVER
+          </p>
           <h2 id="qc-handover-title">
             A Smarter Way to Pass Knowledge Forward.
           </h2>
@@ -281,32 +286,42 @@ export default function HandoverSection() {
         }
 
         .qc-handover__eyebrow {
-          margin: 0 0 22px;
-          color: var(--qc-handover-gold);
-          font-size: 14px;
-          font-weight: 500;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin: 0 0 18px;
+          color: #8F6B28;
+          font-size: 11px;
+          font-weight: 700;
           letter-spacing: .16em;
           line-height: 1.4;
           text-transform: uppercase;
+        }
+
+        .qc-handover__eyebrow-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--qc-handover-gold);
         }
 
         .qc-handover__intro h2 {
           max-width: 560px;
           margin: 0;
           color: var(--qc-handover-charcoal);
-          font-size: clamp(36px, 4.2vw, 48px);
+          font-size: clamp(34px, 4.2vw, 48px);
           font-weight: 700;
           line-height: 1.12;
-          letter-spacing: -.055em;
+          letter-spacing: -.045em;
         }
 
         .qc-handover__subtext {
           max-width: 440px;
-          margin: 24px 0 0;
-          color: rgba(37,37,37,.72);
+          margin: 20px 0 0;
+          color: rgba(37,37,37,.74);
           font-size: 16px;
           font-weight: 400;
-          line-height: 1.85;
+          line-height: 1.75;
         }
 
         .qc-handover__timeline {
@@ -318,7 +333,7 @@ export default function HandoverSection() {
           position: absolute;
           top: 37.5vh;
           bottom: 37.5vh;
-          left: 15px;
+          left: 17px;
           width: 2px;
           overflow: visible;
           background: transparent;
@@ -356,11 +371,11 @@ export default function HandoverSection() {
         .qc-handover__step {
           position: relative;
           display: grid;
-          grid-template-columns: 32px minmax(0, 1fr);
+          grid-template-columns: 36px minmax(0, 1fr);
           align-items: start;
-          gap: 26px;
+          gap: 24px;
           min-height: 75vh;
-          padding: calc(37.5vh - 16px) 0 0;
+          padding: calc(37.5vh - 18px) 0 0;
           transform-origin: left center;
         }
 
@@ -372,52 +387,70 @@ export default function HandoverSection() {
           position: relative;
           z-index: 1;
           display: grid;
-          width: 32px;
-          height: 32px;
+          width: 36px;
+          height: 36px;
           place-items: center;
           border: 1.5px solid rgba(37,37,37,.25);
           border-radius: 50%;
-          background: transparent;
+          background: #F5F4F0;
           color: #77736C;
-          font-size: 10px;
+          font-size: 11px;
           font-weight: 700;
           line-height: 1;
           will-change: box-shadow, background-color;
+          transition: border-color .2s ease, box-shadow .2s ease;
         }
 
-        .qc-handover__step-copy {
+        .qc-handover__step-card {
+          position: relative;
           min-width: 0;
-          padding-top: 2px;
+          padding: 24px 26px;
+          border-radius: 20px;
+          background: #FFFFFF;
+          border: 1.5px solid rgba(37,37,37,.08);
+          box-shadow: 0 4px 18px rgba(37,37,37,.04);
+          transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+        }
+
+        .qc-handover__step[aria-current="step"] .qc-handover__step-card {
+          border-color: rgba(198, 154, 77, 0.55);
+          box-shadow: 0 14px 34px -6px rgba(198, 154, 77, 0.18), 0 2px 8px rgba(37,37,37,.04);
+        }
+
+        .qc-handover__icon-badge {
+          display: grid;
+          width: 36px;
+          height: 36px;
+          flex: 0 0 36px;
+          place-items: center;
+          border-radius: 10px;
+          background: rgba(198, 154, 77, 0.12);
+          color: var(--qc-handover-gold);
         }
 
         .qc-handover__step-heading {
           display: flex;
           align-items: center;
-          gap: 13px;
-        }
-
-        .qc-handover__step-heading svg {
-          flex: 0 0 auto;
-          color: var(--qc-handover-gold);
+          gap: 14px;
         }
 
         .qc-handover__step-heading h3 {
           margin: 0;
           color: inherit;
-          font-size: 24px;
-          font-weight: 600;
+          font-size: 22px;
+          font-weight: 700;
           line-height: 1.3;
-          letter-spacing: -.035em;
+          letter-spacing: -.03em;
         }
 
-        .qc-handover__step-copy p {
-          max-width: 430px;
-          margin: 13px 0 0;
+        .qc-handover__step-card p {
+          max-width: 440px;
+          margin: 12px 0 0;
           color: inherit;
-          font-size: 16px;
+          font-size: 15px;
           font-weight: 400;
-          line-height: 1.8;
-          opacity: .7;
+          line-height: 1.7;
+          opacity: .75;
         }
 
         .qc-handover__sr-only {
