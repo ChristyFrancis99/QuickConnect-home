@@ -1,5 +1,6 @@
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
-import { Suspense, useCallback, useEffect, useMemo, useRef } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { useScroll, type MotionValue } from "framer-motion";
 import * as THREE from "three";
 import { TextureLoader } from "three";
 import { getPanelMotion } from "@/lib/globe-motion";
@@ -99,7 +100,13 @@ function createPanels(): Panel[] {
   return panels;
 }
 
-function GalleryPanels({ progress }: { progress: React.RefObject<number> }) {
+function GalleryPanels({
+  progress,
+  reducedMotion,
+}: {
+  progress: MotionValue<number>;
+  reducedMotion: React.RefObject<boolean>;
+}) {
   const textures = useLoader(TextureLoader, PHOTO_PATHS);
   const panels = useMemo(() => createPanels(), []);
   const meshes = useRef<(THREE.Mesh | null)[]>([]);
@@ -110,10 +117,7 @@ function GalleryPanels({ progress }: { progress: React.RefObject<number> }) {
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.anisotropy = 4;
     });
-    const wrapper = document.querySelector<HTMLElement>("[data-scene-ready]");
-    if (wrapper) wrapper.dataset["sceneReady"] = "true";
-    return () => panels.forEach((panel) => panel.geometry.dispose());
-  }, [panels, textures]);
+  }, [textures]);
 
   useFrame(() => {
     panels.forEach((panel) => {
@@ -121,7 +125,7 @@ function GalleryPanels({ progress }: { progress: React.RefObject<number> }) {
       const material = materials.current[panel.index];
       if (!mesh || !material) return;
 
-      const motion = getPanelMotion(panel.index, progress.current);
+      const motion = getPanelMotion(panel.index, reducedMotion.current ? 0 : progress.get());
       mesh.position.set(
         panel.position.x + motion.x,
         panel.position.y + motion.y,
@@ -173,7 +177,7 @@ function GlobeMotion({
   reducedMotion,
 }: {
   globeRef: React.RefObject<THREE.Group | null>;
-  progress: React.RefObject<number>;
+  progress: MotionValue<number>;
   drag: React.RefObject<{ active: boolean; velocity: number }>;
   reducedMotion: React.RefObject<boolean>;
 }) {
@@ -187,7 +191,7 @@ function GlobeMotion({
     globe.scale.setScalar(isMobile ? 0.72 : 1);
     if (reducedMotion.current) return;
     const dt = Math.min(delta, 0.05);
-    const breakup = progress.current;
+    const breakup = progress.get();
 
     if (!drag.current.active) {
       globe.rotation.y += (0.11 * (1 - breakup) + drag.current.velocity) * dt;
@@ -198,7 +202,7 @@ function GlobeMotion({
   return null;
 }
 
-export function GlobeGallery() {
+type GlobeGalleryProps = {\n  scrollTarget: RefObject<HTMLElement | null>;\n};\n\nexport function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const globeRef = useRef<THREE.Group>(null);
   const progress = useRef(0);
@@ -240,11 +244,6 @@ export function GlobeGallery() {
     }
   }, []);
 
-  const handleScrollUpdate = useCallback((value: number) => {
-    progress.current = value;
-    if (wrapperRef.current) wrapperRef.current.dataset["scrollProgress"] = value.toFixed(3);
-  }, []);
-
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     reducedMotion.current = preference.matches;
@@ -256,34 +255,16 @@ export function GlobeGallery() {
   }, []);
 
   useEffect(() => {
-    let cleanup: (() => void) | undefined;
-    let mounted = true;
+    const element = wrapperRef.current;
+    if (!element || typeof IntersectionObserver === "undefined") return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    void Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
-      ([gsapModule, scrollModule]) => {
-        if (!mounted) return;
-        const gsap = gsapModule.gsap;
-        const ScrollTrigger = scrollModule.ScrollTrigger;
-        gsap.registerPlugin(ScrollTrigger);
-        const trigger = ScrollTrigger.create({
-          trigger: ".hero-scroll-stage",
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.7,
-          onUpdate: (self) => handleScrollUpdate(self.progress),
-        });
-        cleanup = () => trigger.kill();
-        ScrollTrigger.refresh();
-      },
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(Boolean(entry?.isIntersecting)),
+      { rootMargin: "120px 0px" },
     );
-
-    return () => {
-      mounted = false;
-      cleanup?.();
-    };
-  }, [handleScrollUpdate]);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div
@@ -304,7 +285,7 @@ export function GlobeGallery() {
       <div className="globe-orbit globe-orbit--one" aria-hidden="true" />
       <div className="globe-orbit globe-orbit--two" aria-hidden="true" />
       <Canvas
-        dpr={[1, 1.5]}
+        frameloop={isInView ? "always" : "never"}\n        dpr={[1, 1.5]}
         camera={{ position: [0, 0, 7.2], fov: 40 }}
         gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
         className="globe-canvas"
@@ -314,10 +295,10 @@ export function GlobeGallery() {
         <directionalLight position={[-4, -2, -3]} intensity={0.6} />
         <group ref={globeRef}>
           <Suspense fallback={null}>
-            <GalleryPanels progress={progress} />
+            <GalleryPanels progress={scrollYProgress} reducedMotion={reducedMotion} />
           </Suspense>
         </group>
-        <GlobeMotion globeRef={globeRef} progress={progress} drag={drag} reducedMotion={reducedMotion} />
+        <GlobeMotion globeRef={globeRef} progress={scrollYProgress} drag={drag} reducedMotion={reducedMotion} />
       </Canvas>
     </div>
   );
