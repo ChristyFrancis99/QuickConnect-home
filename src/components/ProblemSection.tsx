@@ -158,12 +158,12 @@ export default function ProblemSection() {
             onKeyDown={event=>onKeyDown(event,index)}
             animate={{flexGrow:mobile?0:(active?2.2:1),height:mobile?(active?(window.innerWidth<=390?360:330):74):340}}
             transition={reduced?{duration:0}:{duration:.6,ease:[.22,1,.36,1]}}>
-            <span className="qc-problem-card__wash" /><span className="qc-problem-card__inner">
+            <span className="qc-problem-card__wash" /><div className="qc-problem-card__inner">
               <span className="qc-problem-card__top"><span className="qc-problem-card__index">{card.number}</span>
                 {!active&&<span className="qc-problem-card__small-action"><ArrowUpRight size={18}/></span>}
               </span>
               <AnimatePresence initial={false} mode="wait">
-                {active?<motion.span key="open" className="qc-problem-card__expanded"
+                {active?<motion.div key="open" className="qc-problem-card__expanded"
                   initial={reduced?false:{opacity:0,y:12}} animate={{opacity:1,y:0}}
                   exit={reduced?undefined:{opacity:0,y:-7}}
                   transition={reduced?{duration:0}:{duration:.32,ease:[.22,1,.36,1]}}>
@@ -171,12 +171,12 @@ export default function ProblemSection() {
                     <span className="qc-problem-card__title">{card.title}</span>
                     <span className="qc-problem-card__description" id={"qc-problem-description-"+index}>{card.description}</span>
                     <span className="qc-problem-card__action"><ArrowUpRight size={19}/></span>
-                  </span><span className="qc-problem-art"><Illustration/></span>
-                </motion.span>:<motion.span key="closed" className="qc-problem-card__collapsed"
+                  </span><div className="qc-problem-art"><Illustration/></div>
+                </motion.div>:<motion.span key="closed" className="qc-problem-card__collapsed"
                   initial={reduced?false:{opacity:0}} animate={{opacity:1}} exit={reduced?undefined:{opacity:0}}
                   transition={{duration:reduced?0:.14}}>{card.title}</motion.span>}
               </AnimatePresence>
-            </span>
+            </div>
           </motion.button>;
         })}
       </div>
