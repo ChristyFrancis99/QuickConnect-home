@@ -1,20 +1,18 @@
 import { useEffect, useRef, type ReactNode } from "react";
+import ContinuitySection from "@/components/ContinuitySection";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   ArrowRight,
   ArrowUpRight,
   BrainCircuit,
-  BriefcaseBusiness,
   CheckCircle2,
   ClipboardCheck,
   FolderKanban,
   FolderOpen,
-  GraduationCap,
   Link2,
   RefreshCw,
   ShieldCheck,
-  Workflow,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import PlatformSection from "@/components/PlatformSection";
@@ -53,14 +51,6 @@ const steps = [
   { number: "03", title: "Handover", copy: "Transfer structured knowledge to the incoming team member.", icon: RefreshCw },
   { number: "04", title: "Verify", copy: "Review completeness and ensure the new owner is ready to take over.", icon: CheckCircle2 },
 ];
-
-const useCases = [
-  { icon: BriefcaseBusiness, title: "Employee Offboarding", copy: "Preserve valuable knowledge when employees leave the organization.", tint: "gold" },
-  { icon: RefreshCw, title: "Role Transitions", copy: "Make it easier for employees to transfer responsibilities when changing roles.", tint: "lavender" },
-  { icon: Workflow, title: "Project Ownership Changes", copy: "Keep projects moving when ownership shifts between team members.", tint: "ink" },
-  { icon: GraduationCap, title: "Team Onboarding", copy: "Help new team members understand existing projects, decisions, and workflows faster.", tint: "cream" },
-];
-
 
 const solutionNotes = [
   { number: "01", title: "Centralized Knowledge", copy: "Bring project information, documents, decisions, and resources into one organized space.", icon: FolderKanban, pin: "coral", paper: "peach", side: "left" },
@@ -185,35 +175,7 @@ export function HomepageSections() {
 
       <PlatformSection />
 
-      <section className="qc-section qc-use-cases" id="use-cases" aria-labelledby="use-cases-title">
-        <div className="qc-container">
-          <Reveal>
-            <SectionHeading
-              eyebrow="WHERE CONTEXT MATTERS"
-              id="use-cases-title"
-              title="Knowledge Continuity Across Every Transition."
-              copy="Keep work moving through the moments when people, roles, and responsibilities change."
-              align="center"
-            />
-          </Reveal>
-          <div className="qc-use-grid">
-            {useCases.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <Reveal className="qc-grid-reveal" key={item.title}>
-                  <article className="qc-use-card">
-                    <div className={`qc-use-card__art qc-tone--${item.tint}`}>
-                      <Icon size={31} strokeWidth={1.45} />
-                      <span>0{index + 1}</span>
-                    </div>
-                    <div className="qc-use-card__body"><h3>{item.title}</h3><p>{item.copy}</p></div>
-                  </article>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <ContinuitySection />
 
       <section className="qc-cta-section" id="final-cta" aria-labelledby="final-cta-title">
         <div className="qc-cta-orbit qc-cta-orbit--one" aria-hidden="true" />
