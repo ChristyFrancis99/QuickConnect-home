@@ -521,6 +521,12 @@ export default function HandoverSection() {
         }
 
         @media (prefers-reduced-motion: reduce) {
+          .qc-handover__intro {
+            position: relative;
+            top: auto;
+            padding-top: 0;
+          }
+
           .qc-handover__step,
           .qc-handover__node,
           .qc-handover__track-progress {
