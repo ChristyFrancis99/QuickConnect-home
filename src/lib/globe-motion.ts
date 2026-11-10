@@ -35,5 +35,7 @@ export function getPanelMotion(index: number, progress: number): PanelMotion {
 }
 
 export function getGlobeCameraFov(progress: number): number {
-  return 40 + clampProgress(progress) * 43;
+  const t = clampProgress(progress);
+  const eased = t * t * (3 - 2 * t);
+  return 40 + Math.sqrt(eased) * 60;
 }
