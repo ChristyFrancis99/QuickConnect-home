@@ -9,7 +9,6 @@ import {
   BriefcaseBusiness,
   CheckCircle2,
   ClipboardCheck,
-  FileCheck2,
   FileStack,
   FolderKanban,
   FolderOpen,
@@ -106,10 +105,9 @@ function SolutionStory() {
       cards.forEach((card, index) => {
         gsap.set(card, { autoAlpha: 0, y: 30, scale: 0.88, rotation: index % 2 === 0 ? -4 : 4, transformOrigin: "50% 50%" });
       });
-      const lengths = paths.map((path) => {
+      paths.forEach((path) => {
         const length = path.getTotalLength();
         gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
-        return length;
       });
 
       const timeline = gsap.timeline({
