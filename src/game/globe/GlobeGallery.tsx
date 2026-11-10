@@ -105,7 +105,7 @@ function GalleryPanels({
   reducedMotion,
 }: {
   progress: MotionValue<number>;
-  reducedMotion: React.RefObject<boolean>;
+  reducedMotion: RefObject<boolean>;
 }) {
   const textures = useLoader(TextureLoader, PHOTO_PATHS);
   const panels = useMemo(() => createPanels(), []);
@@ -176,10 +176,10 @@ function GlobeMotion({
   drag,
   reducedMotion,
 }: {
-  globeRef: React.RefObject<THREE.Group | null>;
+  globeRef: RefObject<THREE.Group | null>;
   progress: MotionValue<number>;
-  drag: React.RefObject<{ active: boolean; velocity: number }>;
-  reducedMotion: React.RefObject<boolean>;
+  drag: RefObject<{ active: boolean; velocity: number }>;
+  reducedMotion: RefObject<boolean>;
 }) {
   const { size } = useThree();
 
@@ -209,8 +209,15 @@ type GlobeGalleryProps = {
 export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const globeRef = useRef<THREE.Group>(null);
-  const progress = useRef(0);
-  const reducedMotion = useRef(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const reducedMotion = useRef(prefersReducedMotion);
+  const [isInView, setIsInView] = useState(true);
+  const { scrollYProgress } = useScroll({
+    target: scrollTarget,
+    offset: ["start start", "end end"],
+  });
   const drag = useRef({ active: false, velocity: 0, x: 0, y: 0 });
 
   const handlePointerDown = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
@@ -251,8 +258,10 @@ export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     reducedMotion.current = preference.matches;
+    setPrefersReducedMotion(preference.matches);
     const updatePreference = (event: MediaQueryListEvent) => {
       reducedMotion.current = event.matches;
+      setPrefersReducedMotion(event.matches);
     };
     preference.addEventListener("change", updatePreference);
     return () => preference.removeEventListener("change", updatePreference);
@@ -274,7 +283,6 @@ export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
     <div
       ref={wrapperRef}
       className={`globe-interaction${drag.current.active ? " is-dragging" : ""}`}
-      data-scene-ready="false"
       aria-label="Interactive gallery globe"
       role="img"
     >
@@ -289,7 +297,7 @@ export function GlobeGallery({ scrollTarget }: GlobeGalleryProps) {
       <div className="globe-orbit globe-orbit--one" aria-hidden="true" />
       <div className="globe-orbit globe-orbit--two" aria-hidden="true" />
       <Canvas
-        frameloop={isInView ? "always" : "never"}
+        frameloop={isInView ? (prefersReducedMotion ? "demand" : "always") : "never"}
         dpr={[1, 1.5]}
         camera={{ position: [0, 0, 7.2], fov: 40 }}
         gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
