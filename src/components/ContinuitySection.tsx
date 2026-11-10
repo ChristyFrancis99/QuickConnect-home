@@ -139,7 +139,7 @@ function ContinuityCardView({
             <span className="qc-continuity__arrow" aria-hidden="true">→</span>
           </div>
 
-          <div className="qc-continuity__dots" aria-label={`Card ${activeIndex + 1} of 4`}>
+          <div className="qc-continuity__dots" aria-label={`Card ${position + 1} of ${continuityCards.length}`}>
             {continuityCards.map((item, dotIndex) => (
               <span
                 key={item.index}
