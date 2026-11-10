@@ -391,9 +391,12 @@
   z-index: var(--qc-z-background);
   grid-column: 2;
   grid-row: 1;
-  width: 100%;
-  height: 100%;
+  width: min(100%, 680px, 72svh);
+  height: auto;
   min-height: 0;
+  aspect-ratio: 1;
+  justify-self: center;
+  align-self: center;
   overflow: visible;
   pointer-events: none;
 }
@@ -912,7 +915,7 @@
   .hero-actions { gap: 10px; margin-top: 22px; }
   .hero-button { min-height: 46px; font-size: 12px; padding: 0 16px; }
   .hero-support { margin-top: 20px; font-size: 11px; }
-  .hero-visual { grid-column: 1; grid-row: 2; min-height: 230px; height: 100%; }
+  .hero-visual { grid-column: 1; grid-row: 2; width: 100%; min-height: 230px; height: 100%; aspect-ratio: auto; }
   .globe-orbit { top: 50%; left: 50%; }
   .globe-drag-hit-area { top: 0; right: 8%; width: 84%; height: 100%; }
   .globe-caption { right: 2%; bottom: 5%; font-size: 8px; }
