@@ -392,7 +392,7 @@ export default function ContinuitySection({ onViewClick }: ContinuitySectionProp
         .qc-continuity__panel-top,
         .qc-continuity__panel-middle {
           position: relative;
-          z-index: 1;
+          z-index: var(--qc-z-content);
           display: flex;
           align-items: flex-start;
           justify-content: space-between;
@@ -460,7 +460,7 @@ export default function ContinuitySection({ onViewClick }: ContinuitySectionProp
 
         .qc-continuity__dots {
           position: relative;
-          z-index: 1;
+          z-index: var(--qc-z-content);
           display: flex;
           justify-content: center;
           align-items: center;
