@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 export type ContinuityCard = {
@@ -104,13 +104,11 @@ function ContinuityIcon({
 function ContinuityCardView({
   card,
   position,
-  activeIndex,
   reduceMotion,
   onViewClick,
 }: {
   card: ContinuityCard;
   position: number;
-  activeIndex: number;
   reduceMotion: boolean;
   onViewClick: (card: ContinuityCard) => void;
 }) {
@@ -127,7 +125,7 @@ function ContinuityCardView({
       <div className="qc-continuity__frame">
         <div
           className="qc-continuity__panel"
-          style={{ "--qc-card-tint": cardTints[card.icon] } as React.CSSProperties}
+          style={{ "--qc-card-tint": cardTints[card.icon] } as CSSProperties}
         >
           <div className="qc-continuity__panel-top">
             <span className="qc-continuity__caption">TRANSITION {card.index}</span>
@@ -145,7 +143,7 @@ function ContinuityCardView({
             {continuityCards.map((item, dotIndex) => (
               <span
                 key={item.index}
-                className={dotIndex === activeIndex ? "is-active" : ""}
+                className={dotIndex === position ? "is-active" : ""}
               />
             ))}
           </div>
@@ -422,6 +420,10 @@ export default function ContinuitySection({
           transform: translateX(4px);
         }
 
+        .qc-continuity__mobile-pagination {
+          display: none;
+        }
+
         .qc-continuity__dots {
           position: relative;
           z-index: 1;
@@ -555,6 +557,26 @@ export default function ContinuitySection({
             line-height: 1.65;
           }
 
+          .qc-continuity__mobile-pagination {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 20px;
+          }
+
+          .qc-continuity__mobile-pagination span {
+            width: 6px;
+            height: 6px;
+            border-radius: 99px;
+            background: rgba(37, 37, 37, .28);
+            transition: width .2s ease, background-color .2s ease;
+          }
+
+          .qc-continuity__mobile-pagination span.is-active {
+            width: 20px;
+            background: var(--qc-charcoal);
+          }
+
           .qc-continuity__list {
             display: flex;
             gap: 14px;
@@ -620,6 +642,11 @@ export default function ContinuitySection({
           <p>
             Keep work moving through the moments when people, roles, and responsibilities change.
           </p>
+          <div className="qc-continuity__mobile-pagination" aria-label={`Card ${activeIndex + 1} of 4`}>
+            {continuityCards.map((card, index) => (
+              <span key={card.index} className={index === activeIndex ? "is-active" : ""} />
+            ))}
+          </div>
         </header>
 
         <ul className="qc-continuity__list" ref={listRef}>
@@ -628,7 +655,6 @@ export default function ContinuitySection({
               <ContinuityCardView
                 card={card}
                 position={index}
-                activeIndex={activeIndex}
                 reduceMotion={reduceMotion}
                 onViewClick={onViewClick}
               />
