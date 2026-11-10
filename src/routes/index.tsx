@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowDown, ArrowRight, Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
+import { useMotionValueEvent, useScroll } from "framer-motion";
 import { GlobeGallery } from "@/game/globe/GlobeGallery";
 import { HomepageSections } from "@/components/homepage-sections";
 
@@ -28,13 +29,13 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const heroStageRef = useRef<HTMLElement>(null);
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const updateScrollState = () => setIsScrolled(window.scrollY > 24);
-    updateScrollState();
-    window.addEventListener("scroll", updateScrollState, { passive: true });
-    return () => window.removeEventListener("scroll", updateScrollState);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const next = latest > 24;
+    setIsScrolled((current) => (current === next ? current : next));
+  });
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -84,7 +85,7 @@ function Index() {
         )}
       </header>
 
-      <main className="hero-scroll-stage">
+      <main ref={heroStageRef} className="hero-scroll-stage">
         <section className="hero-sticky" aria-labelledby="hero-title">
           <div className="hero-main" id="top">
             <div className="hero-copy">
@@ -109,9 +110,9 @@ function Index() {
               </div>
               <p className="hero-support"><span className="hero-support__line" />One workspace. Complete context. Seamless transitions.</p>
             </div>
-          </div>
-          <div className="hero-visual" aria-hidden="false">
-            <GlobeGallery />
+            <div className="hero-visual" aria-hidden="false">
+              <GlobeGallery scrollTarget={heroStageRef} />
+            </div>
           </div>
           <div className="hero-footer" aria-hidden="true">
             <div className="scroll-hint">
