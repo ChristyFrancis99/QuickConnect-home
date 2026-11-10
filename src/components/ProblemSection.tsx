@@ -143,6 +143,56 @@ export default function ProblemSection() {
       }
       @media(max-width:390px){.qc-problem-card[data-active=true]{min-height:360px}.qc-problem-card__expanded{align-items:flex-start;flex-direction:column;justify-content:center}.qc-problem-card__copy{flex:0 0 auto;width:100%}.qc-problem-card__title{font-size:19px}.qc-problem-art{flex:0 0 auto;width:100%;height:112px}.qc-problem-card__action{position:absolute;right:0;bottom:0;margin:0}}
       @media(prefers-reduced-motion:reduce){.qc-problem *,.qc-problem *:before,.qc-problem *:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+        .qc-problem__image-pair {
+          display: grid;
+          grid-template-columns: 1.35fr .9fr;
+          gap: 16px;
+          width: min(100%, 980px);
+          margin: 0 auto clamp(34px, 5vw, 58px);
+        }
+        .qc-problem__image {
+          position: relative;
+          height: clamp(150px, 20vw, 220px);
+          margin: 0;
+          overflow: hidden;
+          border: 4px solid rgba(255,255,255,.82);
+          border-radius: 20px;
+          background: #e9e3d8;
+          box-shadow: 0 14px 34px rgba(37,37,37,.09);
+        }
+        .qc-problem__image img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          filter: saturate(.78) contrast(1.02);
+          transition: transform .65s cubic-bezier(.2,.7,.2,1);
+        }
+        .qc-problem__image:hover img { transform: scale(1.04); }
+        .qc-problem__image::after {
+          content: "";
+          position: absolute;
+          inset: 45% 0 0;
+          background: linear-gradient(180deg, transparent, rgba(25,25,25,.62));
+          pointer-events: none;
+        }
+        .qc-problem__image figcaption {
+          position: absolute;
+          z-index: 1;
+          right: 16px;
+          bottom: 14px;
+          left: 16px;
+          color: #fff;
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: .14em;
+        }
+        @media (max-width: 640px) {
+          .qc-problem__image-pair { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+          .qc-problem__image { height: 138px; border-width: 3px; border-radius: 14px; }
+          .qc-problem__image figcaption { right: 9px; bottom: 9px; left: 9px; font-size: 7px; letter-spacing: .08em; }
+        }
     `}</style>
     <div className="qc-problem__inner">
       <header className="qc-problem__header">
@@ -159,6 +209,26 @@ export default function ProblemSection() {
           </p>
         </div>
       </header>
+      <div className="qc-problem__image-pair" aria-label="Teams collaborating and organizing shared work">
+        <figure className="qc-problem__image qc-problem__image--team">
+          <img
+            src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1100&q=85"
+            alt="Colleagues working together around a laptop"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>COLLABORATION NEEDS CONTEXT</figcaption>
+        </figure>
+        <figure className="qc-problem__image qc-problem__image--workspace">
+          <img
+            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85"
+            alt="Shared team workspace prepared for focused project work"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>KEEP EVERYONE ALIGNED</figcaption>
+        </figure>
+      </div>
       <div className="qc-problem__cards" role="group" aria-label="Knowledge handover challenges">
         {cards.map((card,index)=>{
           const active=activeIndex===index;
