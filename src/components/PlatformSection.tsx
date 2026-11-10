@@ -554,7 +554,7 @@ export default function PlatformSection() {
 
         .qcp__card-top {
           position: relative;
-          z-index: 1;
+          z-index: var(--qc-z-content);
           display: flex;
           justify-content: space-between;
           gap: 20px;
@@ -596,7 +596,7 @@ export default function PlatformSection() {
 
         .qcp__card-content {
           position: relative;
-          z-index: 1;
+          z-index: var(--qc-z-content);
           max-width: 530px;
           margin-top: 28px;
         }
@@ -630,7 +630,7 @@ export default function PlatformSection() {
 
         .qcp__card-bottom {
           position: relative;
-          z-index: 1;
+          z-index: var(--qc-z-content);
           display: flex;
           align-items: flex-end;
           justify-content: space-between;
