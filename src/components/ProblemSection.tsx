@@ -137,8 +137,8 @@ export default function ProblemSection() {
         .qc-problem-card[data-active=true]{height:auto;min-height:330px}.qc-problem-card__collapsed{margin-top:8px;font-size:16px}
         .qc-problem-card[data-active=true] .qc-problem-card__collapsed{display:none}
         .qc-problem-card__expanded{gap:12px;padding-top:9px}.qc-problem-card__copy{flex-basis:54%}
-        .qc-problem-card__copy{flex-basis:62%}.qc-problem-card__title{font-size:clamp(16px,4.5vw,18px)}.qc-problem-card__description{margin-top:9px;font-size:13px;line-height:1.55}
-        .qc-problem-card__action{width:34px;height:34px;margin-top:14px}.qc-problem-art{flex-basis:46%;min-width:0;height:180px;border-radius:17px}
+        .qc-problem-card__copy{flex-basis:58%}.qc-problem-card__title{font-size:clamp(16px,4.5vw,18px)}.qc-problem-card__description{margin-top:9px;font-size:13px;line-height:1.55}
+        .qc-problem-card__action{width:34px;height:34px;margin-top:14px}.qc-problem-art{flex-basis:38%;min-width:0;height:180px;border-radius:17px}
         .qc-problem-art svg{width:20px;height:20px}.qc-problem-card__small-action{width:34px;height:34px}
       }
       @media(max-width:390px){.qc-problem-card[data-active=true]{min-height:360px}.qc-problem-card__expanded{align-items:flex-start;flex-direction:column;justify-content:center}.qc-problem-card__copy{flex:0 0 auto;width:100%}.qc-problem-card__title{font-size:19px}.qc-problem-art{flex:0 0 auto;width:100%;height:112px}.qc-problem-card__action{position:absolute;right:0;bottom:0;margin:0}}
