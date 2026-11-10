@@ -1,4 +1,6 @@
 import { useEffect, useRef, type ReactNode } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Activity,
   ArrowRight,
@@ -86,6 +88,96 @@ const useCases = [
   { icon: GraduationCap, title: "Team Onboarding", copy: "Help new team members understand existing projects, decisions, and workflows faster.", tint: "cream" },
 ];
 
+
+const solutionNotes = [
+  { number: "01", title: "Centralized Knowledge", copy: "Bring project information, documents, decisions, and resources into one organized space.", icon: FolderKanban, pin: "coral", paper: "peach", side: "left" },
+  { number: "02", title: "AI-Powered Analysis", copy: "Support teams in understanding, summarizing, and organizing project knowledge with AI-assisted analysis.", icon: BrainCircuit, pin: "blue", paper: "blue", side: "right" },
+  { number: "03", title: "Structured Handovers", copy: "Create clear handover records that help incoming team members understand responsibilities and context.", icon: ClipboardCheck, pin: "violet", paper: "violet", side: "left" },
+  { number: "04", title: "Verification & Readiness", copy: "Track handover progress and identify missing information before responsibilities are transferred.", icon: ShieldCheck, pin: "coral", paper: "peach", side: "right" },
+];
+
+function SolutionStory() {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLArticleElement | null)[]>([]);
+  const pathRefs = useRef<(SVGPathElement | null)[]>([]);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    const cards = cardRefs.current.filter(Boolean) as HTMLArticleElement[];
+    const paths = pathRefs.current.filter(Boolean) as SVGPathElement[];
+    if (!stage || cards.length !== 4 || paths.length !== 3) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.matchMedia("(max-width: 759px)").matches) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+    const context = gsap.context(() => {
+      cards.forEach((card, index) => {
+        gsap.set(card, { autoAlpha: 0, y: 30, scale: 0.88, rotation: index % 2 === 0 ? -4 : 4, transformOrigin: "50% 50%" });
+      });
+      const lengths = paths.map((path) => {
+        const length = path.getTotalLength();
+        gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+        return length;
+      });
+
+      const timeline = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        scrollTrigger: {
+          trigger: stage,
+          start: "top 14%",
+          end: "+=2500",
+          pin: stage,
+          scrub: 0.85,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      timeline.to(cards[0], { autoAlpha: 1, y: 0, scale: 1, rotation: -2, duration: 0.65 });
+      timeline.to(paths[0], { strokeDashoffset: 0, duration: 0.75, ease: "none" }, ">-0.08");
+      timeline.to(cards[1], { autoAlpha: 1, y: 0, scale: 1, rotation: 2, duration: 0.65 });
+      timeline.to(paths[1], { strokeDashoffset: 0, duration: 0.75, ease: "none" }, ">-0.08");
+      timeline.to(cards[2], { autoAlpha: 1, y: 0, scale: 1, rotation: -2, duration: 0.65 });
+      timeline.to(paths[2], { strokeDashoffset: 0, duration: 0.75, ease: "none" }, ">-0.08");
+      timeline.to(cards[3], { autoAlpha: 1, y: 0, scale: 1, rotation: 2, duration: 0.65 });
+      timeline.to({}, { duration: 0.35 });
+      ScrollTrigger.refresh();
+    }, stage);
+
+    return () => context.revert();
+  }, []);
+
+  return (
+    <div className="qc-solution-stage" ref={stageRef}>
+      <svg className="qc-solution-paths" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+        <path ref={(node) => { pathRefs.current[0] = node; }} d="M 350 112 C 455 62, 548 158, 650 205" />
+        <path ref={(node) => { pathRefs.current[1] = node; }} d="M 650 292 C 555 365, 450 355, 350 418" />
+        <path ref={(node) => { pathRefs.current[2] = node; }} d="M 350 482 C 455 540, 548 520, 650 465" />
+      </svg>
+      {solutionNotes.map((note, index) => {
+        const Icon = note.icon;
+        return (
+          <article
+            className={`qc-pin-note qc-pin-note--${note.side} qc-pin-note--${index + 1}`}
+            key={note.number}
+            ref={(node) => { cardRefs.current[index] = node; }}
+          >
+            <span className={`qc-pin qc-pin--${note.pin}`} aria-hidden="true"><i /></span>
+            <div className={`qc-pin-note__paper qc-pin-note__paper--${note.paper}`}>
+              <div className="qc-pin-note__meta"><span>{note.number}</span><Icon size={19} strokeWidth={1.7} /></div>
+              <h3>{note.title}</h3>
+              <p>{note.copy}</p>
+            </div>
+          </article>
+        );
+      })}
+      <div className="qc-story-caption" aria-hidden="true">
+        <span className="qc-story-caption__dot" />
+        <span>Knowledge, connected.</span>
+      </div>
+    </div>
+  );
+}
+
 function SectionHeading({ eyebrow, title, copy, align = "left", id }: { eyebrow: string; title: string; copy?: string; align?: "left" | "center"; id?: string }) {
   return (
     <div className={`qc-section-heading qc-section-heading--${align}`}>
@@ -140,20 +232,7 @@ export function HomepageSections() {
               align="center"
             />
           </Reveal>
-          <div className="qc-solution-grid">
-            {solutions.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <Reveal className="qc-grid-reveal" key={item.title}>
-                  <article className="qc-solution-card">
-                    <div className="qc-solution-card__top"><span>0{index + 1}</span><Icon size={22} strokeWidth={1.7} /></div>
-                    <h3>{item.title}</h3>
-                    <p>{item.copy}</p>
-                  </article>
-                </Reveal>
-              );
-            })}
-          </div>
+          <SolutionStory />
         </div>
       </section>
 
