@@ -94,7 +94,7 @@ export default function ProblemSection() {
       .qc-problem-card[data-active=true]{border-color:var(--qc-gold);background:#FFFFFF;box-shadow:0 16px 42px -6px rgba(198,154,77,.22),0 4px 14px rgba(37,37,37,.04)}
       .qc-problem-card:focus-visible{outline:3px solid var(--qc-lavender);outline-offset:4px}
       .qc-problem-card__wash{position:absolute;z-index:-1;width:240px;height:240px;right:-80px;bottom:-90px;border-radius:50%;background:radial-gradient(circle,rgba(244,233,213,.45) 0%,transparent 70%)}
-      .qc-problem-card__inner{position:relative;z-index:1;display:flex;flex-direction:column;width:100%;min-width:0;height:100%}
+      .qc-problem-card__inner{position:relative;z-index:var(--qc-z-content);display:flex;flex-direction:column;width:100%;min-width:0;height:100%}
       .qc-problem-card__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
       .qc-problem-card__index{color:var(--qc-gold);font-size:13px;font-weight:700;letter-spacing:.1em}
       .qc-problem-card__collapsed{display:block;overflow:hidden;margin-top:24px;max-width:100%;font-size:20px;line-height:1.3;font-weight:650;white-space:nowrap;text-overflow:ellipsis;color:var(--qc-charcoal)}
