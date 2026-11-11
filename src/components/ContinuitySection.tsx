@@ -596,13 +596,14 @@ export default function ContinuitySection({ onViewClick }: ContinuitySectionProp
             width: 6px;
             height: 6px;
             border-radius: 99px;
-            background: rgba(37, 37, 37, .28);
-            transition: width .2s ease, background-color .2s ease;
+            background: var(--qc-charcoal);
+            opacity: .3;
+            transition: opacity .2s ease;
           }
 
           .qc-continuity__mobile-pagination span.is-active {
             width: 20px;
-            background: var(--qc-charcoal);
+            opacity: 1;
           }
 
           .qc-continuity__list {
