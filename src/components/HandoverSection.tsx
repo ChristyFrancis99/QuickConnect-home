@@ -3,7 +3,6 @@ import {
   motion,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
 } from "framer-motion";
 import {
@@ -70,53 +69,10 @@ function HandoverStep({
     [segmentStart, segmentMiddle, segmentEnd],
     index === 0 ? [1, 1, 1] : [0.98, 1, 1],
   );
-  const fillTarget = useTransform(
-    progress,
-    [segmentStart, segmentMiddle],
-    index === 0 ? [1, 1] : [0, 1],
-  );
-  const fill = useSpring(fillTarget, {
-    stiffness: 180,
-    damping: 24,
-    mass: 0.45,
-  });
-  const glowTarget = useTransform(
+  const nodeScale = useTransform(
     progress,
     [segmentStart, segmentMiddle, segmentEnd],
-    [0, 1, 0],
-  );
-  const glow = useSpring(glowTarget, {
-    stiffness: 180,
-    damping: 24,
-    mass: 0.45,
-  });
-  const nodeBackground = useTransform(fill, (value) =>
-    value > 0.5 ? "var(--qc-handover-gold)" : "transparent",
-  );
-  const nodeBorder = useTransform(fill, (value) =>
-    value > 0.5 ? "var(--qc-handover-gold)" : "rgba(37,37,37,0.25)",
-  );
-  const nodeColor = useTransform(fill, (value) =>
-    value > 0.5 ? "#FFFFFF" : "#59554E",
-  );
-  const nodeShadow = useTransform(
-    glow,
-    (value) => `0 0 0 ${6 * value}px rgba(198,154,77,${0.2 * value})`,
-  );
-  const cardBorderColor = useTransform(
-    progress,
-    [segmentStart, segmentMiddle, segmentEnd],
-    ["rgba(37,37,37,0.08)", "rgba(198,154,77,0.55)", "rgba(37,37,37,0.08)"],
-  );
-  const descriptionOpacity = useTransform(
-    progress,
-    [segmentStart, segmentMiddle, segmentEnd],
-    [0.85, 0.9, 0.85],
-  );
-  const textColor = useTransform(
-    progress,
-    [segmentStart, segmentMiddle, segmentEnd],
-    ["#4F4A42", "#252525", "#252525"],
+    [0.92, 1.08, 1],
   );
   const Icon = step.icon;
 
@@ -157,7 +113,6 @@ function HandoverStep({
 
       <motion.div
         className="qc-handover__step-card"
-        style={reducedMotion ? undefined : { color: textColor, borderColor: cardBorderColor }}
       >
         <div className="qc-handover__step-heading">
           <span className="qc-handover__icon-badge">
@@ -165,7 +120,7 @@ function HandoverStep({
           </span>
           <h3>{step.title}</h3>
         </div>
-        <motion.p style={reducedMotion ? undefined : { opacity: descriptionOpacity }}>{step.description}</motion.p>
+        <p>{step.description}</p>
       </motion.div>
     </motion.li>
   );
@@ -464,11 +419,10 @@ export default function HandoverSection() {
           border: 1.5px solid rgba(37,37,37,.25);
           border-radius: 50%;
           background: #F5F4F0;
-          color: #77736C;
+          color: #59554E;
           font-size: 11px;
           font-weight: 700;
           line-height: 1;
-          transition: border-color .2s ease, box-shadow .2s ease;
         }
 
         .qc-handover__step-card {
@@ -479,12 +433,6 @@ export default function HandoverSection() {
           background: #FFFFFF;
           border: 1.5px solid rgba(37,37,37,.08);
           box-shadow: 0 4px 18px rgba(37,37,37,.04);
-          transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
-        }
-
-        .qc-handover__step[aria-current="step"] .qc-handover__step-card {
-          border-color: rgba(198, 154, 77, 0.55);
-          box-shadow: 0 14px 34px -6px rgba(198, 154, 77, 0.18), 0 2px 8px rgba(37,37,37,.04);
         }
 
         .qc-handover__icon-badge {
@@ -557,7 +505,7 @@ export default function HandoverSection() {
           }
 
           .qc-handover__subtext {
-            max-width: calc(100% - 112px);
+            max-width: calc(100% - 124px);
             margin-top: 14px;
             font-size: 14px;
             line-height: 1.6;
@@ -567,8 +515,8 @@ export default function HandoverSection() {
             position: absolute;
             right: 0;
             bottom: 0;
-            width: 104px;
-            height: 84px;
+            width: 116px;
+            height: 92px;
             margin: 0;
             border-width: 3px;
             border-radius: 14px;
