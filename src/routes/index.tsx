@@ -40,7 +40,7 @@ function Index() {
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <>
+    <div className="qc-page-shell">
       <header className={`hero-header${isScrolled ? " is-scrolled" : ""}`}>
         <div className="hero-header__inner">
           <a className="brand-lockup" href="#top" aria-label="QuickConnect home" onClick={closeMenu}>
@@ -126,6 +126,6 @@ function Index() {
         </section>
       </main>
       <HomepageSections />
-    </>
+    </div>
   );
 }
