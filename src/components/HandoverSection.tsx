@@ -523,7 +523,7 @@ export default function HandoverSection() {
           }
 
           .qc-handover__visual figcaption a {
-            font-size: 8px;
+            font-size: 9px;
             white-space: normal;
           }
 
