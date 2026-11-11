@@ -55,7 +55,7 @@ function Pin({ progress, index, reduced }: { progress: MotionValue<number>; inde
   return (
     <motion.span
       aria-hidden="true"
-      className="absolute left-1/2 top-[-18px] z-10 h-[30px] w-[30px] -translate-x-1/2 rounded-full border border-white/80 shadow-[0_5px_10px_rgba(77,57,27,.22),0_0_18px_rgba(198,154,77,.27),inset_-3px_-4px_7px_rgba(65,45,20,.24),inset_2px_2px_4px_rgba(255,255,255,.82)]"
+      className="continuity-steps__pin absolute left-1/2 top-[-18px] z-10 h-[30px] w-[30px] -translate-x-1/2 rounded-full border border-white/80 shadow-[0_5px_10px_rgba(77,57,27,.22),0_0_18px_rgba(198,154,77,.27),inset_-3px_-4px_7px_rgba(65,45,20,.24),inset_2px_2px_4px_rgba(255,255,255,.82)]"
       style={{
         background: "radial-gradient(circle at 31% 24%,rgba(255,255,255,.98) 0 5%,rgba(255,255,255,.5) 7% 13%,transparent 25%),radial-gradient(circle at 38% 30%,#fff4d9 0," + steps[index].pin + " 35%,#8f672f 100%)",
         y: reduced ? 0 : y,
@@ -71,7 +71,7 @@ function StepCard({ step, index, progress, reduced }: { step: Step; index: numbe
   const appear = start + 0.115;
   const settle = start + 0.205;
   const sideOffset = step.side === "right" ? 48 : -48;
-  const opacity = useTransform(progress, [start, appear, settle], [0, 0.15, 1]);
+  const opacity = useTransform(progress, [start, appear, settle], [0.75, 0.88, 1]);
   const y = useTransform(progress, [start, appear, settle], [60, 30, 0]);
   const x = useTransform(progress, [start, appear, settle], [sideOffset, sideOffset * 0.45, 0]);
   const scale = useTransform(progress, [start, appear, settle], [0.94, 0.97, 1]);
@@ -80,7 +80,7 @@ function StepCard({ step, index, progress, reduced }: { step: Step; index: numbe
   return (
     <motion.li
       data-step-card
-      className={"relative z-10 w-full max-w-[340px] " + (step.side === "left" ? "self-start md:ml-[3%]" : "self-end md:mr-[3%]")}
+      className={"continuity-steps__card relative z-10 w-full max-w-[340px] " + (step.side === "left" ? "self-start md:ml-[3%]" : "self-end md:mr-[3%]")}
       style={reduced ? undefined : { opacity, y, x, scale, rotate }}
     >
       <article className="rounded-[28px] border border-[#8F744C]/[0.12] bg-white/95 p-[14px] shadow-[0_18px_48px_rgba(91,72,43,.105),0_3px_10px_rgba(91,72,43,.055)]" aria-labelledby={"continuity-step-" + step.number}>
@@ -158,7 +158,7 @@ export default function ContinuitySteps() {
       }}
     >
       <div className="mx-auto w-full max-w-[1120px]">
-        <header className="relative z-10 mx-auto mb-[66px] max-w-[780px] text-left md:mb-28 md:text-center">
+        <header className="relative z-10 mx-auto mb-[44px] max-w-[780px] text-left md:mb-28 md:text-center">
           <h2 id="continuity-steps-heading" className="text-[clamp(34px,4.1vw,48px)] font-bold leading-[1.1] tracking-[-.055em] text-[#252525]">
             Turn Knowledge Into Continuity.
           </h2>
@@ -180,7 +180,7 @@ export default function ContinuitySteps() {
               ))}
             </svg>
           )}
-          <ol ref={listRef} className="relative z-[1] flex list-none flex-col gap-[106px] p-0 md:gap-[clamp(280px,40vh,380px)] md:px-[8%]">
+          <ol ref={listRef} className="relative z-[1] flex list-none flex-col gap-[48px] p-0 md:gap-[clamp(280px,40svh,380px)] md:px-[8%]">
             {steps.map((step, index) => (
               <StepCard key={step.number} step={step} index={index} progress={progress} reduced={reduced} />
             ))}
