@@ -481,7 +481,7 @@ export default function PlatformSection() {
           border-radius: 24px;
           padding: clamp(26px, 4.2vw, 56px);
           box-shadow: var(--qc-shadow);
-          transition: box-shadow .22s ease;
+          transition: opacity .22s ease;
           transform-origin: center top;
           transform-style: preserve-3d;
         }
@@ -699,7 +699,7 @@ export default function PlatformSection() {
           font-size: 11px;
           font-weight: 700;
           text-decoration: none;
-          transition: transform .25s ease, box-shadow .25s ease;
+          transition: transform .25s ease, opacity .25s ease;
         }
 
         .qcp__learn:hover {
