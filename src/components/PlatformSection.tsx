@@ -719,7 +719,7 @@ export default function PlatformSection() {
         }
 
         @media (max-width: 768px) {
-          .qcp { padding: 75px 14px 5svh; }
+          .qcp { padding: 75px 14px 0; }
           .qcp__intro { margin-bottom: 45px; }
           .qcp__intro h2 br { display: none; }
           .qcp__intro p { font-size: 14px; }
