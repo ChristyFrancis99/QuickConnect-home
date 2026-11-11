@@ -99,7 +99,7 @@ function StepCard({ step, index, progress, reduced }: { step: Step; index: numbe
 
 function ConnectorLine({ path, index, progress, reduced }: { path: string; index: number; progress: MotionValue<number>; reduced: boolean }) {
   const start = index * 0.235 + 0.205;
-  const pathLength = useTransform(progress, [start, start + 0.105], [0, 1]);
+  const opacity = useTransform(progress, [start, start + 0.105], [0.2, 0.72]);
   return (
     <motion.path
       d={path}
