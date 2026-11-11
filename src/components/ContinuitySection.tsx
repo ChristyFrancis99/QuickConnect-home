@@ -116,10 +116,10 @@ function ContinuityCardView({
     <motion.article
       className="qc-continuity__card"
       aria-labelledby={`qc-continuity-title-${card.index}`}
-      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+      initial={reduceMotion ? false : { opacity: 0.55, y: 12 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.18 }}
-      transition={{ duration: 0.55, delay: reduceMotion ? 0 : position * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.45, delay: reduceMotion ? 0 : Math.min(position * 0.06, 0.08), ease: [0.22, 1, 0.36, 1] }}
       whileHover={reduceMotion ? undefined : { y: -6, transition: { duration: 0.22 } }}
     >
       <div className="qc-continuity__frame">
@@ -612,6 +612,7 @@ export default function ContinuitySection({ onViewClick }: ContinuitySectionProp
             scroll-snap-type: x mandatory;
             scroll-padding-inline: 22px;
             overscroll-behavior-x: contain;
+            touch-action: pan-x pan-y;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
           }
@@ -623,6 +624,10 @@ export default function ContinuitySection({ onViewClick }: ContinuitySectionProp
           .qc-continuity__list > li {
             flex: 0 0 min(84vw, 360px);
             scroll-snap-align: center;
+          }
+
+          .qc-continuity__dots {
+            display: none;
           }
 
           .qc-continuity__frame {
