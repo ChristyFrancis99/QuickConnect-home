@@ -1090,4 +1090,8 @@
   .continuity-steps__pin {
     transform: none !important;
   }
+
+  .continuity-steps__card p {
+    color: #4f4a42 !important;
+  }
 }
