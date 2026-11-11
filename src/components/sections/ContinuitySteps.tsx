@@ -162,7 +162,7 @@ export default function ContinuitySteps() {
           <h2 id="continuity-steps-heading" className="text-[clamp(34px,4.1vw,48px)] font-bold leading-[1.1] tracking-[-.055em] text-[#252525]">
             Turn Knowledge Into Continuity.
           </h2>
-          <p className="mx-auto mt-4 max-w-[690px] text-[15px] font-normal leading-[1.75] text-[#252525]/75 md:mt-5 md:text-base">
+          <p className="mx-auto mt-4 max-w-[690px] text-[15px] font-normal leading-[1.75] text-[#4f4a42] md:mt-5 md:text-base">
             QuickConnect brings scattered project knowledge together and transforms it into structured, actionable handovers.
           </p>
         </header>
