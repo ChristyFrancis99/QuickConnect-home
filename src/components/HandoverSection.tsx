@@ -92,21 +92,7 @@ function HandoverStep({
       <motion.span
         className="qc-handover__node"
         aria-hidden="true"
-        style={
-          reducedMotion
-            ? {
-                backgroundColor: "var(--qc-handover-gold)",
-                borderColor: "var(--qc-handover-gold)",
-                color: "#FFFFFF",
-                boxShadow: "0 0 0 6px rgba(198,154,77,0.2)",
-              }
-            : {
-                backgroundColor: nodeBackground,
-                borderColor: nodeBorder,
-                color: nodeColor,
-                boxShadow: nodeShadow,
-              }
-        }
+        style={reducedMotion ? undefined : { scale: nodeScale }}
       >
         <span>{String(index + 1).padStart(2, "0")}</span>
       </motion.span>
@@ -532,7 +518,7 @@ export default function HandoverSection() {
           }
 
           .qc-handover__visual figcaption span {
-            font-size: 7px;
+            font-size: 8px;
             letter-spacing: .08em;
           }
 
