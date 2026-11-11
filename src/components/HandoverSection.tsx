@@ -1,7 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import {
   motion,
-  useMotionValueEvent,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -46,13 +45,11 @@ function HandoverStep({
   index,
   progress,
   reducedMotion,
-  activeStep,
 }: {
   step: (typeof handoverSteps)[number];
   index: number;
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
   reducedMotion: boolean;
-  activeStep: number;
 }) {
   const segmentStart = index / handoverSteps.length;
   const segmentMiddle = (index + 0.5) / handoverSteps.length;
@@ -61,7 +58,7 @@ function HandoverStep({
   const opacity = useTransform(
     progress,
     [segmentStart, segmentMiddle, segmentEnd],
-    index === 0 ? [1, 1, 0.55] : [0.28, 1, 0.55],
+    index === 0 ? [1, 1, 0.72] : [0.5, 1, 0.72],
   );
   const y = useTransform(
     progress,
@@ -106,22 +103,26 @@ function HandoverStep({
     glow,
     (value) => `0 0 0 ${6 * value}px rgba(198,154,77,${0.2 * value})`,
   );
+  const cardBorderColor = useTransform(
+    progress,
+    [segmentStart, segmentMiddle, segmentEnd],
+    ["rgba(37,37,37,0.08)", "rgba(198,154,77,0.55)", "rgba(37,37,37,0.08)"],
+  );
   const descriptionOpacity = useTransform(
     progress,
     [segmentStart, segmentMiddle, segmentEnd],
-    index === 0 ? [0.7, 0.7, 0.55] : [0.28, 0.7, 0.55],
+    [0.72, 0.82, 0.72],
   );
   const textColor = useTransform(
     progress,
     [segmentStart, segmentMiddle, segmentEnd],
-    ["#77736C", "#252525", "#252525"],
+    ["#4F4A42", "#252525", "#252525"],
   );
   const Icon = step.icon;
 
   return (
     <motion.li
       className="qc-handover__step"
-      aria-current={index === activeStep ? "step" : undefined}
       style={
         reducedMotion
           ? undefined
@@ -156,7 +157,7 @@ function HandoverStep({
 
       <motion.div
         className="qc-handover__step-card"
-        style={reducedMotion ? undefined : { color: textColor }}
+        style={reducedMotion ? undefined : { color: textColor, borderColor: cardBorderColor }}
       >
         <div className="qc-handover__step-heading">
           <span className="qc-handover__icon-badge">
@@ -172,20 +173,11 @@ function HandoverStep({
 
 export default function HandoverSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeStep, setActiveStep] = useState(0);
   const reducedMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start center", "end center"],
-  });
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const nextStep = Math.min(
-      handoverSteps.length - 1,
-      Math.max(0, Math.floor(latest * handoverSteps.length)),
-    );
-    setActiveStep((current) => current === nextStep ? current : nextStep);
   });
 
   const progressScale = useTransform(
@@ -247,7 +239,7 @@ export default function HandoverSection() {
             />
           </div>
 
-          <ol className="qc-handover__steps">
+          <ol className="qc-handover__steps" aria-label="Handover steps">
             {handoverSteps.map((step, index) => (
               <HandoverStep
                 key={step.title}
@@ -255,15 +247,10 @@ export default function HandoverSection() {
                 index={index}
                 progress={scrollYProgress}
                 reducedMotion={Boolean(reducedMotion)}
-                activeStep={activeStep}
               />
             ))}
           </ol>
 
-          <span className="qc-handover__sr-only" aria-live="polite">
-            Step {activeStep + 1} of {handoverSteps.length}:{" "}
-            {handoverSteps[activeStep].title}
-          </span>
         </div>
       </div>
 
@@ -358,8 +345,8 @@ export default function HandoverSection() {
         .qc-handover__visual::after {
           content: "";
           position: absolute;
-          inset: 35% 0 0;
-          background: linear-gradient(180deg, transparent 0%, rgba(28, 27, 25, .72) 100%);
+          inset: 18% 0 0;
+          background: linear-gradient(180deg, transparent 0%, rgba(28, 27, 25, .82) 100%);
           pointer-events: none;
         }
 
@@ -533,7 +520,7 @@ export default function HandoverSection() {
           font-size: 15px;
           font-weight: 400;
           line-height: 1.7;
-          opacity: .75;
+          opacity: 1;
         }
 
         .qc-handover__sr-only {
@@ -556,10 +543,12 @@ export default function HandoverSection() {
           }
 
           .qc-handover__intro {
-            position: relative;
-            top: auto;
-            padding-top: 0;
-            margin-bottom: 42px;
+            position: sticky;
+            top: calc(var(--qc-nav-height) + 8px);
+            z-index: var(--qc-z-sticky);
+            padding: 8px 0 0;
+            margin-bottom: 24px;
+            background: #F5F4F0;
           }
 
           .qc-handover__intro h2 {
@@ -568,14 +557,40 @@ export default function HandoverSection() {
           }
 
           .qc-handover__subtext {
-            margin-top: 17px;
-            font-size: 15px;
+            max-width: calc(100% - 112px);
+            margin-top: 14px;
+            font-size: 14px;
+            line-height: 1.6;
           }
 
           .qc-handover__visual {
-            width: 100%;
-            height: clamp(190px, 58vw, 250px);
-            margin-top: 26px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 104px;
+            height: 84px;
+            margin: 0;
+            border-width: 3px;
+            border-radius: 14px;
+          }
+
+          .qc-handover__visual figcaption {
+            right: 5px;
+            bottom: 5px;
+            left: 5px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+          }
+
+          .qc-handover__visual figcaption span {
+            font-size: 7px;
+            letter-spacing: .08em;
+          }
+
+          .qc-handover__visual figcaption a {
+            font-size: 8px;
+            white-space: normal;
           }
 
           .qc-handover__track {
