@@ -28,7 +28,7 @@ function createPanels(rows = ROWS, segments = 6): Panel[] {
   const panels: Panel[] = [];
 
   for (let row = 0; row < rows; row += 1) {
-    const latitude = -Math.PI / 2 + (Math.PI * (row + 0.5)) / ROWS;
+    const latitude = -Math.PI / 2 + (Math.PI * (row + 0.5)) / rows;
     const count = Math.max(4, Math.round(14 * Math.cos(latitude)));
     const latitudeStep = Math.PI / rows;
     const longitudeStep = (Math.PI * 2) / count;
@@ -197,6 +197,10 @@ function GlobeMotion({
     const isMobile = size.width <= 768;
     globe.position.set(0, 0, 0);
     globe.scale.setScalar(isMobile ? 0.9 : 1.32);
+    if (isMobile) {
+      globe.rotation.x = 0;
+      globe.rotation.z = 0;
+    }
     const breakup = reducedMotion.current || isMobile ? 0 : progress.get();
 
     if (camera instanceof THREE.PerspectiveCamera) {
