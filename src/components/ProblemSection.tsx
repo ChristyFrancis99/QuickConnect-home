@@ -37,7 +37,7 @@ export default function ProblemSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [mobile, setMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches);
+  const [mobile, setMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches);
   const reduceMotion = useReducedMotion();
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const reduced = reduceMotion ?? false;
@@ -130,7 +130,7 @@ export default function ProblemSection() {
       .qc-paper-stack>i{position:absolute;right:0;top:0;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--qc-lavender);color:white;font-size:13px;font-style:normal;font-weight:700}
       .qc-transfer-arrow{position:absolute;left:50%;bottom:12px;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--qc-gold);color:#252525;transform:translateX(-50%)}
       @media(max-width:900px){.qc-problem-card{padding:22px 18px}.qc-problem-card__expanded{gap:12px}.qc-problem-card__title{font-size:21px}.qc-problem-card__description{font-size:14px}.qc-problem-art{min-width:120px;height:190px}}
-      @media(max-width:767px){
+      @media(max-width:768px){
         .qc-problem{padding:68px 18px}.qc-problem__header{align-items:flex-start;flex-direction:column;gap:18px;margin-bottom:28px}
         .qc-problem__title{font-size:clamp(32px,8.5vw,42px)}.qc-problem__intro{margin-top:14px;font-size:15px;line-height:1.7}
         .qc-problem__cards{flex-direction:column;gap:12px}.qc-problem-card{flex:0 0 auto;width:100%;height:74px;min-height:74px;padding:17px 20px}
