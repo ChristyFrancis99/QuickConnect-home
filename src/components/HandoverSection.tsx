@@ -58,7 +58,7 @@ function HandoverStep({
   const opacity = useTransform(
     progress,
     [segmentStart, segmentMiddle, segmentEnd],
-    index === 0 ? [1, 1, 0.72] : [0.5, 1, 0.72],
+    index === 0 ? [1, 1, 0.85] : [0.85, 1, 0.85],
   );
   const y = useTransform(
     progress,
@@ -97,7 +97,7 @@ function HandoverStep({
     value > 0.5 ? "var(--qc-handover-gold)" : "rgba(37,37,37,0.25)",
   );
   const nodeColor = useTransform(fill, (value) =>
-    value > 0.5 ? "#FFFFFF" : "#77736C",
+    value > 0.5 ? "#FFFFFF" : "#59554E",
   );
   const nodeShadow = useTransform(
     glow,
@@ -111,7 +111,7 @@ function HandoverStep({
   const descriptionOpacity = useTransform(
     progress,
     [segmentStart, segmentMiddle, segmentEnd],
-    [0.72, 0.82, 0.72],
+    [0.85, 0.9, 0.85],
   );
   const textColor = useTransform(
     progress,
@@ -533,7 +533,7 @@ export default function HandoverSection() {
           clip-path: inset(50%);
         }
 
-        @media (max-width: 760px) {
+        @media (max-width: 768px) {
           .qc-handover {
             padding: 76px 22px;
           }
