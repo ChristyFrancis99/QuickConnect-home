@@ -1,4 +1,4 @@
-import { useRef, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   motion,
   useReducedMotion,
@@ -139,11 +139,13 @@ function PlatformCard({
   index,
   progress,
   reducedMotion,
+  mobile,
 }: {
   item: PlatformCardData;
   index: number;
   progress: MotionValue<number>;
   reducedMotion: boolean;
+  mobile: boolean;
 }) {
   const total = platformCards.length;
   const enter = index / total;
@@ -156,22 +158,22 @@ function PlatformCard({
   const scale = useTransform(
     progress,
     [settleStart, settlePoint, exit, exitEnd],
-    reducedMotion ? [1, 1, 1, 1] : index === 0 ? [1, 1, 1, 0.93] : [0.97, 1, 1, 0.93]
+    reducedMotion ? [1, 1, 1, 1] : mobile ? [1, 1, 1, 0.96] : index === 0 ? [1, 1, 1, 0.93] : [0.97, 1, 1, 0.93]
   );
   const rotateX = useTransform(
     progress,
     [settleStart, settlePoint, exit, exitEnd],
-    reducedMotion ? [0, 0, 0, 0] : [0, 0, 0, 5]
+    reducedMotion || mobile ? [0, 0, 0, 0] : [0, 0, 0, 5]
   );
   const y = useTransform(
     progress,
     [exit, exitEnd],
-    reducedMotion ? [0, 0] : [0, -8]
+    reducedMotion ? [0, 0] : mobile ? [0, -4] : [0, -8]
   );
   const brightnessValue = useTransform(
     progress,
     [exit, exitEnd],
-    reducedMotion ? [1, 1] : [1, 0.88]
+    reducedMotion ? [1, 1] : mobile ? [1, 0.9] : [1, 0.88]
   );
   const filter = useTransform(
     brightnessValue,
@@ -259,6 +261,17 @@ function PlatformCard({
 export default function PlatformSection() {
   const stackRef = useRef<HTMLOListElement>(null);
   const reducedMotion = useReducedMotion();
+  const [mobile, setMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches,
+  );
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: stackRef,
@@ -312,6 +325,7 @@ export default function PlatformSection() {
             index={index}
             progress={scrollYProgress}
             reducedMotion={Boolean(reducedMotion)}
+            mobile={mobile}
           />
         ))}
       </ol>
@@ -704,7 +718,7 @@ export default function PlatformSection() {
           outline-offset: 4px;
         }
 
-        @media (max-width: 760px) {
+        @media (max-width: 768px) {
           .qcp { padding: 75px 14px 5svh; }
           .qcp__intro { margin-bottom: 45px; }
           .qcp__intro h2 br { display: none; }
@@ -723,54 +737,54 @@ export default function PlatformSection() {
           .qcp__value-point strong { font-size: 12px; }
           .qcp__value-point div span { font-size: 11px; }
 
-          .qcp__stack { padding-bottom: 0; }
+          .qcp__stack { padding: 0; }
 
           .qcp__card-slot {
-            position: relative;
-            top: auto;
-            height: auto;
-            min-height: 0;
-            margin-bottom: 20px;
+            position: sticky;
+            top: calc(var(--qc-nav-height) + 8px);
+            height: min(calc(100svh - var(--qc-nav-height) - 16px), 660px);
+            min-height: min(450px, calc(100svh - var(--qc-nav-height) - 16px));
+            margin-bottom: 12svh;
             perspective: none;
           }
 
+          .qcp__card-slot:last-child { margin-bottom: 0; }
+
           .qcp__card {
-            height: auto;
+            height: 100%;
             min-height: 0;
-            padding: 25px;
+            padding: clamp(16px, 4vw, 22px);
             border-radius: 20px;
-            transform: none !important;
-            filter: none !important;
+            transform-style: flat;
           }
 
-          .qcp__card-heading { gap: 13px; }
+          .qcp__card-heading { gap: 12px; }
 
           .qcp__icon {
-            width: 46px;
-            height: 46px;
-            flex-basis: 46px;
-            border-radius: 13px;
+            width: 42px;
+            height: 42px;
+            flex-basis: 42px;
+            border-radius: 12px;
           }
 
-          .qcp__card h3 { font-size: 22px; }
-          .qcp__card-content { margin-top: 24px; }
-          .qcp__card-content { max-width: 100%; padding-bottom: 0; }
-          .qcp__card-content p { font-size: 14px; }
-          .qcp__highlights { margin-top: 20px; }
-          .qcp__highlight-list { gap: 7px; }
-          .qcp__highlight { padding: 8px 10px; font-size: 9px; }
+          .qcp__card h3 { font-size: clamp(18px, 5vw, 22px); }
+          .qcp__card-content { max-width: 100%; margin-top: 14px; padding-bottom: 0; }
+          .qcp__card-content p { margin-bottom: 12px; font-size: 13px; line-height: 1.5; }
+          .qcp__highlights { margin-top: 14px; }
+          .qcp__highlight-list { gap: 6px; }
+          .qcp__highlight { padding: 7px 9px; font-size: 9px; }
           .qcp__visual-panel {
             position: relative;
             top: auto;
             right: auto;
             bottom: auto;
             width: 100%;
-            height: 210px;
-            margin-top: 22px;
+            height: clamp(112px, 26svh, 168px);
+            margin-top: 12px;
           }
           .qcp__visual-image { animation: none; }
-          .qcp__card-meta { margin-top: 22px; }
-          .qcp__learn { position: relative; right: auto; bottom: auto; align-self: flex-start; margin-top: 16px; }
+          .qcp__card-meta { margin-top: 12px; font-size: 8px; }
+          .qcp__learn { position: relative; right: auto; bottom: auto; align-self: flex-start; margin-top: 10px; padding: 9px 13px; }
 
           .qcp__card-bottom {
             align-items: flex-start;
@@ -788,9 +802,11 @@ export default function PlatformSection() {
         }
 
         @media (max-width: 420px) {
-          .qcp__card-top { gap: 10px; }
-          .qcp__index { font-size: 12px; }
-          .qcp__card h3 { font-size: 19px; }
+          .qcp__card-top { gap: 8px; }
+          .qcp__index { font-size: 11px; }
+          .qcp__card h3 { font-size: 18px; }
+          .qcp__card-content p { font-size: 12.5px; }
+          .qcp__visual-panel { height: clamp(104px, 22svh, 136px); }
         }
 
         @media (prefers-reduced-motion: reduce) {
