@@ -71,7 +71,7 @@ function StepCard({ step, index, progress, reduced }: { step: Step; index: numbe
   const appear = start + 0.115;
   const settle = start + 0.205;
   const sideOffset = step.side === "right" ? 48 : -48;
-  const opacity = useTransform(progress, [start, appear, settle], [0.75, 0.88, 1]);
+  const opacity = useTransform(progress, [start, appear, settle], [0.85, 0.92, 1]);
   const y = useTransform(progress, [start, appear, settle], [60, 30, 0]);
   const x = useTransform(progress, [start, appear, settle], [sideOffset, sideOffset * 0.45, 0]);
   const scale = useTransform(progress, [start, appear, settle], [0.94, 0.97, 1]);
@@ -108,8 +108,7 @@ function ConnectorLine({ path, index, progress, reduced }: { path: string; index
       strokeWidth="1.7"
       strokeLinecap="round"
       strokeDasharray="6 8"
-      pathLength={reduced ? 1 : pathLength}
-      opacity={0.72}
+      opacity={reduced ? 0.72 : opacity}
     />
   );
 }
