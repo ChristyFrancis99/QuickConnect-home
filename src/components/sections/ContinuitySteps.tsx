@@ -89,7 +89,7 @@ function StepCard({ step, index, progress, reduced }: { step: Step; index: numbe
           <Pin progress={progress} index={index} reduced={reduced} />
           <div className="pt-10">
             <h3 id={"continuity-step-" + step.number} className="text-[23px] font-semibold leading-tight tracking-[-.04em] text-[#252525] md:text-2xl">{step.title}</h3>
-            <p className="mt-[13px] text-[15.5px] font-normal leading-[1.7] text-[#252525]/75">{step.description}</p>
+            <p className="mt-[13px] text-[15.5px] font-normal leading-[1.7] text-[#4f4a42]">{step.description}</p>
           </div>
         </div>
       </article>
