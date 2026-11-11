@@ -116,7 +116,7 @@ function ContinuityCardView({
     <motion.article
       className="qc-continuity__card"
       aria-labelledby={`qc-continuity-title-${card.index}`}
-      initial={reduceMotion ? false : { opacity: 0.55, y: 12 }}
+      initial={reduceMotion ? false : { opacity: 0.8, y: 8 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.45, delay: reduceMotion ? 0 : Math.min(position * 0.06, 0.08), ease: [0.22, 1, 0.36, 1] }}
@@ -628,6 +628,10 @@ export default function ContinuitySection({ onViewClick }: ContinuitySectionProp
 
           .qc-continuity__dots {
             display: none;
+          }
+
+          .qc-continuity__card:hover {
+            transform: none !important;
           }
 
           .qc-continuity__frame {
