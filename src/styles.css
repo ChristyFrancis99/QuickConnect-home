@@ -942,6 +942,7 @@
     overflow: clip;
     padding-bottom: 20px;
   }
+  .globe-interaction { inset: 0 0 20px; }
   .globe-canvas-expansion { transform: none !important; }
   .globe-canvas { inset: -3% !important; width: 106% !important; height: 106% !important; }
   .globe-drag-hit-area { pointer-events: none; touch-action: pan-y; }
